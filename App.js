@@ -1,24 +1,28 @@
 
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, StyleSheet, Text, View, LogBox} from 'react-native';
-import { Navigation } from "./Navigation/Navigation"
-import 'react-native-gesture-handler';
+import { Navigation } from "./Navigation/Navigation";
 
 
-export default function App() {
+const App2 = () => {
+
+LogBox.ignoreAllLogs();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Navigation/>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: "row",
     alignItems: 'center',
     justifyContent: 'center',
+   
+   
   },
 });
+
+ export default App2;

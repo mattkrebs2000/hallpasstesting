@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { scale, ScaledSheet } from 'react-native-size-matters';
+
 import CryptoES from "crypto-es";
 import Results from "./Subcomponents/ResultsContainer";
 import StateResults from "./Subcomponents/StateResultsContainer";
 import TownResults from "./Subcomponents/TownResultsContainer";
 import SignIn from "./SignIn";
-import Passes from './Mapofpenaltyhistory/Mapofpenaltyhistory'
+import Passes from './MapofClassesTeacher/Mapofpasshistory/Mapofpasshistory';
 
 
 import {
@@ -27,8 +27,8 @@ const height = Dimensions.get("window").height;
 
 export default function SignUp({ route, navigation }) {
 
-    const { idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepassmaxstudents, drinkpasslimit, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, location, teacherid, teacheriscalled,
-        email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, sessionending, maxstudentsbathroom, totalclasstime, idselected, penaltyminutes, adjustments, abc, linkedclass
+    const { idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepassmaxstudents, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, location, teacherid, teacheriscalled,
+        email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, sessionending, maxstudentsbathroom, totalclasstime, idselected, penaltyminutes, adjustments, abc, drinkpasslimit, linkedclass
     } = route.params;
     console.log("this is the class id", classid, "this is the class id", currentsessionid, "starttime = ", starttime, "userinformation now in ClassesSessions.js", userinformation, "userinformation now in CLassesTeacher.js");
 
@@ -48,9 +48,15 @@ export default function SignUp({ route, navigation }) {
     const [idsofpasses, setIdsofpasses] = useState();
     const [empty, setEmpty] = useState();
 
-    const [newconsequence, setNewoverunder] = useState();
+    const [newoverunder, setNewoverunder] = useState();
 
+    useEffect(() => {
+        console.log(newoverunder, "this is the newoverunder");
+    }, [newoverunder]);
 
+    useEffect(() => {
+        console.log(newoverunder, "this is the newoverunder");
+    }, []);
 
     const endpasses = () => {
 
@@ -75,10 +81,10 @@ export default function SignUp({ route, navigation }) {
     useEffect(() => {
         if (typeof idsofpasses != "undefined") {
             const t = Date.now();
-         
+
             for (let s = 0; s < idsofpasses.length; s++) {
 
-                const r = new Date(idsofpasses[s].endofclasssession);
+                const r = new Date(idsofpasses[s].endofclasssession)
 
                 updateDoc(doc(firebase, "passes", idsofpasses[s].id), {
 
@@ -150,45 +156,39 @@ export default function SignUp({ route, navigation }) {
     const createTwoButtonAlert = () =>
 
 
-        Alert.alert('Please be aware.', 'This will permanently remove this penalty from the system.', [
+        Alert.alert('Please be aware.', 'This will permanently remove this pass from the system.', [
             {
                 text: 'Cancel',
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel',
             },
-            { text: 'Delete Penalty', onPress: () => deleteToDo() },
+            { text: 'Delete Pass', onPress: () => deleteToDo() },
         ]);
 
     const createTwoButton = () => {
 
 
-        Alert.alert('Please be aware.', 'This will permanently remove all of this students penalties (for this class) from the system.', [
+        Alert.alert('Please be aware.', 'This will permanently remove all of this students passes (for this class) from the system.', [
             {
                 text: 'Cancel',
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel',
             },
-            { text: 'Delete Penalties', onPress: () => deleteAll() },
+            { text: 'Delete Passes', onPress: () => deleteAll() },
         ]);
 
     }
 
     useEffect(() => {
-        setNewoverunder(false);
         console.log("THIS IS THE IDddddddddddddd");
         getlocationsqrcodes();
-
     }, []);
 
     useEffect(() => {
-
         const filteredData = userdata.filter((person) => {
-            return person.classid === classid || person.linkedclass === linkedclass;
+            return person.classid === classid || person.linkedclass === classid;
         })
-
-
         setClassesarray(filteredData)
-
     }, [userdata]);
 
     useEffect(() => {
@@ -196,19 +196,36 @@ export default function SignUp({ route, navigation }) {
         if (classesarray.length === 0) {
             setClassesarray([{ classname: "You haven't Registered" }]);
             setEmpty(true);
+            setNewoverunder(0);
 
         } else {
-            console.log(classesarray, "This is my classes dataa")
+            figureoutoverunder();
         }
-        
 
     }, [classesarray]);
+
+    const figureoutoverunder = () => {
+
+        const array = [];
+
+        for (let w = 0; w < classesarray.length; w++) {
+            if (classesarray[w].returned < Date.now()) {
+                array.push(classesarray[w].differenceoverorunderinminutes)
+
+            }
+        }
+        setNewoverunder(array.reduce((a, b) => a + b, 0));
+    }
+
+
 
 
     async function getlocationsqrcodes() {
 
         if (userdata.length === 0) {
-            const q = query(collection(firebase, "consequencephoneuse"), where("studentid", "==", idselected), orderBy("starttimepenalty", "desc"));
+            const q = query(collection(firebase, "passes"), where("studentid", "==", idselected), orderBy("endofclasssession", "desc"));
+
+
 
             const querySnapshot = await getDocs(q)
 
@@ -224,7 +241,7 @@ export default function SignUp({ route, navigation }) {
                     if (array.length === 0) {
                         setUserdata([{ classname: "You haven't Registered" }]);
                         setEmpty(true);
-                        
+
                     } else {
                         setIdselected2();
                         setEmpty(false);
@@ -255,9 +272,9 @@ export default function SignUp({ route, navigation }) {
             navigation.setOptions({
                 headerLeft: () => (
                     <TouchableOpacity onPress={() => navigation.navigate("Studentsenrolled", {
-                        idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit,drinkpasslimit:drinkpasslimit,  exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
-                        email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater:drinkofwater,exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, drinkpassduration:drinkpassduration, bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
-                        newconsequence:newconsequence, penaltyminutes:penaltyminutes, adjustments:adjustments, abc:abc, linkedclass:linkedclass
+                        idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, drinkpasslimit: drinkpasslimit, nonbathroompasslimit: nonbathroompasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
+                        email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, drinkpassduration: drinkpassduration, phonepassduration: phonepassduration, bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
+                        newoverunder: newoverunder, penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass:linkedclass
                     })}
 
                     >
@@ -273,12 +290,10 @@ export default function SignUp({ route, navigation }) {
             navigation.setOptions({
                 headerLeft: () => (
                     <TouchableOpacity onPress={() => navigation.navigate("Studentsenrolled", {
-                        idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit:drinkpasslimit, drinkpasslimit:drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
-                        email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater:drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, drinkpassduration:drinkpassduration,  bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
-                        newconsequence:newconsequence, penaltyminutes:penaltyminutes, adjustments:adjustments, abc:abc, linkedclass:linkedclass
-                    })}
-
-                    >
+                        idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
+                        email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, drinkpassduration: drinkpassduration, phonepassduration: phonepassduration, bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
+                        newoverunder: newoverunder, penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass:linkedclass
+                    })}>
 
                         <Text accessibilityLabel="Guest" style={styles.error5}>
                             Students
@@ -328,8 +343,8 @@ export default function SignUp({ route, navigation }) {
 
 
     const deleteitspasses = async () => {
-setNewoverunder(true);
-        const userDoc = doc(firebase, "consequencephoneuse",
+
+        const userDoc = doc(firebase, "passes",
             idselected2)
 
 
@@ -346,15 +361,14 @@ setNewoverunder(true);
     }, [userdata]);
 
     const deleteAllpasses = async () => {
-        setNewoverunder(true);
-        const v = query(collection(firebase, "consequencephoneuse"), where("studentid", "==", idselected), where("classid", "==", classid));
+        const v = query(collection(firebase, "passes"), where("studentid", "==", idselected), where("classid", "==", classid));
 
         const querySnapshot = await getDocs(v)
 
             .then(function (snapshot) {
 
                 snapshot.forEach(docs => {
-                    deleteDoc(doc(firebase, "consequencephoneuse", docs.data().id))
+                    deleteDoc(doc(firebase, "passes", docs.data().id))
                 })
                 console.log("Did anything change?")
             })
@@ -364,7 +378,7 @@ setNewoverunder(true);
     return (
         <SafeAreaView style={styles.largercontainer}>
             <View style={styles.container1}>
-                {allclasses === true ? <View><TouchableOpacity><Text style={styles.error} onPress={() => switchthis()}>Passes/Tardies Of:{'\n'}{firstname} {lastname}{'\n'}All Classes</Text></TouchableOpacity></View> : <View><TouchableOpacity><Text style={styles.error} onPress={() => switchthis()}>Passes/Tardies Of:{'\n'}{firstname} {lastname}{'\n'}{coursename}</Text></TouchableOpacity></View>}
+                {allclasses === true ? <View><TouchableOpacity><Text style={styles.error} onPress={() => switchthis()}>Passes/Tardies:{'\n'}{firstname} {lastname}{'\n'}All Classes</Text></TouchableOpacity></View> : <View><TouchableOpacity><Text style={styles.error} onPress={() => switchthis()}>Passes/Tardies:{'\n'}{firstname} {lastname} - {coursename}{'\n'}Over/Under Sum: {(Math.round(newoverunder * 10)) / 10}</Text></TouchableOpacity></View>}
             </View>
 
             <View style={styles.container2}>
@@ -389,16 +403,16 @@ setNewoverunder(true);
                         bottom: 0,
                     }} /></View>
 
-                {idselected2 && allclasses === false && empty != true ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Selected Penalty </Text> : idselected2 && allclasses === false && empty === true
-                    ? <Text style={styles.paragraph2}>   </Text> : allclasses === false ? <Text style={styles.paragraph2} onPress={(e) => createTwoButton()}>Delete All of {firstname}'s Penalties </Text> : <Text style={styles.paragraph2}>   </Text>}
+                {idselected2 && allclasses === false && empty != true ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : idselected2 && allclasses === false && empty === true
+                    ? <Text style={styles.paragraph2}>   </Text> : allclasses === false ? <Text style={styles.paragraph2} onPress={(e) => createTwoButton()}>Delete All Passes/Tardies </Text> : <Text style={styles.paragraph2}>   </Text>}
 
                 <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 
                 <Text style={styles.paragraph2} onPress={() => navigation.navigate("Studentsenrolled", {
-                    idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, bathroompasslimit: bathroompasslimit, drinkpasslimit:drinkpasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled, teacheriscalled: teacheriscalled,
-                    email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater:drinkofwater, exclusivetime: exclusivetime,  drinkofwater:drinkofwater, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, overunder: overunder, drinkpassduration:drinkpassduration, bathroompassduration: bathroompassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
-                    newconsequence:newconsequence, penaltyminutes:penaltyminutes, adjustments:adjustments, abc:abc, linkedclass:linkedclass
-                })}>Back To Students </Text>
+                    idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled, teacheriscalled: teacheriscalled,
+                    email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, drinkpassduration: drinkpassduration, phonepassduration: phonepassduration, overunder: overunder, bathroompassduration: bathroompassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
+                    newoverunder: newoverunder, penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass:linkedclass
+                })}  >Back To Students </Text>
 
 
             </View>

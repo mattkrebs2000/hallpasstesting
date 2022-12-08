@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { scale, ScaledSheet } from 'react-native-size-matters';
 import CryptoES from "crypto-es";
 import Results from "./Subcomponents/ResultsContainer";
 import StateResults from "./Subcomponents/StateResultsContainer";
@@ -24,11 +23,11 @@ import { onSnapshot, collection, addDoc, query, where, getDocs, deleteDoc, doc, 
 
 const height = Dimensions.get("window").height;
 
-export default function SignUp({ route, navigation }) {
+export default function ClassesTeacher({ route, navigation }) {
 
     const { teacheriscalled, idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, id, bathroompasslimit, drinkpasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, email, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, exclusivetime, drinkofwater, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, sessionended, thelastid, consequenceid,
     } = route.params;
-    console.log(selectedclass, coursename, "coursename", classiscurrent, "CLassesTeacher.js", Date.now());
+    console.log("id", id, selectedclass, coursename, "coursename", classiscurrent, "CLassesTeacher.js", Date.now());
 
     const [userdata, setUserdata] = useState([]);
     const [classesarray, setClassesarray] = useState([]);
@@ -71,9 +70,11 @@ export default function SignUp({ route, navigation }) {
     const [idsofpasses, setIdsofpasses] = useState();
     const [linkedclass, setLinkedclass] = useState();
 
-console.log(idselected, "idselected")
+console.log(id, "id", idselected, "idselected");
 
     const endpasses = () => {
+
+console.log("endpasses is being run", usersesssionid, "endpasses is being run");
 
         if (sessionending < Date.now()) {
             const q = query(collection(firebase, "passes"), where("classsessionid", "==", usersesssionid), where("returned", "==", 0));
@@ -251,10 +252,11 @@ console.log(idselected, "idselected")
     }, [classisstillgoingon]);
 
     useEffect(() => {
+
         setUserdata([]);
         setShowspinner(true);
         updateallstudentswhohadthisclass();
-
+        
     }, [deleteToDo]);
 
     const auth = getAuth();
@@ -264,15 +266,16 @@ console.log(idselected, "idselected")
             getlocationsqrcodes();
 
         } else {
-            console.log(user, "id", id, "id");
+            console.log("idyo", id, "idyo");
         }
     });
 
     useEffect(() => {
-        console.log("THIS IS THE IDddddddddddddd");
+        if (typeof id != "undefined") {
+        console.log("THIS IS THE IDddddddddddddd", id);
         getlocationsqrcodes();
-
-    }, []);
+        }
+    }, [id]);
 
     useEffect(() => {
 
@@ -318,7 +321,9 @@ console.log(idselected, "idselected")
 
     async function getlocationsqrcodes() {
 
-        if (userdata.length === 0) {
+console.log("is qrcodes run before this?", id,"it knows the id");
+
+        if (typeof id != "undefined" && userdata.length === 0) {
             const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
 
             const querySnapshot = await getDocs(q)
@@ -489,7 +494,6 @@ console.log(idselected, "idselected")
         setClasssessionbegun(true);
         setShowspinner(false);
     }
-
 
     // Deletes a class and then reruns classes that are still there.
 

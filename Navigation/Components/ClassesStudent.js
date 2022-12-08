@@ -6,7 +6,7 @@ import { SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, St
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification } from "@firebase/auth";
 import { onSnapshot, getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, FieldValue, arrayUnion } from "@firebase/firestore";
-import { useCollection, useDocument } from "react-firebase-hooks/firestore";
+
 
 
 

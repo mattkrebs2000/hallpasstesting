@@ -7,43 +7,43 @@ import {
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-// import Destination from "./Components/Destination";
-// import Customlocation from "./Components/Customlocation";
-// import Scanner from "./Components/Scanner";
-// import Pass from "./Components/Pass";
-// import addconsequence from "./Components/addconsequence";
+import Destination from "./Components/Destination";
+import Customlocation from "./Components/Customlocation";
+import Scanner from "./Components/Scanner";
+import Pass from "./Components/Pass";
+import Addconsequence from "./Components/Addconsequence";
 
 import Signup from "./Components/Signup";
 import SignIn from "./Components/SignIn";
-// import QuickSignUp from "./Components/QuickSignUp";
-// import RegisterClasses from "./Components/RegisterClasses";
-// import QRCodes from "./Components/QRCodes";
-// import ClassesTeacher from "./Components/ClassesTeacher";
-// import ClassesStudent from "./Components/ClassesStudent";
-// import Availableclasses from "./Components/Availableclassesatyourschool";
-// import Studentsawaitingconfirmation from "./Components/Studentsawaitingconfirmation";
-// import Studentsenrolled from "./Components/Studentsenrolled";
+import QuickSignUp from "./Components/QuickSignUp";
+import RegisterClasses from "./Components/RegisterClasses";
+import QRCodes from "./Components/QRCodes";
+import ClassesTeacher from "./Components/ClassesTeacher";
+import ClassesStudent from "./Components/ClassesStudent";
+import Availableclasses from "./Components/Availableclassesatyourschool";
+import Studentsawaitingconfirmation from "./Components/Studentsawaitingconfirmation";
+import Studentsenrolled from "./Components/Studentsenrolled";
 import Mainmenustudent from "./Components/MainMenuStudent";
-// import Mainmenuteacher from "./Components/MainMenuTeacher";
-// import Passisready from "./Components/Passisready";
-// import Donewithwork from "./Components/Donewithwork";
-// import Settingsteacher from "./Components/SettingsTeacher";
-// import Classsessions from "./Components/Classsessions";
-// import Bathroomline from "./Components/Lineforbathroom";
-// import Lineforexclusivephonepass from "./Components/Lineforexclusivephonepass";
-// import Bathroomlineforteacher from "./Components/Lineforbathroomteacher";
-// import Donewithworkpass from "./Components/Donewithworkpass";
-// import Passhistory from "./Components/Passhistory";
-// import Penaltyhistory from "./Components/Penaltyhistory";
-// import Linkclasses from "./Components/Linkclasses";
-// import Passesstudents from "./Components/Passesforstudents";
-// import Classpasses from "./Components/Passesfromthisclass";
+import Mainmenuteacher from "./Components/MainMenuTeacher";
+import Passisready from "./Components/Passisready";
+import Donewithwork from "./Components/Donewithwork";
+import Settingsteacher from "./Components/SettingsTeacher";
+import Classsessions from "./Components/Classsessions";
+import Bathroomline from "./Components/Lineforbathroom";
+import Lineforexclusivephonepass from "./Components/Lineforexclusivephonepass";
+import Bathroomlineforteacher from "./Components/Lineforbathroomteacher";
+import Donewithworkpass from "./Components/Donewithworkpass";
+import Passhistory from "./Components/Passhistory";
+import Penaltyhistory from "./Components/Penaltyhistory";
+import Linkclasses from "./Components/Linkclasses";
+import Passesstudents from "./Components/Passesforstudents";
+import Classpasses from "./Components/Passesfromthisclass";
 
-// import Getapprovalfromteacher from "./Components/Getapprovalfromteacher";
-// import Studentconsequences from "./Components/Consequencesforstudents";
-// import Definitions from "./Components/Definitions";
-// import Relatedrules from "./Components/Relatedrules";
-// import Studnetsnotenrolled from "./Components/Studentsnotyetinyourclaass";
+import Getapprovalfromteacher from "./Components/Getapprovalfromteacher";
+import Studentconsequences from "./Components/Consequencesforstudents";
+import Definitions from "./Components/Definitions";
+import Relatedrules from "./Components/Relatedrules";
+import Studnetsnotenrolled from "./Components/Studentsnotyetinyourclaass";
 
 
 
@@ -69,16 +69,18 @@ const [day, setDay] = useState();
   const AuthStackScreen = () => (
 
     <AuthStack.Navigator
+    initialRouteName="Mainmenustudent"
       screenOptions={{
         transitionSpec: {
           open: config,
           close: config
         }
-      }}>
+      }}
+    >
 
 <AuthStack.Screen
         name="Mainmenustudent"
-        component={Mainmenustudent}
+        getComponent={() => require('./Components/MainMenuStudent').default}
         initialParams={{ Donewithworkpass: "" }}
         options={{
           title: "Main Menu",
@@ -93,7 +95,7 @@ const [day, setDay] = useState();
       />
     <AuthStack.Screen
         name="SignIn"
-        component={SignIn}
+        getComponent={() => require('./Components/SignIn').default}
         options={{
           title: "Sign In",
           headerTitleAlign: "center",
@@ -109,7 +111,7 @@ const [day, setDay] = useState();
 
       <AuthStack.Screen
         name="Signup"
-        component={Signup}
+        getComponent={() => require('./Components/Signup').default}
         options={{
           title: "Sign Up",
           headerTitleAlign: "center",
@@ -122,11 +124,11 @@ const [day, setDay] = useState();
         }}
       />
 
-{/*   
+  
   
       <AuthStack.Screen
         name="QuickSignUp"
-        component={QuickSignUp}
+        getComponent={() => require('./Components/QuickSignUp').default}
         options={{
           title: "Quick Sign Up",
           headerTitleAlign: "center",
@@ -140,7 +142,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="Studentsawaitingconfirmation"
-        component={Studentsawaitingconfirmation}
+        getComponent={() => require('./Components/Studentsawaitingconfirmation').default}
         options={{
           title: "Waiting List",
           headerTitleAlign: "center",
@@ -155,7 +157,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Relatedrules"
-        component={Relatedrules}
+        getComponent={() => require('./Components/Relatedrules').default}
         options={{
           title: "Related Rules",
           headerTitleAlign: "center",
@@ -169,7 +171,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="Studentsnotenrolled"
-        component={Studnetsnotenrolled}
+        getComponent={() => require('./Components/Studentsenrolled').default}
         options={{
           title: "Other Students",
           headerTitleAlign: "center",
@@ -183,7 +185,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="Classpasses"
-        component={Classpasses}
+        getComponent={() => require('./Components/Passesfromthisclass').default}
         options={{
           title: "Class Passes",
           headerTitleAlign: "center",
@@ -198,7 +200,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Passesstudents"
-        component={Passesstudents}
+        getComponent={() => require('./Components/Passesforstudents').default}
         options={{
           title: "Passes",
           headerTitleAlign: "center",
@@ -214,7 +216,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Linkclasses"
-        component={Linkclasses}
+        getComponent={() => require('./Components/Linkclasses').default}
         options={{
           title: "Link Classes",
           headerTitleAlign: "center",
@@ -229,7 +231,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="StudentConsequences"
-        component={Studentconsequences}
+        getComponent={() => require('./Components/Consequencesforstudents').default}
         options={{
           title: "Consequences",
           headerTitleAlign: "center",
@@ -245,7 +247,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Addconsequence"
-        component={addconsequence}
+        getComponent={() => require('./Components/Addconsequence').default}
         options={{
           title: "Behavior Description",
           headerTitleAlign: "center",
@@ -260,7 +262,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Passhistory"
-        component={Passhistory}
+        getComponent={() => require('./Components/Passhistory').default}
         options={{
           title: "Punctuality",
           headerTitleAlign: "center",
@@ -275,7 +277,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Penaltyhistory"
-        component={Penaltyhistory}
+        getComponent={() => require('./Components/Penaltyhistory').default}
         options={{
           title: "Penalty History",
           headerTitleAlign: "center",
@@ -291,7 +293,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Getapprovalfromteacher"
-        component={Getapprovalfromteacher}
+        getComponent={() => require('./Components/Getapprovalfromteacher').default}
         options={{
           title: "Contract",
           headerTitleAlign: "center",
@@ -307,7 +309,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Lineforbathroompass"
-        component={Bathroomline}
+        getComponent={() => require('./Components/Lineforbathroom').default}
         options={{
           title: "Line For Bathroom Pass",
           headerTitleAlign: "center",
@@ -322,7 +324,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Lineforexclusivephonepass"
-        component={Lineforexclusivephonepass}
+        getComponent={() => require('./Components/Lineforexclusivephonepass').default}
         options={{
           title: "Line For Phone Break",
           headerTitleAlign: "center",
@@ -337,7 +339,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Lineforbathroompassteacher"
-        component={Bathroomlineforteacher}
+        getComponent={() => require('./Components/Lineforbathroomteacher').default}
         options={{
           title: "Line For Bathroom Pass",
           headerTitleAlign: "center",
@@ -351,7 +353,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="Studentsenrolled"
-        component={Studentsenrolled}
+        getComponent={() => require('./Components/Studentsenrolled').default}
         options={{
           title: "Students Enrolled",
           headerTitleAlign: "center",
@@ -367,7 +369,7 @@ const [day, setDay] = useState();
 
       <AuthStack.Screen
         name="Settingsteacher"
-        component={Settingsteacher}
+        getComponent={() => require('./Components/SettingsTeacher').default}
         options={{
           title: "Settings",
           headerTitleAlign: "center",
@@ -382,7 +384,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Definitions"
-        component={Definitions}
+        getComponent={() => require('./Components/Definitions').default}
         options={{
           title: "Definitions",
           headerTitleAlign: "center",
@@ -397,7 +399,7 @@ const [day, setDay] = useState();
 
       <AuthStack.Screen
         name="Mainmenuteacher"
-        component={Mainmenuteacher}
+        getComponent={() => require('./Components/MainMenuTeacher').default}
         options={{
           title: "Main Menu",
           headerTitleAlign: "center",
@@ -412,7 +414,7 @@ const [day, setDay] = useState();
 
       <AuthStack.Screen
         name="Passisready"
-        component={Passisready}
+        getComponent={() => require('./Components/Passisready').default}
         options={{
           title: "Pass is Ready",
           headerTitleAlign: "center",
@@ -428,7 +430,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Classsessions"
-        component={Classsessions}
+        getComponent={() => require('./Components/Classsessions').default}
         options={{
           title: "Class Sessions",
           headerTitleAlign: "center",
@@ -443,7 +445,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Donewithwork"
-        component={Donewithwork}
+        getComponent={() => require('./Components/Donewithwork').default}
         options={{
           title: "Done With Work",
           headerTitleAlign: "center",
@@ -458,7 +460,7 @@ const [day, setDay] = useState();
 
 <AuthStack.Screen
         name="Donewithworkpass"
-        component={Donewithworkpass}
+        getComponent={() => require('./Components/Donewithworkpass').default}
         options={{
           title: "Done With Work Pass",
           headerTitleAlign: "center",
@@ -474,7 +476,7 @@ const [day, setDay] = useState();
 
       <AuthStack.Screen
         name="RegisterClasses"
-        component={RegisterClasses}
+        getComponent={() => require('./Components/RegisterClasses').default}
         options={{
           title: "Register Classes",
           headerTitleAlign: "center",
@@ -488,7 +490,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="ClassesTeacher"
-        component={ClassesTeacher}
+        getComponent={() => require('./Components/ClassesTeacher').default}
         options={{
           title: "Classes",
           headerTitleAlign: "center",
@@ -502,7 +504,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="ClassesStudent"
-        component={ClassesStudent}
+        getComponent={() => require('./Components/ClassesStudent').default}
         options={{
           title: "Classes",
           headerTitleAlign: "center",
@@ -516,7 +518,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="Availableclasses"
-        component={Availableclasses}
+        getComponent={() => require('./Components/Availableclassesatyourschool').default}
         options={{
           title: "Available Classes",
           headerTitleAlign: "center",
@@ -530,7 +532,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="QRCodes"
-        component={QRCodes}
+        getComponent={() => require('./Components/QRCodes').default}
         options={{
           title: "QR Code",
           headerTitleAlign: "center",
@@ -545,7 +547,7 @@ const [day, setDay] = useState();
 
       <AuthStack.Screen
         name="Destination"
-        component={Destination}
+        getComponent={() => require('./Components/Destination').default}
         options={{
           title: "Destination",
           headerTitleAlign: "center",
@@ -559,7 +561,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="Customlocation"
-        component={Customlocation}
+        getComponent={() => require('./Components/Customlocation').default}
         options={{
           title: "Custom Location",
           headerTitleAlign: "center",
@@ -573,7 +575,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="Scanner"
-        component={Scanner}
+        getComponent={() => require('./Components/Scanner').default}
         options={{
           title: "Scanner",
           headerTitleAlign: "center",
@@ -587,7 +589,7 @@ const [day, setDay] = useState();
       />
       <AuthStack.Screen
         name="Pass"
-        component={Pass}
+        getComponent={() => require('./Components/Pass').default}
         options={{
           title: "Pass",
           headerLeft: null,
@@ -599,7 +601,7 @@ const [day, setDay] = useState();
             color: '#ffffff'
           },
         }}
-      /> */}
+      />
     </AuthStack.Navigator>
   );
   return (

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View, TouchableOpacity } from "react-native";
-
 import Output from "./TownOutput";
 
 import { auth, firebase } from "../../Firebase/Config";

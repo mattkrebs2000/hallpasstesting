@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { scale, ScaledSheet } from 'react-native-size-matters';
+
 import CryptoES from "crypto-es";
 import Results from "./Subcomponents/ResultsContainer";
 import StateResults from "./Subcomponents/StateResultsContainer";

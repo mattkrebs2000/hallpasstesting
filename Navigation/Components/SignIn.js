@@ -10,7 +10,7 @@ import { doc, getDoc } from '@firebase/firestore';
 
 const height = Dimensions.get("window").height;
 
-export default function SignIn({ route, navigation }) {
+export default function Login({ route, navigation }) {
 
   LogBox.ignoreAllLogs();
 

@@ -8,12 +8,11 @@ import { Audio } from 'expo-av';
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification } from "@firebase/auth";
 import { limit, onSnapshot, orderBy, getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, FieldValue, arrayUnion } from "@firebase/firestore";
-
 import { _DEFAULT_PROGRESS_UPDATE_INTERVAL_MILLIS } from "expo-av/build/AV";
 
 
 
-export default function Mainmenustudent({ route, navigation }) {
+export default function Destination({ route, navigation }) {
 
   const { teacherid, classid, coursename, section, location, teacher, youcangetpass, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, getadjustmentss, adjust, nowinpenalty, passid, overunderstatus, currentsessionid, endofclasssession, donewithworkplease, day,} = route.params;
 
@@ -345,14 +344,14 @@ const getAllKeys = async () => {
       const docData = getDoc(docRef)
 
         .then((docSnap) => {
-
+          if (docSnap.exists()) {
           let object = docSnap.data();
           const statusupdate = object.status;
           const idofpass = object.passid;
 
           setGetstatus(statusupdate);
           setGetexistingpassid(idofpass);
-
+          }
         })
     }
   }

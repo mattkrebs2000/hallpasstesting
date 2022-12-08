@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { scale, ScaledSheet } from 'react-native-size-matters';
+
 import CryptoES from "crypto-es";
 import Results from "./Subcomponents/ResultsContainer";
 import StateResults from "./Subcomponents/StateResultsContainer";
 import TownResults from "./Subcomponents/TownResultsContainer";
 import SignIn from "./SignIn";
-import Classes from './Mapofrelatedrules/mapofrelatedrules';
+import Passes from './Mapofpassesforstudents/Mapofpassesforstudents';
 
 
 import {
@@ -19,7 +19,8 @@ import { Alert, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platf
 
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification } from "@firebase/auth";
-import { onSnapshot, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, FieldValue, arrayUnion } from "@firebase/firestore";
+import { onSnapshot, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, FieldValue, arrayUnion, orderBy } from "@firebase/firestore";
+import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 
 const height = Dimensions.get("window").height;
@@ -28,17 +29,24 @@ export default function SignUp({ route, navigation }) {
 
     const { userinformation, teacherid, classid, coursename, section, location, school, teacher, town, state, firstname, lastname, id, percent, total2, getadjustmentsandplustotal2, getstatus, passid
     } = route.params;
-  
+
+
     const [userdata, setUserdata] = useState([]);
+    const [classdata, setClassdata] = useState();
     const [classesarray, setClassesarray] = useState([]);
     const [selectedclass, setSelectedclass] = useState("");
-
-    const [idselected, setIdselected] = useState();
-    
+    const [idselected2, setIdselected2] = useState();
 
     const [showspinner, setShowspinner] = useState(true);
-    const [classtrue, setClasstrue] = useState(false);
+    const [classtrue, setClasstrue] = useState(false)
+    const [classbegin, setclassbegin] = useState("");
+    const [duration, setduration] = useState(0);
+    const [sessionended, setSessionended] = useState(false);
+    const [allclasses, setAllclasses] = useState(true)
 
+    const [idsofpasses, setIdsofpasses] = useState();
+
+    const [newconsequence, setNewoverunder] = useState();
 
 
     useEffect(() => {
@@ -47,31 +55,44 @@ export default function SignUp({ route, navigation }) {
 
     }, []);
 
-  
-
     async function getlocationsqrcodes() {
 
         if (userdata.length === 0) {
-            const q = query(collection(firebase, "Expectations"), where("teacherid", "==", teacherid));
+            const q = query(collection(firebase, "passes"), where("studentid", "==", id),orderBy("leftclass", "desc"));
 
             const querySnapshot = await getDocs(q)
+
+
                 .then(function (snapshot) {
+                    let statusarray = []
                     let array = []
                     snapshot.forEach(doc => {
                         array.push(doc.data())
+                        statusarray.push(doc.data().status)
+
                     })
                     if (array.length === 0) {
-                        setUserdata([{ classname: "You haven't Registered" }])
+                        setUserdata([{ classname: "There are no consequences." }]);
+                        
                     } else {
                         setUserdata(array);
+                       
                     }
+
                 })
 
-
+            console.log("Was this run", userdata, "Was this run")
             setShowspinner(false);
 
         }
     };
+
+    useEffect(() => {
+        const filteredData = userdata.filter((person) => {
+            return person.classid === classid || person.linkedclass === classid;
+        })
+        setClassesarray(filteredData)
+    }, [userdata]);
 
     useEffect(() => {
 
@@ -85,58 +106,78 @@ export default function SignUp({ route, navigation }) {
         });
     }, []);
 
-    useEffect(() => {
 
+
+    // useEffect(() => {
+
+    //     if (typeof classesarray != "undefined") {
+    // console.log(classesarray[0].classname, "this is the classesarrayYYYYYY")
+    //     }
+    // }, [classesarray]);
+
+
+    useEffect(() => {
+        let classbegin = selectedclass.classbegin;
+        let duration = selectedclass.lengthofclass;
         let idselect = selectedclass.id;
-     
+
+
+        setduration(duration);
+        setclassbegin(classbegin);
+
+        setIdselected2(idselect);
+
+
         console.log(selectedclass, "This is the selected class", selectedclass.id);
-      
-        setIdselected(idselect);
-       
     }, [selectedclass]);
 
-    // Deletes a class and then reruns classes that are still there.
+
+    useEffect(() => {
+        if (userdata.length === 0) {
+            getlocationsqrcodes();
+        }
+    }, [userdata]);
 
     return (
         <SafeAreaView style={styles.largercontainer}>
             <View style={styles.container1}>
-                {coursename ? <View><Text style={styles.error}>Now Active:{'\n'}{coursename} - {section} </Text></View> : <View><Text style={styles.error}>No Class is Active</Text></View>}
+               <Text style={styles.error}>Passes/Tardies{'\n'}{coursename}</Text>
             </View>
 
             <View style={styles.container2}>
 
-                <Classes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected}/>
+                <Passes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected2} classesarray={classesarray} allclasses={allclasses} />
 
             </View>
 
             <View style={styles.section3}>
 
-                <View><ActivityIndicator
-                    size="large"
-                    color="#FFF"
-                    animating={showspinner}
-                    style={{
-                        position: 'absolute',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0,
-                    }} /></View>
+<View><ActivityIndicator
+    size="large"
+    color="#FFF"
+    animating={showspinner}
+    style={{
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+    }} /></View>
 
 
 <Text style={styles.paragraph2}>___________________</Text>
 
 <View>
-    <TouchableOpacity onPress={() => navigation.navigate("Mainmenustudent", {
-          userinformation: userinformation, teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: passid
-    })}><Text style={styles.paragraph2}>Return To Main Menu</Text></TouchableOpacity>
+<TouchableOpacity onPress={() => navigation.navigate("Mainmenustudent", {
+userinformation: userinformation, teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: passid
+})}><Text style={styles.paragraph2}>Return To Main Menu</Text></TouchableOpacity>
 </View>
 
 
-             
-            </View>
+
+</View>
         </SafeAreaView>
     );
 }
@@ -160,35 +201,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
         width: "100%",
         justifyContent: "center",
-
-
     },
     error: {
 
         backgroundColor: '#000',
         color: "#FFF",
-        marginLeft: "3%",
-        marginRight: "3%",
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: "center",
-
-    },
-    error5: {
-
-        backgroundColor: '#000',
-        color: "#FFF",
-        marginLeft: "3%",
-        marginRight: "3%",
-        fontSize: 17,
-        fontWeight: 'bold',
-        textAlign: "center",
-
-    },
-    error1: {
-
-        backgroundColor: '#000',
-        color: "#000",
         marginLeft: "3%",
         marginRight: "3%",
         fontSize: 18,
@@ -278,7 +295,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#000",
         color: "#fff",
         alignContent: "center",
-        height: "100%",
         height: "35%",
 
     },
@@ -297,14 +313,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 20,
     },
-    paragraph2: {
+    error5: {
 
-        fontSize: 18,
+        backgroundColor: '#000',
+        color: "#FFF",
+        marginLeft: "3%",
+        marginRight: "3%",
+        fontSize: 17,
         fontWeight: 'bold',
         textAlign: "center",
-        backgroundColor: '#000',
-        color: "#fff",
-        justifyContent: "center",
-        marginTop: 30,
+
     },
+
 });

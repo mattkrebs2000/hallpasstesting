@@ -97,7 +97,6 @@ const ResultsContainer = ({ textsearched, posts, email, username, school, setsch
 };
 
 export default ResultsContainer;
-
 const styles = StyleSheet.create({
   container: {
     height: 30,

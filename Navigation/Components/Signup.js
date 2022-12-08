@@ -1,3 +1,6 @@
+
+
+
 import React, { useState, useEffect } from "react";
 import CryptoES from "crypto-es";
 import Results from "./Subcomponents/ResultsContainer";
@@ -22,6 +25,7 @@ import { SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, St
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, deleteUser, signInWithEmailAndPassword } from "@firebase/auth";
 import { getDoc, updateDoc, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc } from "@firebase/firestore";
+// import { user } from "firebase-functions/v1/auth";
 
 
 const height = Dimensions.get("window").height;
@@ -86,6 +90,8 @@ export default function SignUp({ route, navigation }) {
   const [idsofpasses, setIdsofpasses] = useState();
   const [idsofconsequences, setIdsofconsequences] = useState();
   const [newid, setNewid] = useState();
+
+  const [adminteacherid, setAdminteacherid] = useState();
 
 
   const resetform = () => {
@@ -157,6 +163,13 @@ export default function SignUp({ route, navigation }) {
       getrecords2();
     }
   }, [idselected]);
+
+  useEffect(() => {
+    if (typeof adminteacherid != "undefined") {
+      makeclassforadmin();
+    }
+  }, [adminteacherid]);
+
 
   useEffect(() => {
 
@@ -586,7 +599,7 @@ useEffect(() => {
           const usera = auth.currentUser;
 
           console.log(userCredential.uid, usera, usera.uid, "Here is the iiddddddd", password)
-          if (usera.uid === idselected) {
+          if (usera.uid === idselected && (usera.email != "mkrebs@rpsk12.org" && usera.email != "Mkrebs@rpsk12.org" && usera.email != "nurse@rpsk12.org"  && usera.email != "Nurse@rpsk12.org")) {
 
             deleteUser(usera).then(() => {
               // User deleted.
@@ -607,7 +620,7 @@ useEffect(() => {
 
 
   useEffect(() => {
-    if (idselected) {
+    if (idselected ) {
       console.log("1The old user Document has just been erased!");
       deleteDoc(doc(firebase, "users", idselected))
     }
@@ -960,20 +973,20 @@ useEffect(() => {
 
 
 
-  async function signUpAdmin() {
+const signUpAdmin = () => {
 
     if (password === confirmPassword && validationMessage === "Sign Up") {
 
 
       createUserWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
+        .then((userCredential) => {
 
           const usersRef = firebase;
 
           const uid = userCredential.user.uid;
 
-          const docRef = await addDoc(collection(firebase, "users"), {
-
+          const data5 = {
+            id: uid,
             role,
             teacheriscalled,
             email,
@@ -982,67 +995,63 @@ useEffect(() => {
             school,
             state: state,
             town,
-
-          }).then(async (userreference) => {
-
-            const user = userreference.id;
-
-            await updateDoc(doc(firebase, "users", user), {
-              id: user
-            }).catch((error) => {
-              console.log(error); alert(error);
-            });
-
-          }).then(async (users) => {
-            const docRef = await addDoc(collection(firebase, "classesbeingtaught"), {
-              acceptingincomingstudents: true,
-              passesareavailable: true,
-              classname: nameoflocation,
-              location: nameoflocation,
-              school,
-              state,
-              town,
-              teacheriscalled,
-              teacherid: users.id,
-              ledby: role,
-              timelimitnonbathroompass: 10,
-
-            }).then(async (userRec) => {
-
-              const user = userRec.id;
-              await updateDoc(doc(firebase, "classesbeingtaught", user), {
-                id: user
-              }).catch((error) => {
-                console.log(error); alert(error);
-              });
+          };
+        setDoc(doc(usersRef, "users", uid), data5);
+        setAdminteacherid(uid);
+     
+        })
+  }
+ else {
+  alert("Passwords do not match!")
+  }
+}
+  
 
 
-              await updateDoc(doc(firebase, "users", uid), {
-                currentclass: user
-              }).catch((error) => {
-                console.log(error); alert(error);
-              });
+  async function makeclassforadmin() {
 
-            }).then(() => {
+      const docRef = await addDoc(collection(firebase, "classesbeingtaught"), {
+        acceptingincomingstudents: true,
+        passesareavailable: true,
+        classname: nameoflocation,
+        location: nameoflocation,
+        school,
+        state,
+        town,
+        teacheriscalled,
+        teacherid: adminteacherid,
+        ledby: role,
+        timelimitnonbathroompass: 10,
 
-              const auth = getAuth();
+      }).then(async (userRec) => {
 
-              auth.signOut();
-              
-              navigation.navigate("SignIn")
-            })
-          })
-
+        const user = userRec.id;
+        await updateDoc(doc(firebase, "classesbeingtaught", user), {
+          id: user
         }).catch((error) => {
-          setValidationMessage(error.message);
+          console.log(error); alert(error);
         });
 
-    } else {
-      alert("Passwords do not match!")
-    }
+
+        await updateDoc(doc(firebase, "users", adminteacherid), {
+          currentclass: user
+        }).catch((error) => {
+          console.log(error); alert(error);
+        });
+
+      }).then(() => {
+
+        const auth = getAuth();
+
+        auth.signOut();
+        
+        navigation.navigate("SignIn")
+    
+  }).catch((error) => {
+    setValidationMessage(error.message);
+  });
 
   }
-
 
 
 

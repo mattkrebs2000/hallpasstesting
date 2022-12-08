@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { scale, ScaledSheet } from 'react-native-size-matters';
+
 import Students from './Mapofstudentsawaitingconfirmation/Mapofstudentsawaitingconfirmation';
 
 import { SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator, Pressable } from 'react-native';

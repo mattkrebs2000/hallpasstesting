@@ -49,7 +49,7 @@ const TeacherMainMenu = ({ route, navigation }) => {
     starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, sessionended, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, sessionending, maxstudentsbathroom, classsessionbegun, linkedclass
   } = route.params;
 
-  console.log(drinkofwater, " Drink of Water ,Main Menu ");
+  console.log(drinkofwater, " Drink of Water ,Main Menu ", id, "this is the id");
 
 
   const getData = async () => {
@@ -446,7 +446,7 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log(email)
-    if (email2 != "Mkrebs@rpsk12.org" && email2 != "Mjones@rpsk12.org") {
+    if (email2 != "Mkrebs@rpsk12.org" && email2 != "Mjones@rpsk12.org" && email2 != "Nurse@rpsk12.org") {
       navigation.navigate("SignIn");
       alert("This App is in Development. Direct inquiries to mattkrebsemail@gmail.com.")
     } else {

@@ -7,9 +7,6 @@ import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getD
 
 import { auth, firebase } from "../Firebase/Config";
 
-
-
-import reactDom from 'react-dom';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 

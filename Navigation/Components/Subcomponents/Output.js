@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, Text,Image} from "react-native";
 
-
 import { AppLoading, Font } from "expo";
 
 const Output = ({ username, email, school, number}) => {
