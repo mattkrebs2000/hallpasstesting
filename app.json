@@ -1,11 +1,51 @@
+// {
+//   "expo": {
+//     "name": "StickerSmash",
+//     "slug": "StickerSmash",
+//     "version": "1.3.0",
+//     "orientation": "portrait",
+//     "icon": "./assets/icon.png",
+//     "userInterfaceStyle": "light",
+//     "splash": {
+//       "image": "./assets/splash.png",
+//       "resizeMode": "contain",
+//       "backgroundColor": "#ffffff"
+//     },
+//     "updates": {
+//       "fallbackToCacheTimeout": 0
+//     },
+//     "assetBundlePatterns": [
+//       "**/*"
+//     ],
+//     "ios": {
+//       "supportsTablet": true,
+//       "bundleIdentifier": "com.mattkrebs.StickerSmash"
+//     },
+//     "android": {
+//       "adaptiveIcon": {
+//         "foregroundImage": "./assets/adaptive-icon.png",
+//         "backgroundColor": "#FFFFFF"
+//       }
+//     },
+//     "web": {
+//       "favicon": "./assets/favicon.png"
+//     },
+//     "extra": {
+//       "eas": {
+//         "projectId": "9246b784-51f4-4929-bd8b-85b04e47b347"
+//       }
+//     }
+//   }
+// }
+
+
 {
   "expo": {
-    "name": "StickerSmash",
-    "slug": "StickerSmash",
-    "version": "1.2.0",
+    "name": "A hallpass",
+    "slug": "hallpass",
+    "version": "1.5.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -19,20 +59,24 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mattkrebs.StickerSmash"
+      "bundleIdentifier": "com.mattkrebs.hallpass"
+    
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.mattkrebs.hallpass2",
+      "versionCode": 53
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "description": "",
     "extra": {
       "eas": {
-        "projectId": "9246b784-51f4-4929-bd8b-85b04e47b347"
+        "projectId": "8b1bdb87-6809-4737-804e-14df09e9e979"
       }
     }
   }
