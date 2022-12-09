@@ -1,13 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { Audio } from 'expo-av';
-import { ScrollView, Text, View, StyleSheet, Button, TouchableHighlight, LogBox } from 'react-native';
+import { Pressable, ScrollView, Text, View, StyleSheet, Button, TouchableHighlight, LogBox } from 'react-native';
 
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, arrayUnion, FieldValue } from "@firebase/firestore";
 
 import { auth, firebase } from "../Firebase/Config";
 
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -49,10 +48,10 @@ export default function App3({ route, navigation }) {
     if (coursename) {
       navigation.setOptions({
         headerLeft: () => (
-          <TouchableOpacity>
+          <Pressable>
             <Text accessibilityLabel="Guest" style={styles.error5}>
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         ),
       });
     }
@@ -176,20 +175,20 @@ export default function App3({ route, navigation }) {
       <View style={styles.sectionB}>
         <ScrollView>
 
-          {locationdestination != newlocation ? <TouchableOpacity
+          {locationdestination != newlocation ? <Pressable
             onPress={() => navigation.navigate('Scanner', {
               teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, teacherid: teacherid, coursename: coursename, Selectedclassdestination: Selectedclassdestination, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime,
               currentsessionid: currentsessionid, id: id, passid: passid, day: day, teacheridforreturn: teacheridforreturn, leftclass2: leftclass2, leftclass2: leftclass2, bathroompassinuse: bathroompassinuse, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, expectedreturn2: expectedreturn, endofclasssession: endofclasssession, day:day
             })}
           >
             <Text style={styles.paragraph}>Return this Pass!</Text>
-          </TouchableOpacity> : <TouchableOpacity onPress={() => navigation.navigate('Mainmenustudent', {
+          </Pressable> : <Pressable onPress={() => navigation.navigate('Mainmenustudent', {
             teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, teacherid: teacherid, coursename: coursename, Selectedclassdestination: Selectedclassdestination, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime,
             currentsessionid: currentsessionid, id: id, passid: passid, day: day, teacheridforreturn: teacheridforreturn, leftclass2: leftclass2, leftclass2: leftclass2, bathroompassinuse: bathroompassinuse, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference,
           })}
           >
             <Text style={styles.paragraph}>Return Pass</Text>
-          </TouchableOpacity>}
+          </Pressable>}
 
 
 
@@ -197,12 +196,12 @@ export default function App3({ route, navigation }) {
             <Text style={styles.text}>You left class {'\n'} Just over {Math.round(currentdifference)} minute(s) ago. {'\n'}The time limit for{'\n'} This pass is {timeallowed} minutes. {'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
           </View>) : (<View style={styles.text}>
 
-            <TouchableHighlight
+            <Pressable
               style={styles.paragraph}
               onPress={() => ComputeTimeOut()}
             >
               <Text style={styles.text}>Check time {'\n'}Since you left class{'\n'}{'\n'} {'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
-            </TouchableHighlight>
+            </Pressable>
 
           </View>)}
         </ScrollView>

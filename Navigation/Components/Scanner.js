@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TouchableOpacity, Pressable } from 'react-native';
+import { ScrollView, Text, View, StyleSheet, Button, TouchableOpacity, Pressable } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 // import { Audio } from 'expo-av';
 import { auth, firebase } from "../Firebase/Config";
@@ -9,7 +9,6 @@ import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getD
 import Pass from "./Pass";
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { sqrt } from 'react-native-reanimated';
-import { ScrollView } from 'react-native-gesture-handler';
 
 // import { useNavigation } from '@react-navigation/native';
 
@@ -193,7 +192,7 @@ const Scanner = ({ route, navigation }) => {
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <TouchableOpacity onPress={() =>
+        <Pressable onPress={() =>
           navigation.navigate("Passisready", {
             userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, currentsessionid: currentsessionid, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, passid: passid, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, timeallowed: timeallowed, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, endofclasssession: endofclasssession,
           })}
@@ -202,7 +201,7 @@ const Scanner = ({ route, navigation }) => {
           <Text accessibilityLabel="Guest" style={styles.error5}>
             Instructions
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       ),
     });
   }, []);
@@ -224,10 +223,10 @@ const Scanner = ({ route, navigation }) => {
 
     navigation.setOptions({
       headerLeft: () => (
-        <TouchableOpacity >
+        <Pressable>
           <Text accessibilityLabel="Guest" style={styles.error}>
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       ),
     });
   }, []);
@@ -931,7 +930,7 @@ console.log("second if then");
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={{ height: 300, width: 350 }} />
-        {scanned && <TouchableOpacity onPress={() => setScanned(false)}><Text></Text></TouchableOpacity>}
+        {scanned && <Pressable onPress={() => setScanned(false)}><Text></Text></Pressable>}
 
       </View>
       

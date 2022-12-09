@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, TouchableHighlight, LogBox } from 'react-native';
+import { Pressable, Text, View, StyleSheet, Button, TouchableHighlight, LogBox } from 'react-native';
 
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, arrayUnion, FieldValue } from "@firebase/firestore";
 
 import { auth, firebase } from "../Firebase/Config";
 
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 
 
 
@@ -149,14 +149,14 @@ setRealtimeleave(p);
         Going To: {locationdestination}
       </Text>} 
       
-   <TouchableOpacity
+   <Pressable
         onPress={() => navigation.navigate('Mainmenustudent', {
           teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname,  teacherid: teacherid, coursename: coursename, Selectedclassdestination: Selectedclassdestination, ledby: ledby, drinkofwater:drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime,
            currentsessionid: currentsessionid, id: id, passid: passid, day:day,teacheridforreturn:teacheridforreturn, leftclass2:leftclass2, expectedreturn2:expectedreturn2, leftclass2:leftclass2, bathroompassinuse:bathroompassinuse,   maxstudentsonphonepass:maxstudentsonphonepass,  newlocation: newlocation, endofclasssession: endofclasssession,
          })}
       >
         <Text style={styles.paragraph}>Return to Main Menu</Text>
-      </TouchableOpacity>
+      </Pressable>
 
     </View>
 
