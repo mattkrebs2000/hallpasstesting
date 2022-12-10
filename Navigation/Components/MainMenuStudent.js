@@ -314,7 +314,11 @@ const getAllKeys = async () => {
         }).catch((error) => {
           console.log(error); alert(error);
         })
-
+        updateDoc(doc(firebase, "classesbeingtaught", classid), {
+          removescanneraddbutton: false,
+        }).catch((error) => {
+          console.log(error); alert(error);
+        })
       }
     }
 

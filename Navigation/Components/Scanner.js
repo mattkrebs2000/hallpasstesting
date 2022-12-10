@@ -151,7 +151,7 @@ const Scanner = ({ route, navigation }) => {
       } else {
         setText('Not yet scanned')
         setScanned(false);
-        Alert("You have scanned the wrong @RCode");
+        Alert("You have scanned the wrong @RCode1");
       }
 
     } else if (typeof currentdate != "undefined" && locationdestination != "Break From Work Pass") {
@@ -160,7 +160,7 @@ const Scanner = ({ route, navigation }) => {
       } else {
         setText('Not yet scanned')
         setScanned(false);
-        Alert("You have scanned the wrong @RCode");
+        Alert("You have scanned the wrong @RCode2");
       }
 
     } else {
@@ -289,7 +289,7 @@ const Scanner = ({ route, navigation }) => {
   //shortcut() to be used in development
 
   const developmentshortcut = () => {
-    console.log(expectedreturn, "expectedreturn,", "7was this run?", text, scanned, ontime, "expectedreturn2, ontime, text, scanned,")
+    console.log(teacherid, "teacherid this should be the same as the text");
 
     var r = new Date();
     var s = Date.now();
@@ -301,9 +301,9 @@ const Scanner = ({ route, navigation }) => {
     setScanned(true);
 
     if (typeof day != "undefined") {
-      setText(teacherid);
-    } else {
       setText(teacheridforreturn);
+    } else {
+      setText(teacherid);
     }
   }
 
@@ -841,7 +841,7 @@ console.log("second if then");
   useEffect(() => {
     console.log(day, "is currentdateeend undefined?");
     if (typeof day === "undefined" && typeof currentdate != "undefined") {
-      console.log("12was this run?")
+      console.log("teacherid and text", teacherid, text, "teacherid and texti");
       if (text == teacherid && scanned) {
         console.log("Play SOund Happened");
    
@@ -856,7 +856,7 @@ console.log("second if then");
 
         setText('Not yet scanned');
         setScanned(false);
-        alert("You have scanned the wrong @RCode")
+        alert(teacherid)
       }
     }
   }, [currentdate]);

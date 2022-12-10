@@ -202,11 +202,19 @@ export default function Login({ route, navigation }) {
 
       navigation.navigate("Mainmenustudent", { school2: school2, state2: state2, town2: town2, role2: role2, firstname2: firstname2, lastname2: lastname2, id2: id2, email2: email2 });
 
-    } if (role2 === "Teacher" || role2 === "Admin") {
+    } if (role2 === "Teacher") {
 
       navigation.navigate("Mainmenuteacher", { school2: school2, state2: state2, town2: town2, role2: role2, teacheriscalled2: teacheriscalled2, id2: id2, email2: email2 });
 
-    } else {
+    } 
+    if (role2 === "Admin") {
+
+      navigation.navigate("Mainmenuadmin", { school2: school2, state2: state2, town2: town2, role2: role2, teacheriscalled2: teacheriscalled2, id2: id2, email2: email2 });
+
+    }
+    
+    
+    else {
       console.log("Slow your role");
     }
   }

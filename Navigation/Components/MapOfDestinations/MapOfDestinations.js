@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Phonelessstudents({ Currentlocation, Teacherdestination, setCoursenamedestination, seconddata, id, Idselecteddestination, setSelectedclassdestination, Selectedclass, newlocation, disable, disabledonewithworkphonepass, classisover}) {
+export default function Phonelessstudents({ Currentlocation, Teacherdestination, setCoursenamedestination, seconddata, id, Idselecteddestination, setSelectedclassdestination, Selectedclass, newlocation, disable, disabledonewithworkphonepass, classisover, ledby}) {
 
   // const selectHandler = (value) => {
   //   setSelectedclassdestination(value);
@@ -87,7 +87,21 @@ export default function Phonelessstudents({ Currentlocation, Teacherdestination,
             {item.location === "Bathroom" || item.location === "Get Drink of Water" || item.location === "Break From Work Pass " || item.location === "Done with work Phone Pass" ? <Text style ={styles.unselected
             }>{item.location}</Text> : <Text style ={styles.unselected
             }>{item.teacheriscalled} - {item.location}</Text> }
-          </Pressable> : <Pressable
+          </Pressable> : ledby === "Admin" ? <View>{ item.ledby === "Admin" ? <Pressable
+            style={
+              item.id === Idselecteddestination ? styles.selected : styles.unselected
+            }
+            onPress={() => selectHandler(item) }>
+            <Text style ={styles.unselected
+            }> Location: {item.location}{'\n'} With: {item.teacheriscalled}</Text>
+          </Pressable> :  <Pressable
+            style={
+              item.id === Idselecteddestination? styles.selected : styles.unselected
+            }
+            onPress={() => selectHandler(item) }>
+            <Text style ={styles.unselected
+            }> Period: {item.period}  {'\n'}Class: {item.classname} {'\n'} In Room: {item.location}{'\n'} With: {item.teacheriscalled}</Text>
+          </Pressable> }</View>: <Pressable
             style={
               item.id === Idselecteddestination ? styles.selected : styles.unselected
             }

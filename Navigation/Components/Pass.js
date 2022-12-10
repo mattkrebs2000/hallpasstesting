@@ -130,11 +130,11 @@ export default function App3({ route, navigation }) {
 
 
   return (
-    <View style={styles.container}>
+    <View style={locationdestination.includes("urse") ? styles.container2 : styles.container}>
 
-      <View style={styles.sectionA}>
+      <View style={locationdestination.includes("urse") ? styles.sectionA2 : styles.sectionA}>
 
-        <View style={styles.barcodebox}>
+        <View style={locationdestination.includes("urse") ? styles.barcodebox2 : styles.barcodebox}>
 
           {locationdestination === "Done with work Phone Pass" ? <Text style={styles.paragraph}>{'\n'}
             {school}
@@ -157,7 +157,7 @@ export default function App3({ route, navigation }) {
               Using a Phone Pass
               {'\n'} {'\n'}
               Issued at: {realtimeleave}.{'\n'}{'\n'}
-              {'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text> : <Text style={styles.paragraph}>
+              {'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text> : <Text style={locationdestination.includes("urse") ? styles.paragraph2 : styles.paragraph}>
             {'\n'}{school}{'\n'}{'\n'}
             {day} {currentdate}
             {'\n'}{'\n'}
@@ -181,7 +181,7 @@ export default function App3({ route, navigation }) {
               currentsessionid: currentsessionid, id: id, passid: passid, day: day, teacheridforreturn: teacheridforreturn, leftclass2: leftclass2, leftclass2: leftclass2, bathroompassinuse: bathroompassinuse, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, expectedreturn2: expectedreturn, endofclasssession: endofclasssession, day:day
             })}
           >
-            <Text style={styles.paragraph}>Return this Pass!</Text>
+            <Text style={locationdestination.includes("urse") ? styles.paragraph2 : styles.paragraph}>Return this Pass!</Text>
           </Pressable> : <Pressable onPress={() => navigation.navigate('Mainmenustudent', {
             teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, teacherid: teacherid, coursename: coursename, Selectedclassdestination: Selectedclassdestination, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime,
             currentsessionid: currentsessionid, id: id, passid: passid, day: day, teacheridforreturn: teacheridforreturn, leftclass2: leftclass2, leftclass2: leftclass2, bathroompassinuse: bathroompassinuse, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference,
@@ -192,15 +192,15 @@ export default function App3({ route, navigation }) {
 
 
 
-          {currentdifference !== 0 ? (<View style={styles.paragraph}>
-            <Text style={styles.text}>You left class {'\n'} Just over {Math.round(currentdifference)} minute(s) ago. {'\n'}The time limit for{'\n'} This pass is {timeallowed} minutes. {'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
+          {currentdifference !== 0 ? (<View style={locationdestination.includes("urse") ? styles.paragraph2 : styles.paragraph}>
+            <Text style={locationdestination.includes("urse") ? styles.text2 : styles.text}>You left class {'\n'} Just over {Math.round(currentdifference)} minute(s) ago. {'\n'}The time limit for{'\n'} This pass is {timeallowed} minutes. {'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
           </View>) : (<View style={styles.text}>
 
             <Pressable
-              style={styles.paragraph}
+              style={locationdestination.includes("urse") ? styles.paragraph2 :  styles.paragraph}
               onPress={() => ComputeTimeOut()}
             >
-              <Text style={styles.text}>Check time {'\n'}Since you left class{'\n'}{'\n'} {'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
+              <Text style={locationdestination.includes("urse") ? styles.paragraph2 : styles.text}>Check time {'\n'}Since you left class{'\n'}{'\n'} {'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
             </Pressable>
 
           </View>)}
@@ -220,6 +220,13 @@ const styles = StyleSheet.create({
     padding: 3,
     justifyContent: 'flex-end',
   },
+  container2: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: '#ffa500',
+    padding: 3,
+    justifyContent: 'flex-end',
+  },
 
   sectionA: {
 
@@ -229,8 +236,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     justifyContent: 'center',
     flex: .6,
+  },
 
+  sectionA2: {
 
+    fontSize: 18,
+    fontWeight: 'bold',
+    backgroundColor: "#ffa500",
+    color: "#000",
+    justifyContent: 'center',
+    flex: .6,
   },
   sectionB: {
 
@@ -248,13 +263,27 @@ const styles = StyleSheet.create({
     padding: 20,
     color: '#FFFFFF',
     backgroundColor: '#013469',
-
-
   },
+  paragraph2: {
+    marginTop: 5,
+    fontSize: 20,
+    textAlign: 'center',
+    padding: 20,
+    color: '#000000',
+    backgroundColor: '#ffa500',
+  },
+
+
   text: {
     color: '#FFFFFF',
     textAlign: "center",
+    fontSize: 18,
 
+  },
+
+  text2: {
+    color: '#000000',
+    textAlign: "center",
     fontSize: 18,
 
   },
@@ -265,5 +294,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 350
   },
+
+  barcodebox2: {
+    alignItems: 'center',
+    width: "100%",
+    backgroundColor: '#ffa500',
+    justifyContent: 'center',
+    height: 350
+  },
+
 
 });

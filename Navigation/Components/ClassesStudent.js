@@ -29,7 +29,7 @@ export default function SignUp({ route, navigation }) {
     const [currentlocation, setCurrrentlocation] = useState("");
     const [ledby, setLedby] = useState("");
     const [exclusivetime, setExclusivetime] = useState(10);
-    const [drinkofwater,setDrinkofwater] = useState(5);
+    const [drinkofwater, setDrinkofwater] = useState(5);
     const [bathroomtime, setBathroomtime] = useState(10);
 
     const [nonbathroomtime, setNonbathroomtime] = useState(10);
@@ -49,7 +49,7 @@ export default function SignUp({ route, navigation }) {
     const [bathroompassinuse, setBathroominuse] = useState();
     const [totalinlineforbathroom, setTotalinlineforbathroom] = useState(0);
 
-  
+
     const [getlevel, setGetlevel] = useState();
 
     const [donewithworkpass, setDonewithworkpass] = useState(false);
@@ -61,12 +61,13 @@ export default function SignUp({ route, navigation }) {
     const [adjustmentandoverunder, setAdjustmentandoverunder] = useState();
     const [linkedclass, setLinkedclass] = useState();
     const [overundernumber, setOverundernumber] = useState();
+    const [coursesstudentisin, setCoursesstudentisin] = useState();
 
 
     const { userinformation, classid, location, school, town, state, firstname, lastname, id, percent, total2, total3, getadjustments, } = route.params;
-    
-    console.log(id, "id", "adjustmentoverunder", firstname, "firstname"," in CLassesStudent.js");
-  
+
+    console.log(id, "id", "adjustmentoverunder", firstname, "firstname", " in CLassesStudent.js");
+
 
     //realtime updates!!!
 
@@ -81,7 +82,7 @@ export default function SignUp({ route, navigation }) {
 
 
     useEffect(() => {
-     
+
         if (id != "") {
             getlocationsqrcodes();
         }
@@ -101,9 +102,9 @@ export default function SignUp({ route, navigation }) {
 
     async function getlocationsqrcodes() {
 
-       
-        const array = []
 
+        const array = []
+        const array2 = [];
         if (id != "") {
             setShowspinner(true);
 
@@ -112,14 +113,16 @@ export default function SignUp({ route, navigation }) {
             const querySnapshot = await getDocs(q)
 
                 .then(async (snapshot) => {
-                  
+
                     snapshot.forEach(doc => {
                         array.push(doc.data())
+                        array2.push(doc.data())
                     })
-             
+
 
                 }).then(async () => {
                     setCoursesadded(array.length);
+                    setCoursesstudentisin(array2);
                 })
 
             const f = query(collection(firebase, "classesbeingtaught"), where("school", "==", school), where("state", "==", state), where("town", "==", town), where("ledby", "==", "Admin"));
@@ -136,15 +139,15 @@ export default function SignUp({ route, navigation }) {
                     setUserdata(array);
 
                 })
-                setShowspinner(false);
+            setShowspinner(false);
         }
     };
 
 
     useEffect(() => {
-if (typeof getadjustmentss != 'undefined') {
-        console.log(getadjustmentss, "getadjustmentss")
-}
+        if (typeof getadjustmentss != 'undefined') {
+            console.log(getadjustmentss, "getadjustmentss")
+        }
     }, [getadjustmentss]);
 
 
@@ -161,58 +164,58 @@ if (typeof getadjustmentss != 'undefined') {
 
     useEffect(() => {
         if (typeof selectedclass != "undefined") {
-        let classe = selectedclass.classname;
-        let idselect = selectedclass.id;
-        let section = selectedclass.period;
-        let teachername = selectedclass.teacheriscalled;
-        let passesarethere = selectedclass.passesareavailable;
-        let teacheridd = selectedclass.teacherid;
-        let location = selectedclass.location;
-        let isitadmin = selectedclass.ledby;
-        let drinkofwater = selectedclass.drinkofwater;
-        let exclusivetime = selectedclass.phonepassexclusivetime;
-        let donewithworkpass = selectedclass.donewithworkphonepassavailable;
-        let bathroomtime = selectedclass.timelimitbathroompass;
-        let nonbathroomtime = selectedclass.timelimitnonbathroompass;
-        let sessionid = selectedclass.currentsessionid;
+            let classe = selectedclass.classname;
+            let idselect = selectedclass.id;
+            let section = selectedclass.period;
+            let teachername = selectedclass.teacheriscalled;
+            let passesarethere = selectedclass.passesareavailable;
+            let teacheridd = selectedclass.teacherid;
+            let location = selectedclass.location;
+            let isitadmin = selectedclass.ledby;
+            let drinkofwater = selectedclass.drinkofwater;
+            let exclusivetime = selectedclass.phonepassexclusivetime;
+            let donewithworkpass = selectedclass.donewithworkphonepassavailable;
+            let bathroomtime = selectedclass.timelimitbathroompass;
+            let nonbathroomtime = selectedclass.timelimitnonbathroompass;
+            let sessionid = selectedclass.currentsessionid;
 
-        let bathroominuse = selectedclass.inusebathroompass;
+            let bathroominuse = selectedclass.inusebathroompass;
 
-        let maxstudentsonphonepass = selectedclass.exclusivephonepassmaxstudents;
+            let maxstudentsonphonepass = selectedclass.exclusivephonepassmaxstudents;
 
-        let numberinline = selectedclass.totalinlineforbathroom;
-        let link = selectedclass.linkto;
+            let numberinline = selectedclass.totalinlineforbathroom;
+            let link = selectedclass.linkto;
 
-        let lengthofsession = selectedclass.lengthofclassescomputer;
-        let endofclass = selectedclass.currentsessionends;
-        let maxbathroom = selectedclass.bathroompassmaxstudents;
+            let lengthofsession = selectedclass.lengthofclassescomputer;
+            let endofclass = selectedclass.currentsessionends;
+            let maxbathroom = selectedclass.bathroompassmaxstudents;
 
-        setLinkedclass(link);
-        setBathroominuse(bathroominuse);
-        setEndofclasssession(endofclass);
-        setLengthofclasssession(lengthofsession);
+            setLinkedclass(link);
+            setBathroominuse(bathroominuse);
+            setEndofclasssession(endofclass);
+            setLengthofclasssession(lengthofsession);
 
-        setTotalinlineforbathroom(numberinline)
+            setTotalinlineforbathroom(numberinline)
 
-        setCoursename(classe);
-        setCurrentsessionid(sessionid);
-        setIdselected(idselect);
-        setTeacher(teachername);
-        setMaxstudentsonphonepass(maxstudentsonphonepass);
-        setMaxstudentsbathroom(maxbathroom);
+            setCoursename(classe);
+            setCurrentsessionid(sessionid);
+            setIdselected(idselect);
+            setTeacher(teachername);
+            setMaxstudentsonphonepass(maxstudentsonphonepass);
+            setMaxstudentsbathroom(maxbathroom);
 
-        setYoucangetpass(passesarethere);
-        setTeacherid(teacheridd);
-        setSection(section);
-        setDonewithworkpass(donewithworkpass);
-        setLedby(isitadmin);
-        setBathroomtime(bathroomtime);
-        setNonbathroomtime(nonbathroomtime);
-        setExclusivetime(exclusivetime);
-        setDrinkofwater(drinkofwater);
-        setCurrrentlocation(location);
+            setYoucangetpass(passesarethere);
+            setTeacherid(teacheridd);
+            setSection(section);
+            setDonewithworkpass(donewithworkpass);
+            setLedby(isitadmin);
+            setBathroomtime(bathroomtime);
+            setNonbathroomtime(nonbathroomtime);
+            setExclusivetime(exclusivetime);
+            setDrinkofwater(drinkofwater);
+            setCurrrentlocation(location);
 
-        getlocationsqrcodes();
+            getlocationsqrcodes();
 
         }
     }, [selectedclass]);
@@ -268,7 +271,7 @@ if (typeof getadjustmentss != 'undefined') {
     }, [idselected]);
 
     const updatedatabase = () => {
-console.log((total3 / 60000), "penaltyminutes", total2, "overunder THIS IW WHERE THE PROBLEM BEGINS" )
+        console.log((total3 / 60000), "penaltyminutes", total2, "overunder THIS IW WHERE THE PROBLEM BEGINS")
 
         // const percents = { id: idselected, penaltyminutes: (total3 / 60000), overunder: total2, adjustments: getadjustmentss, level: overunderstatus }
 
@@ -290,21 +293,21 @@ console.log((total3 / 60000), "penaltyminutes", total2, "overunder THIS IW WHERE
 
     async function refresh() {
 
-if (typeof selectedclass != "undefined") {
-        const docRef = doc(firebase, "classesbeingtaught", selectedclass.id);
+        if (typeof selectedclass != "undefined") {
+            const docRef = doc(firebase, "classesbeingtaught", selectedclass.id);
 
-        const docSnap = await getDoc(docRef);
+            const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-            setYoucangetpass(docSnap.data().passesareavailable);
+            if (docSnap.exists()) {
+                setYoucangetpass(docSnap.data().passesareavailable);
 
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+            console.log("THIIIIS was NOW RUN")
+
         }
-        console.log("THIIIIS was NOW RUN")
-
-    }
     }
 
 
@@ -337,14 +340,14 @@ if (typeof selectedclass != "undefined") {
                     }} /></View>
                 <View>
                     {getadjustmentss < 0 && overunderstatus == "Consequences For Lateness" && selectedclass && youcangetpass && endofclasssession > Date.now() ? (<TouchableOpacity onPress={() => navigation.navigate("Getapprovalfromteacher", {
-                        userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater:drinkofwater,exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
+                        userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
                         maxstudentsonphonepass: maxstudentsonphonepass,
-                        bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom:maxstudentsbathroom, linkedclass:linkedclass
-                    })} ><Text style={styles.paragraph2}>See pass options. </Text></TouchableOpacity>) : selectedclass && youcangetpass && endofclasssession > Date.now() ? (<TouchableOpacity onPress={() => navigation.navigate("Destination", {
-                        userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater:drinkofwater,exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
+                        bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass
+                    })} ><Text style={styles.paragraph2}>See pass options. </Text></TouchableOpacity>) : (selectedclass && youcangetpass && endofclasssession > Date.now()) || selectedclass && youcangetpass && ledby == "Admin" ? (<TouchableOpacity onPress={() => navigation.navigate("Destination", {
+                        userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
                         maxstudentsonphonepass: maxstudentsonphonepass,
-                        bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom:maxstudentsbathroom, linkedclass:linkedclass
-                    })} ><Text style={styles.paragraph2}>See pass options. </Text></TouchableOpacity>) : selectedclass && youcangetpass === false && endofclasssession > Date.now() ? (<Text style={styles.paragraph2}  onPress={() =>refresh()} >Passes for this class{'\n'} are not available. {'\n'}{'\n'}You may ask the teacher {'\n'}to make them available.</Text>) : (<Text style={styles.paragraph2} >You have not{'\n'} Selected a Class{'\n'}That is 'In Session'</Text>)}
+                        bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass, coursesstudentisin: coursesstudentisin
+                    })} ><Text style={styles.paragraph2}>See pass options. </Text></TouchableOpacity>) : selectedclass && youcangetpass === false && endofclasssession > Date.now() ? (<Text style={styles.paragraph2} onPress={() => refresh()} >Passes for this class{'\n'} are not available. {'\n'}{'\n'}You may ask the teacher {'\n'}to make them available.</Text>) : (<Text style={styles.paragraph2} >You have not{'\n'} Selected a Class{'\n'}That is 'In Session'</Text>)}
                 </View>
 
                 <Text style={styles.paragraph2}>___________________</Text>
@@ -359,9 +362,9 @@ if (typeof selectedclass != "undefined") {
                         teacherid: teacherid,
                         school: school,
                         teacher: teacher,
-                        town: town, state: state, youcangetpass: youcangetpass, firstname: firstname, lastname: lastname, ledby: ledby, donewithworkpass: donewithworkpass, drinkofwater:drinkofwater,exclusivetime: exclusivetime, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime,
+                        town: town, state: state, youcangetpass: youcangetpass, firstname: firstname, lastname: lastname, ledby: ledby, donewithworkpass: donewithworkpass, drinkofwater: drinkofwater, exclusivetime: exclusivetime, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime,
                         currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse,
-                        maxstudentsonphonepass: maxstudentsonphonepass, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, nowinpenalty:nowinpenalty, maxstudentsbathroom:maxstudentsbathroom, overunderstatus:overunderstatus
+                        maxstudentsonphonepass: maxstudentsonphonepass, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, nowinpenalty: nowinpenalty, maxstudentsbathroom: maxstudentsbathroom, overunderstatus: overunderstatus
                     })}>{idselected ? <Text style={styles.paragraph2}>View Status For This Class </Text> : <Text style={styles.paragraph2}>Return to Main Menu </Text>}</TouchableOpacity>
                 </View>
 

@@ -15,7 +15,7 @@ const height = Dimensions.get("window").height;
 
 const Destination = ({ route, navigation }) => {
 
-  const { userinformation, teacherid, classid, coursename, section, location, school, teacher, youcangetpass, currentlocation, state, town, newlocation, firstname, lastname, ledby, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, currentsessionid, bathroompassinuse, totalinlineforbathroom, id, exclusivephonepassinuse, totalinlineforexclusivephone, maxstudentsonphonepass, endofclasssession, overunderstatus, lengthofclasssession, adjustmentandoverunder, total2, getcurrentdifference, maxstudentsbathroom, linkedclass } = route.params;
+  const { userinformation, teacherid, classid, coursename, section, location, school, teacher, youcangetpass, currentlocation, state, town, newlocation, firstname, lastname, ledby, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, currentsessionid, bathroompassinuse, totalinlineforbathroom, id, exclusivephonepassinuse, totalinlineforexclusivephone, maxstudentsonphonepass, endofclasssession, overunderstatus, lengthofclasssession, adjustmentandoverunder, total2, getcurrentdifference, maxstudentsbathroom, linkedclass, coursesstudentisin } = route.params;
 
   console.log(passid, "this is the passid", endofclasssession, "endofclasssession", " in Destination.js");
 
@@ -37,7 +37,7 @@ const Destination = ({ route, navigation }) => {
   const [Teacherdestination, setTeacherdestination] = useState("");
   const [Youcangetpassdestination, setYoucangetpassdestination] = useState(false);
   const [Teacheriddestination, setTeacheriddestination] = useState("");
-  const [newlocation2, setNewlocation2] = useState("");
+  const [newlocation2, setNewlocation2] = useState();
   const [nurseadded, setNurseadded] = useState({ location: "Nurse", id: "Nurse" });
   const [locationdestination, setLocationdestination] = useState("");
   const [passid, setPassid] = useState("");
@@ -68,7 +68,25 @@ const Destination = ({ route, navigation }) => {
   const [classsessionending2, setClasssessionending] = useState();
 
 
-  console.log(classid, id, "this should say classid,", totalinlineforbathroomlocal, "totalinlineforbathroomlocal",bathroomepassinuselocal, "bathroomepassinuselocal", "id, and role");
+  console.log( classid, id, "this should say classid,", totalinlineforbathroomlocal, "totalinlineforbathroomlocal",bathroomepassinuselocal, "bathroomepassinuselocal", "id, and role");
+
+
+  useEffect(() => {
+ console.log(getexistingpassid2, "getexistingpassid2");
+  }, [getexistingpassid2]);
+
+  useEffect(() => {
+    console.log(getexistingpassid2, "getexistingpassid2");
+     }, []);
+
+     useEffect(() => {
+      console.log(seconddata, "seconddata", seconddata);
+       }, [seconddata]);
+     
+       useEffect(() => {
+         console.log(seconddata, "seconddata", seconddata);
+          }, []);
+     
 
   //onSnapshots
   if (classid) {
@@ -125,9 +143,7 @@ const Destination = ({ route, navigation }) => {
 
     if (typeof newlocation != "undefined") {
       setNewlocation2(newlocation);
-    } else {
-      setNewlocation2("");
-    }
+    } 
 
     const currenttime = Date.now();
 
@@ -341,6 +357,7 @@ const Destination = ({ route, navigation }) => {
 
         .then((docSnap) => {
 
+          if (docSnap.exists()) {
           let object = docSnap.data();
 
           const classid = object.classid;
@@ -374,6 +391,7 @@ const Destination = ({ route, navigation }) => {
           setPasscoursename(coursename);
           setClasssessionending(classending);
           setPassdestinaation(destination);
+          }
         })
     }
 
@@ -444,7 +462,7 @@ const Destination = ({ route, navigation }) => {
 
   const getAvailableLocationsingrouptime0 = () => {
 
-    console.log("10")
+    console.log("1000")
 
     const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
     const docDATAA = getDocs(g)
@@ -453,9 +471,7 @@ const Destination = ({ route, navigation }) => {
         const arrayy = [{ location: "Break From Work Pass ", id: "Break From Work Pass " }, { location: "Done with work Phone Pass", id: "Done with work Phone Pass" }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
 
         snapshot.forEach(doc => {
-          if (data.includes(doc.data().id)) {
             arrayy.push(doc.data())
-          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -473,9 +489,7 @@ const Destination = ({ route, navigation }) => {
         const arrayy = [{ location: "Break From Work Pass ", id: "Break From Work Pass " }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
 
         snapshot.forEach(doc => {
-          if (data.includes(doc.data().id)) {
             arrayy.push(doc.data())
-          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -491,12 +505,11 @@ const Destination = ({ route, navigation }) => {
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
 
+
         const arrayy = [{ location: "Done with work Phone Pass", id: "Done with work Phone Pass" }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
 
         snapshot.forEach(doc => {
-          if (data.includes(doc.data().id)) {
             arrayy.push(doc.data())
-          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -514,9 +527,7 @@ const Destination = ({ route, navigation }) => {
         const arrayy = [{ location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
 
         snapshot.forEach(doc => {
-          if (data.includes(doc.data().id)) {
             arrayy.push(doc.data())
-          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -525,18 +536,17 @@ const Destination = ({ route, navigation }) => {
 
   const getAvailableLocationswithadmin = () => {
 
-    console.log("14")
+    const arrayy = coursesstudentisin;
+
+    console.log( "14")
 
     const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
 
-        const arrayy = [];
-
         snapshot.forEach(doc => {
-          if (data.includes(doc.data().id)) {
+          if (classid != doc.data().id)
             arrayy.push(doc.data())
-          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -556,9 +566,7 @@ const Destination = ({ route, navigation }) => {
         const arrayy = [{ location: newlocation, id: newlocation },]
 
         snapshot.forEach(doc => {
-          if (data.includes(doc.data().id)) {
             arrayy.push(doc.data())
-          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -582,9 +590,7 @@ const Destination = ({ route, navigation }) => {
 
 
         snapshot.forEach(doc => {
-          if (data.includes(doc.data().id)) {
             arrayy.push(doc.data())
-          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -608,9 +614,7 @@ const Destination = ({ route, navigation }) => {
 
 
         snapshot.forEach(doc => {
-          if (data.includes(doc.data().id)) {
             arrayy.push(doc.data())
-          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -848,7 +852,6 @@ const Destination = ({ route, navigation }) => {
       returnteacherid: teacheridforreturn,
       timepassinitiated: Date.now(),
       timeallowedonpass: nonbathroomtime,
-      linkedclass: linkedclass,
       firstname: firstname,
       lastname: lastname,
       classid: classid,
@@ -863,11 +866,9 @@ const Destination = ({ route, navigation }) => {
       leftclass: 0,
       returned: 0,
       timereturned: 0,
-      classsessionid: currentsessionid,
       whenlimitwillbereached: 0,
       // returnedbeforetimelimit: "null",
       differenceoverorunderinminutes: 0,
-      endofclasssession: endofclasssession,
 
     }).then(async (userRec) => {
       let user = userRec.id;
@@ -911,7 +912,7 @@ const Destination = ({ route, navigation }) => {
         <TouchableOpacity><Text style={styles.error} onPress={() => refresh()}>Select Desired Destination</Text></TouchableOpacity></View>
       <Text>{'\n'}</Text>
       <View style={styles.container2}>
-        {seconddata.length > 0 ? <Destinations newlocation={newlocation} seconddata={seconddata} id={id} setSelectedclassdestination={setSelectedclassdestination} selectedclass={Selectedclassdestination} setCoursenamedestination={setCoursenamedestination} Idselecteddestination={Idselecteddestination} currentlocation={currentlocation} Teacherdestination={Teacherdestination} disable={disable} disabledonewithworkphonepass={disabledonewithworkphonepass} classisover={classisover} /> : <Text style={styles.text}>   </Text>}
+        {seconddata.length > 0 ? <Destinations ledby = {ledby} newlocation={newlocation} seconddata={seconddata} id={id} setSelectedclassdestination={setSelectedclassdestination} selectedclass={Selectedclassdestination} setCoursenamedestination={setCoursenamedestination} Idselecteddestination={Idselecteddestination} currentlocation={currentlocation} Teacherdestination={Teacherdestination} disable={disable} disabledonewithworkphonepass={disabledonewithworkphonepass} classisover={classisover} /> : <Text style={styles.text}>   </Text>}
       </View>
       <View style={styles.section3}>
 
@@ -1030,3 +1031,5 @@ const styles = StyleSheet.create({
 
 });
 export default Destination; 
+
+

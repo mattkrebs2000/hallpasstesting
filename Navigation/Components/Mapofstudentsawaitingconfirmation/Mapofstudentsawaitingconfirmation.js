@@ -28,7 +28,7 @@ export default function Phonelessstudents({setIdselected, idselected, userdata, 
             }
             onPress={() => selectHandler(item)}>
             <Text style ={styles.unselected
-            }>{item.localfirstname} {item.locallastname}</Text>
+            }>{item.localfirstname} {item.locallastname}.</Text>
           </Pressable>
          
           
