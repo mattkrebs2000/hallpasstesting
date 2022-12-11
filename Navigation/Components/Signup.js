@@ -1034,7 +1034,8 @@ const signUpAdmin = () => {
 
 
         await updateDoc(doc(firebase, "users", adminteacherid), {
-          currentclass: user
+          currentclass: user,
+          adminclass: user
         }).catch((error) => {
           console.log(error); alert(error);
         });

@@ -26,24 +26,24 @@ export default function SignUp({ route, navigation }) {
 
     const [showspinner, setShowspinner] = useState();
     // const [classtrue, setClasstrue] = useState(false)
-    // const [classbegin, setclassbegin] = useState("");
-    // const [duration, setduration] = useState(0);
+    const [classbegin, setclassbegin] = useState("");
+    const [duration, setduration] = useState(0);
     // const [sessionended, setSessionended] = useState(false);
 
     // const [idsofpasses, setIdsofpasses] = useState();
 
     // const [newoverunder, setNewoverunder] = useState();
-    // const [returnedzero, setReturnedzero] = useState();
-    // const [limitreached, setLimitreached] = useState();
-    // const [studentid, setStudentid] = useState();
-    // const [dest, setDest] = useState();
+    const [returnedzero, setReturnedzero] = useState();
+    const [limitreached, setLimitreached] = useState();
+    const [studentid, setStudentid] = useState();
+    const [dest, setDest] = useState();
     // const [howmany, setHowmanypeople] = useState();
-    // const [leftclassonpass, setLeftclassonpass] = useState();
+    const [leftclassonpass, setLeftclassonpass] = useState();
     const [userdatabefore, setUserdatabefore] = useState();
     // const [localpercent, setLocalpercent] = useState();
     const [test, setTest] = useState([]);
-    // const [helpgiven, setHelpgiven] = useState(false);
-    // const [studentfirstname, setStudentfirstname] = useState();
+    const [helpgiven, setHelpgiven] = useState(false);
+    const [studentfirstname, setStudentfirstname] = useState();
 
 
 
@@ -53,31 +53,31 @@ export default function SignUp({ route, navigation }) {
     //     }
     //     ), []);
 
-    // useEffect(() => {
-    //     let classbegin = selectedclass.classbegin;
-    //     let duration = selectedclass.lengthofclass;
-    //     let idselect = selectedclass.id;
-    //     let returned = selectedclass.returned;
-    //     let limit = selectedclass.whenlimitwillbereached;
-    //     let student = selectedclass.studentid;
-    //     let destination = selectedclass.destination;
-    //     let left = selectedclass.leftclass;
+    useEffect(() => {
+        let classbegin = selectedclass.classbegin;
+        let duration = selectedclass.lengthofclass;
+        let idselect = selectedclass.id;
+        let returned = selectedclass.returned;
+        let limit = selectedclass.whenlimitwillbereached;
+        let student = selectedclass.studentid;
+        let destination = selectedclass.destination;
+        let left = selectedclass.leftclass;
 
-    //     let first = selectedclass.firstname;
+        let first = selectedclass.firstname;
 
-    //     setStudentfirstname(first);
-    //     setStudentid(student);
-    //     setDest(destination);
-    //     setLeftclassonpass(left);
+        setStudentfirstname(first);
+        setStudentid(student);
+        setDest(destination);
+        setLeftclassonpass(left);
 
-    //     setReturnedzero(returned);
-    //     setduration(duration);
-    //     setclassbegin(classbegin);
-    //     setLimitreached(limit);
+        setReturnedzero(returned);
+        setduration(duration);
+        setclassbegin(classbegin);
+        setLimitreached(limit);
 
-    //     setIdselected2(idselect);
+        setIdselected2(idselect);
 
-    // }, [selectedclass]);
+    }, [selectedclass]);
 
     // useEffect(() => {
     //     if (typeof classid != "undefined") {
@@ -86,9 +86,9 @@ export default function SignUp({ route, navigation }) {
     //     setHelpgiven(false);
     // }, []);
 
-    // useEffect(() => {
-    //   setHelpgiven(false);
-    // }, [idselected2]);
+    useEffect(() => {
+        console.log(adminclass, "classid", returnedzero, "this is returnedzero")
+    }, [idselected2]);
 
 
 
@@ -204,7 +204,7 @@ export default function SignUp({ route, navigation }) {
     // }, [test]);
 
 
-  
+
 
 
     // useEffect(() => {
@@ -235,42 +235,42 @@ export default function SignUp({ route, navigation }) {
         if (role === "Admin") {
 
 
-                // Should be changed back to this as soon as "timepassinitiated" is on all pass documnents
-    
-                const q = query(collection(firebase, "passes"), where("teacherid", "==", id), orderBy("timepassinitiated", "desc"), limit(20));
-    
-                // const q = query(collection(firebase, "passes"), where("classid", "==", classid));
-    
-    
-                const querySnapshot = await getDocs(q)
-    
-    
-                    .then(function (snapshot) {
-                        let statusarray = []
-                        let array = []
-                        snapshot.forEach(doc => {
-                            array.push(doc.data())
-                            statusarray.push(doc.data().status)
-    
-                        })
-                        if (array.length === 0) {
-                            setUserdata([{ classname: "You haven't Registered" }]);
-                            setEmpty(true);
-    
-                        } else {
-                            // setIdselected2();
-    
-                            setEmpty(false);
-                            setUserdata(array);
-                            console.log("HEEEEEEEEYYYYY,", idselected, "HEEEEEEEEEEEEy");
-                        }
+            // Should be changed back to this as soon as "timepassinitiated" is on all pass documnents
 
-    
+            const q = query(collection(firebase, "passes"), where("teacherid", "==", id), orderBy("timepassinitiated", "desc"), limit(20));
+
+            // const q = query(collection(firebase, "passes"), where("classid", "==", classid));
+
+
+            const querySnapshot = await getDocs(q)
+
+
+                .then(function (snapshot) {
+                    let statusarray = []
+                    let array = []
+                    snapshot.forEach(doc => {
+                        array.push(doc.data())
+                        statusarray.push(doc.data().status)
+
                     })
-                setShowspinner(false);
-    
-            }
-       
+                    if (array.length === 0) {
+                        setUserdata([{ classname: "You haven't Registered" }]);
+                        setEmpty(true);
+
+                    } else {
+                        // setIdselected2();
+
+                        setEmpty(false);
+                        setUserdata(array);
+                        console.log("HEEEEEEEEYYYYY,", idselected, "HEEEEEEEEEEEEy");
+                    }
+
+
+                })
+            setShowspinner(false);
+
+        }
+
     };
 
 
@@ -312,28 +312,28 @@ export default function SignUp({ route, navigation }) {
 
     // }, [coursename]);
 
-    // const createTwoButtonAlert = () =>
+    const createTwoButtonAlert = () =>
 
 
-    //     Alert.alert('Please be aware.', 'This will permanently remove this pass from the system.', [
-    //         {
-    //             text: 'Cancel',
-    //             onPress: () => console.log('Cancel Pressed'),
-    //             style: 'cancel',
-    //         },
-    //         { text: 'Delete Pass', onPress: () => deleteToDo() },
-    //     ]);
+        Alert.alert('Please be aware.', 'This will permanently remove this pass from the system.', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            { text: 'Delete Pass', onPress: () => deleteToDo() },
+        ]);
 
-    // const deleteToDo = async () => {
+    const deleteToDo = async () => {
 
-    //     const userDoc = doc(firebase, "passes",
-    //         idselected2)
+        const userDoc = doc(firebase, "passes",
+            idselected2)
 
-    //     await deleteDoc(userDoc)
-    //         .then(async () => {
-    //             getlocationsqrcodes();
-    //         })
-    // };
+        await deleteDoc(userDoc)
+            .then(async () => {
+                getlocationsqrcodes();
+            })
+    };
 
     // async function ReturnStudnet2() {
     //     if (howmany > 0) {
@@ -425,18 +425,18 @@ export default function SignUp({ route, navigation }) {
     // }
 
 
-    // async function Sendonpass() {
-    //     await updateDoc(doc(firebase, "classesbeingtaught", classid), {
-    //         removescanneraddbutton: true
-    //     }).catch((error) => {
-    //         console.log(error); alert(error);
-        
-    // }).then(async (check) => {
-    //    setHelpgiven(true);
-    //     }).catch((error) => {
-    //       console.log(error); alert(error);
-    //     });
-    // }
+    async function Sendonpass() {
+        await updateDoc(doc(firebase, "classesbeingtaught", adminclass), {
+            removescanneraddbutton: true
+        }).catch((error) => {
+            console.log(error); alert(error);
+
+    }).then(async (check) => {
+       setHelpgiven(true);
+        }).catch((error) => {
+          console.log(error); alert(error);
+        });
+    }
 
 
 
@@ -456,7 +456,7 @@ export default function SignUp({ route, navigation }) {
 
             <View style={styles.container2}>
 
-                <Passes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected2} setTest = {setTest}/>
+                <Passes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected2} setTest={setTest} />
 
             </View>
             <ScrollView>
@@ -476,16 +476,18 @@ export default function SignUp({ route, navigation }) {
                             bottom: 0,
                         }} /></View>
 
-                    {idselected2 && leftclassonpass === 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={(e) => Sendonpass()} >Give Shortcut: Send On Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={() => Sendonpass()}>Give Shortcut: Return Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === true ? <Text style={styles.paragraph2}>{studentfirstname} has Shortcut option</Text>:<Text style={styles.paragraph2}>    </Text>}
+                    {idselected2 ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : <Text style={styles.paragraph2}>    </Text>}
 
-                    {idselected2 && returnedzero != 0 && howmany === 0 ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> : <Text style={styles.paragraph2} onPress={(e) => ReturnStudnet2()}>Reset Bathroom Availability</Text>}
+                    {idselected2 && leftclassonpass === 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={(e) => Sendonpass()} >Give Shortcut: Send On Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={() => Sendonpass()}>Give Shortcut: Return Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === true ? <Text style={styles.paragraph2}>{studentfirstname} has Shortcut option</Text> : <Text style={styles.paragraph2}>    </Text>}
+
+                    {idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> :  <Text style={styles.paragraph2}>    </Text>}
 
                     <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 
-                    <Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenuteacher", {
+                    <Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenuadmin", {
                         idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled, teacheriscalled: teacheriscalled,
-                        email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, drinkpassduration: drinkpassduration, phonepassduration: phonepassduration, overunder: overunder, bathroompassduration: bathroompassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
-                        newoverunder: newoverunder, penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass: linkedclass
+                        email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, thelastid: thelastid, drinkpassduration: drinkpassduration, phonepassduration: phonepassduration, overunder: overunder, bathroompassduration: bathroompassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
+                     penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass: linkedclass
                     })}  >Return to Main Menu</Text>
 
 

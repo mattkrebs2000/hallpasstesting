@@ -116,6 +116,14 @@ export default function Login({ route, navigation }) {
 
         if (docSnap.exists()) {
 
+
+          if (docSnap.data().adminclass) {
+            AsyncStorage.setItem('adminclass', docSnap.data().adminclass);
+            console.log("there was a adminclass")
+          } else {
+            console.log("there was not an adminclass")
+          }
+  
         if (docSnap.data().teacheriscalled) {
           AsyncStorage.setItem('teacheriscalled', docSnap.data().teacheriscalled);
           console.log("there was a teacheriscalled")

@@ -3,7 +3,7 @@
   "expo": {
     "name": "A hallpass",
     "slug": "hallpass",
-    "version": "1.5.3",
+    "version": "1.5.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,7 +28,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.mattkrebs.hallpass2",
-      "versionCode": 53
+      "versionCode": 54
     },
     "web": {
       "favicon": "./assets/favicon.png"

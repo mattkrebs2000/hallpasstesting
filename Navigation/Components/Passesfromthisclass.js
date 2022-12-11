@@ -236,7 +236,13 @@ export default function SignUp({ route, navigation }) {
 
             // Should be changed back to this as soon as "timepassinitiated" is on all pass documnents
 
-            const q = query(collection(firebase, "passes"), where("classid", "==", classid), orderBy("timepassinitiated", "desc"), limit(20));
+            // const q = query(collection(firebase, "passes"), where("classid", "==", classid), orderBy("timepassinitiated", "desc"), limit(20));
+
+            const q = query(collection(firebase, "passes"),   where('classesinvolved', 'array-contains-any', [classid]), orderBy("timepassinitiated", "desc"), limit(20));
+
+
+
+
 
             // const q = query(collection(firebase, "passes"), where("classid", "==", classid));
 

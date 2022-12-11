@@ -50,7 +50,7 @@ const TeacherMainMenu = ({ route, navigation }) => {
     starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, sessionended, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, sessionending, maxstudentsbathroom, classsessionbegun, linkedclass
   } = route.params;
 
-  console.log(drinkofwater, " Drink of Water ,Main Menu ", id, "this is the id");
+  console.log(drinkofwater, " Drink of Water ,Main Menu ", id, "this is the id", adminclass, "adminclass");
 
 
   const getData = async () => {
@@ -64,8 +64,11 @@ const TeacherMainMenu = ({ route, navigation }) => {
       const value7 = await AsyncStorage.getItem('state')
       const value8 = await AsyncStorage.getItem('teacheriscalled')
       const value9 = await AsyncStorage.getItem('role')
+      const value10 = await AsyncStorage.getItem('adminclass')
 
-      console.log(email, value2, value9, value5, value6, value7, value8, value9, "This is the stored value");
+      console.log(email, value2, value9, value5, value6, value7, value8, value9, "This is the stored value", value10, adminclass, "adminclass");
+
+      setAdminclass(value10);
 
     } catch (e) {
       // error reading value
@@ -77,8 +80,12 @@ const TeacherMainMenu = ({ route, navigation }) => {
   }, [id]);
 
   useEffect(() => {
-    console.log(email, "email was just set")
-  }, [email]);
+    console.log(adminclass, "this is the adminclass1")
+  }, [adminclass]);
+
+  useEffect(() => {
+    console.log(adminclass, "this is the adminclass2")
+  }, []);
 
 
   useEffect(() => {
@@ -459,16 +466,7 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
 
 
-  useEffect(() => {
 
-    if (typeof coursename === "undefined") {
-      if (youcangetincomingpass) {
-        makeallincomingpassesavailable();
-      } else {
-        makeallincomingpassesunavailable();
-      }
-    }
-  }, [youcangetincomingpass]);
 
 
 
@@ -502,132 +500,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
     })
 
   }
-
-  const makeincomingpassesavailable = () => {
-
-    updateDoc(doc(firebase, "classesbeingtaught", classid), {
-      acceptingincomingstudents: true,
-      currentsessionid: currentsessionid, sessionending: sessionending,
-    }).catch((error) => {
-      console.log(error); alert(error);
-    })
-
-  }
-
-  const makepassesunavailable = () => {
-
-    updateDoc(doc(firebase, "classesbeingtaught", classid), {
-      passesareavailable: false,
-    }).catch((error) => {
-      console.log(error); alert(error);
-    })
-
-  }
-  const makeincomingpassesunavailable = () => {
-
-    updateDoc(doc(firebase, "classesbeingtaught", classid), {
-      acceptingincomingstudents: false
-    }).catch((error) => {
-      console.log(error); alert(error);
-    })
-  }
-
-
-
-  async function makeallpassesunavailable() {
-
-    const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
-
-    const querySnapshot = await getDocs(q)
-
-      .then(function (snapshot) {
-
-        snapshot.forEach(docs => {
-          updateDoc(doc(firebase, "classesbeingtaught", docs.data().id), {
-            passesareavailable: false
-          }).catch((error) => {
-            console.log(error); alert(error);
-          })
-
-        })
-
-      })
-
-  };
-
-
-  async function makeallincomingpassesunavailable() {
-    if (typeof id != "undefined") {
-      const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
-
-      const querySnapshot = await getDocs(q)
-        .then(function (snapshot) {
-
-          snapshot.forEach(docs => {
-            updateDoc(doc(firebase, "classesbeingtaught", docs.data().id), {
-              acceptingincomingstudents: false
-            }).catch((error) => {
-              console.log(error); alert(error);
-            })
-
-          })
-
-        })
-    }
-  };
-
-
-
-
-  async function makeallpassesavailable() {
-    console.log("makeallpassesavailable was run")
-
-
-    const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
-
-    const querySnapshot = await getDocs(q)
-
-      .then(function (snapshot) {
-
-        snapshot.forEach(docs => {
-          updateDoc(doc(firebase, "classesbeingtaught", docs.data().id), {
-            passesareavailable: true,
-            currentsessionid: currentsessionid, sessionending: sessionending,
-          }).catch((error) => {
-            console.log(error); alert(error);
-          })
-
-        })
-
-      })
-
-  };
-
-
-
-
-  async function makeallincomingpassesavailable() {
-    console.log("makeallincomingpassesavailable was run")
-
-
-    const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
-
-    const querySnapshot = await getDocs(q)
-
-      .then(function (snapshot) {
-
-        snapshot.forEach(docs => {
-          updateDoc(doc(firebase, "classesbeingtaught", docs.data().id), {
-            acceptingincomingstudents: true,
-            currentsessionid: currentsessionid, sessionending: sessionending,
-          }).catch((error) => {
-            console.log(error); alert(error);
-          })
-
-        })
-      })
-
-  };
 
   return (
     <View style={styles.container}>

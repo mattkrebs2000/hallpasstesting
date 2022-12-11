@@ -408,7 +408,7 @@ console.log("is qrcodes run before this?", id,"it knows the id");
         let usersession = selectedclass.currentsessionid;
 
 
-        console.log(selectedclass, "This is the selected class", selectedclass.id);
+        console.log("This is the selected class", selectedclass.id);
         setEndlastclasssubstitute(false);
         setUsersessionid(usersession);
         setLocation(selectedclass.location)

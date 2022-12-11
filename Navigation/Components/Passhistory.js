@@ -328,7 +328,7 @@ export default function SignUp({ route, navigation }) {
         setIdselected2(idselect);
 
 
-        console.log(selectedclass, "This is the selected class", selectedclass.id);
+        console.log("This is the selected class", selectedclass.id);
     }, [selectedclass]);
 
 

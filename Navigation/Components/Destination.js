@@ -72,8 +72,8 @@ const Destination = ({ route, navigation }) => {
 
 
   useEffect(() => {
- console.log(getexistingpassid2, "getexistingpassid2");
-  }, [getexistingpassid2]);
+ console.log(Idselecteddestination, "idselecteddestinatiion");
+  }, [Idselecteddestination]);
 
   useEffect(() => {
     console.log(getexistingpassid2, "getexistingpassid2");
@@ -643,6 +643,7 @@ const Destination = ({ route, navigation }) => {
       teacherid: teacherid,
 
       returnteacherid: teacheridforreturn,
+      classesinvolved: [classid],
 
       studentid: id,
       school: school,
@@ -710,6 +711,7 @@ const Destination = ({ route, navigation }) => {
       teacherid: teacherid,
 
       returnteacherid: teacheridforreturn,
+      classesinvolved: [classid],
 
       studentid: id,
       school: school,
@@ -792,6 +794,7 @@ const Destination = ({ route, navigation }) => {
       coursename: coursename,
       comingfrom: currentlocation,
       teacherid: teacherid,
+      classesinvolved: [classid],
       studentid: id,
       school: school,
       teacheriscalled: teacher,
@@ -858,6 +861,7 @@ const Destination = ({ route, navigation }) => {
       coursename: coursename,
       comingfrom: currentlocation,
       teacherid: teacherid,
+      classesinvolved: [classid,Idselecteddestination ],
       studentid: id,
       school: school,
       teacheriscalled: teacher,

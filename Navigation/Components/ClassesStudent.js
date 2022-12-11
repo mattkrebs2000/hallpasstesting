@@ -287,6 +287,13 @@ export default function SignUp({ route, navigation }) {
             }).catch((error) => {
                 console.log(error); alert(error);
             })
+
+
+            updateDoc(doc(firebase, "classesbeingtaught", idselected), {
+                removescanneraddbutton: false
+            }).catch((error) => {
+                console.log(error); alert(error);
+            })
         }
         console.log(userdata.length, coursesadded)
     }
