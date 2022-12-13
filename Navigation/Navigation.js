@@ -619,7 +619,7 @@ export const Navigation = ({ navigation, route }) => {
 
 <AuthStack.Screen
         name="Passesadmin"
-        getComponent={() => require('./Components/Mainmenuadmin').default}
+        getComponent={() => require('./Components/Passesforadmin').default}
         options={{
           title: "Passes",
           headerTitleAlign: "center",

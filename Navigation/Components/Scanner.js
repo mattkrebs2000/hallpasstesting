@@ -918,7 +918,7 @@ console.log("second if then");
     {giveshortcut === true ? <View style={styles.container}>
 
 <View style={styles.barcodebox2}><View><Pressable
-        onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Try This{'\n'}Shortcut!</Text></Pressable></View>
+        onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Get{'\n'}Pass!</Text></Pressable></View>
       </View>
       
       {/* <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable> */}
@@ -932,8 +932,7 @@ console.log("second if then");
     <View style={styles.barcodebox2}><View><Pressable><Text style={styles.maintext11}>Ask The Teacher{'\n'}To Allow Pass Return.</Text></Pressable></View>
       </View>
       
-      <Pressable><Text style={styles.maintext}>Get Camera</Text></Pressable>
-      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
+      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintextred}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
 
 <Pressable>
       <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
@@ -941,9 +940,8 @@ console.log("second if then");
     </View>  : <View style={styles.container}>
     <View style={styles.barcodebox2}><View><Pressable><Text style={styles.maintext11}>Ask The Teacher{'\n'} To Free Up Pass.</Text></Pressable></View>
       </View>
-      
-      <Pressable><Text style={styles.maintext}>Get Camera</Text></Pressable>
-      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
+    
+      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintextred}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
 
 <Pressable>
       <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
@@ -970,6 +968,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     margin: 20,
     color: "#fff",
+    textAlign: "center"
+  },
+  maintextred: {
+    fontSize: 16,
+    margin: 20,
+    color: "#ff0000",
     textAlign: "center"
   },
   maintext1: {

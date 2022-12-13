@@ -198,10 +198,10 @@ export default function SignUp({ route, navigation }) {
     }, []);
 
 
-    // useEffect(() => {
-    //     console.log("THIS IS THE IDddddddddddddd");
-    //     getlocationsqrcodes();
-    // }, [test]);
+    useEffect(() => {
+        console.log("THIS IS THE IDddddddddddddd");
+        getlocationsqrcodes();
+    }, [test]);
 
 
 
@@ -233,11 +233,10 @@ export default function SignUp({ route, navigation }) {
 
     async function getlocationsqrcodes() {
         if (role === "Admin") {
-
-
             // Should be changed back to this as soon as "timepassinitiated" is on all pass documnents
 
-            const q = query(collection(firebase, "passes"), where("teacherid", "==", id), orderBy("timepassinitiated", "desc"), limit(20));
+            const q = query(collection(firebase, "passes"), where('classesinvolved', 'array-contains-any', [adminclass]), orderBy("timepassinitiated", "desc"), limit(20));
+
 
             // const q = query(collection(firebase, "passes"), where("classid", "==", classid));
 
@@ -431,10 +430,10 @@ export default function SignUp({ route, navigation }) {
         }).catch((error) => {
             console.log(error); alert(error);
 
-    }).then(async (check) => {
-       setHelpgiven(true);
+        }).then(async (check) => {
+            setHelpgiven(true);
         }).catch((error) => {
-          console.log(error); alert(error);
+            console.log(error); alert(error);
         });
     }
 
@@ -456,7 +455,7 @@ export default function SignUp({ route, navigation }) {
 
             <View style={styles.container2}>
 
-                <Passes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected2} setTest={setTest} />
+                <Passes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected2} setTest={setTest} test={test}  />
 
             </View>
             <ScrollView>
@@ -476,18 +475,17 @@ export default function SignUp({ route, navigation }) {
                             bottom: 0,
                         }} /></View>
 
+
+                    {idselected2 ? <Text style={styles.paragraph2} onPress={(e) => Sendonpass()} >Confirm Pass</Text> : <Text style={styles.paragraph2}>    </Text>}
+
                     {idselected2 ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : <Text style={styles.paragraph2}>    </Text>}
-
-                    {idselected2 && leftclassonpass === 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={(e) => Sendonpass()} >Give Shortcut: Send On Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={() => Sendonpass()}>Give Shortcut: Return Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === true ? <Text style={styles.paragraph2}>{studentfirstname} has Shortcut option</Text> : <Text style={styles.paragraph2}>    </Text>}
-
-                    {idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> :  <Text style={styles.paragraph2}>    </Text>}
 
                     <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 
                     <Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenuadmin", {
                         idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled, teacheriscalled: teacheriscalled,
                         email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, thelastid: thelastid, drinkpassduration: drinkpassduration, phonepassduration: phonepassduration, overunder: overunder, bathroompassduration: bathroompassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
-                     penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass: linkedclass
+                        penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass: linkedclass
                     })}  >Return to Main Menu</Text>
 
 
