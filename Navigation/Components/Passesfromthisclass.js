@@ -48,7 +48,7 @@ export default function SignUp({ route, navigation }) {
 
     useEffect(() =>
         onSnapshot(doc(firebase, "classesbeingtaught", classid), (doc) => {
-           checkDatabaseData2();
+            checkDatabaseData2();
         }
         ), []);
 
@@ -86,13 +86,13 @@ export default function SignUp({ route, navigation }) {
     }, []);
 
     useEffect(() => {
-      setHelpgiven(false);
+        setHelpgiven(false);
     }, [idselected2]);
 
 
 
     useEffect(() => {
-     console.log(howmany, "howmanypeople")
+        console.log(howmany, "howmanypeople")
     }, [howmany]);
 
 
@@ -203,7 +203,7 @@ export default function SignUp({ route, navigation }) {
     }, [test]);
 
 
-  
+
 
 
     useEffect(() => {
@@ -238,7 +238,7 @@ export default function SignUp({ route, navigation }) {
 
             // const q = query(collection(firebase, "passes"), where("classid", "==", classid), orderBy("timepassinitiated", "desc"), limit(20));
 
-            const q = query(collection(firebase, "passes"),   where('classesinvolved', 'array-contains-any', [classid]), orderBy("timepassinitiated", "desc"), limit(20));
+            const q = query(collection(firebase, "passes"), where('classesinvolved', 'array-contains-any', [classid]), orderBy("timepassinitiated", "desc"), limit(20));
 
 
 
@@ -441,11 +441,11 @@ export default function SignUp({ route, navigation }) {
             removescanneraddbutton: true
         }).catch((error) => {
             console.log(error); alert(error);
-        
-    }).then(async (check) => {
-       setHelpgiven(true);
+
+        }).then(async (check) => {
+            setHelpgiven(true);
         }).catch((error) => {
-          console.log(error); alert(error);
+            console.log(error); alert(error);
         });
     }
 
@@ -454,7 +454,7 @@ export default function SignUp({ route, navigation }) {
 
     useEffect(() => {
         if (typeof userdata != "undefined") {
-           setUserdatabefore();
+            setUserdatabefore();
         }
     }, [userdata]);
 
@@ -467,7 +467,7 @@ export default function SignUp({ route, navigation }) {
 
             <View style={styles.container2}>
 
-                <Passes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected2} localpercent={localpercent} test = {test} setTest = {setTest} />
+                <Passes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected2} localpercent={localpercent} test={test} setTest={setTest} />
 
             </View>
             <ScrollView>
@@ -487,9 +487,13 @@ export default function SignUp({ route, navigation }) {
                             bottom: 0,
                         }} /></View>
 
-                    {idselected2 && leftclassonpass === 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={(e) => Sendonpass()} >Give Shortcut: Send On Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={() => Sendonpass()}>Give Shortcut: Return Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === true ? <Text style={styles.paragraph2}>{studentfirstname} has Shortcut option</Text>:<Text style={styles.paragraph2}>    </Text>}
 
-                    {idselected2 && returnedzero != 0 && howmany === 0 ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> : <Text style={styles.paragraph2} onPress={(e) => ReturnStudnet2()}>Reset Bathroom Availability</Text>}
+
+                    {idselected2 && leftclassonpass === 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={(e) => Sendonpass()} >Give Shortcut: Send On Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={() => Sendonpass()}>Give Shortcut: Return Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === true ? <Text style={styles.paragraph2}>{studentfirstname} has Shortcut option</Text> : <Text style={styles.paragraph2}>    </Text>}
+
+                    {idselected2 ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : <Text style={styles.paragraph2}>    </Text>}
+
+                    {idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> : <Text style={styles.paragraph2} onPress={(e) => ReturnStudnet2()}>Reset Bathroom Availability</Text>}
 
                     <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 

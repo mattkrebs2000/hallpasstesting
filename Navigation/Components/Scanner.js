@@ -55,7 +55,7 @@ const Scanner = ({ route, navigation }) => {
   const [currenttime, setCurrenttiime] = useState();
   const [giveshortcut, setGiveshortcut] = useState();
 
-  console.log(takenameoffwaitlist, "takenameoffwaitlist", expectedreturn, allottedtime, "expectedreturn", "allottedtime", "In Scanner");
+  console.log(teacherid, teacheridforreturn, "teacherid", "teacheridforreturn", "In Scanner");
 
   useEffect(() => {
 
@@ -87,17 +87,25 @@ const Scanner = ({ route, navigation }) => {
           let idd = classid;
           let object = docSnap.data();
 
+          if (typeof object[idd] != "undefined") {
+
           const whatever = object[idd].adjustments;
           const penaltyminutes = object[idd].penaltyminutes;
           const ovunder = object[idd].overunder;
           const level = object[idd].level;
 
-        
-
           setAdjust(whatever);
           setPenaltyminutes(penaltyminutes);
           setOverunderr(ovunder);
           setLevell(level);
+
+          } else {
+            setAdjust(0);
+            setPenaltyminutes(0);
+            setOverunderr(0);
+            setLevell("Consequences For Lateness");
+          }
+
 
         })
     }

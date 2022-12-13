@@ -204,6 +204,8 @@ const getAllKeys = async () => {
 
         .then((docSnap) => {
 
+          if (docSnap.exists()) {
+
           let object = docSnap.data();
           const getpenaltystatus = object.temporary;
           const phonepassawardedd = object.phonepassawarded;
@@ -213,7 +215,7 @@ const getAllKeys = async () => {
           setIsthestudentdonewithwork(phonepassawardedd)
           setGetstatus(statusupdate);
           setGetexistingpassid(idofpass);
-
+          }
      
         })
     }
