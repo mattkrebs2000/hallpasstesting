@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, BackHandler, TouchableOpacity, Pressable, ScrollView, ContentContainerstyle} from 'react-native';
-import QRCode from 'react-native-qrcode-svg';
+
+// import QRCode from 'react-native-qrcode-svg';
 
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification } from "@firebase/auth";
@@ -17,10 +18,6 @@ export default function App25rn({route}) {
 
   console.log("userinformation now in QRCodes.js", id, "Here",teacherid, "userinformation now in QRCodes.js");
 
-
- 
- 
-  
     const [userdata, setUserdata] = useState([]);
     const [idsofpasses, setIdsofpasses] = useState();
 
@@ -135,7 +132,7 @@ export default function App25rn({route}) {
     
               <View style={styles.textContainer}>
                 <View style={styles.centerContainer}>
-                  <QRCode value= {id} logoSize={30} size={250}/>
+                  {/* <QRCode value= {id} logoSize={30} size={250}/> */}
                 </View>
               </View>
     </ScrollView>

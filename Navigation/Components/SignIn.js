@@ -87,9 +87,7 @@ export default function Login({ route, navigation }) {
       console.log("NOONE IS LOGGED IN", id2)
       setId("");
       setRole("");
-
     }
-
   });
 
   useEffect(() => {

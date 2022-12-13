@@ -341,7 +341,7 @@ const getAllKeys = async () => {
 
 
   const getadjustment2 = () => {
-    if (id) {
+    if (typeof id != "undefined") {
       console.log(id, "301 here is something else", classid);
       const docRef = doc(firebase, "users", id);
 

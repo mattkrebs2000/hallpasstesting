@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, View, StyleSheet, Button, TouchableOpacity, Pressable } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+// import { BarCodeScanner } from 'expo-barcode-scanner';
 // import { Audio } from 'expo-av';
 import { auth, firebase } from "../Firebase/Config";
 
@@ -864,34 +864,29 @@ console.log("second if then");
   // Request Camera Permission
 
 
-  useEffect(() => {
-    console.log(hasPermission, "THiis is whaat hasPermission shows")
-  }, []);
-
-  useEffect(() => {
-    askPermissions();
-    console.log(hasPermission, "THiis is whaat hasPermission shows")
-  }, [hasPermission]);
 
 
 
 
-  useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    };
 
-    getBarCodeScannerPermissions();
-  }, []);
 
-  const askPermissions = () => {
-    (async () => {
-      console.log("Asking for permissions", hasPermission);
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status == "granted");
-    })();
-  };
+
+  // useEffect(() => {
+  //   const getBarCodeScannerPermissions = async () => {
+  //     const { status } = await BarCodeScanner.requestPermissionsAsync();
+  //     setHasPermission(status === 'granted');
+  //   };
+
+  //   getBarCodeScannerPermissions();
+  // }, []);
+
+  // const askPermissions = () => {
+  //   (async () => {
+  //     console.log("Asking for permissions", hasPermission);
+  //     const { status } = await BarCodeScanner.requestPermissionsAsync();
+  //     setHasPermission(status == "granted");
+  //   })();
+  // };
 
   // What happens when we scan the bar code
   const handleBarCodeScanned = ({ type, data }) => {
@@ -918,23 +913,28 @@ console.log("second if then");
         onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Try This{'\n'}Shortcut!</Text></Pressable></View>
       </View>
       
-      <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
+      {/* <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable> */}
+
       <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>Press on{'\n'}Shortcut Above</Text></Pressable>
 
 <Pressable>
       <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
    
-    </View> : <View style={styles.container}>
-
-<View style={styles.barcodebox}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 300, width: 350 }} />
-        {scanned && <Pressable onPress={() => setScanned(false)}><Text></Text></Pressable>}
-
+    </View> :  typeof day != "undefined" ? <View style={styles.container}>
+    <View style={styles.barcodebox2}><View><Pressable><Text style={styles.maintext11}>Ask The Teacher{'\n'}To Allow Pass Return.</Text></Pressable></View>
       </View>
       
-      <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
+      <Pressable><Text style={styles.maintext}>Get Camera</Text></Pressable>
+      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
+
+<Pressable>
+      <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
+   
+    </View>  : <View style={styles.container}>
+    <View style={styles.barcodebox2}><View><Pressable><Text style={styles.maintext11}>Ask The Teacher{'\n'} To Free Up Pass.</Text></Pressable></View>
+      </View>
+      
+      <Pressable><Text style={styles.maintext}>Get Camera</Text></Pressable>
       <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
 
 <Pressable>
