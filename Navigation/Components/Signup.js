@@ -278,12 +278,12 @@ useEffect(() => {
     }
   }, [password]);
 
-  useEffect(() => {
-    if (domain.length > 2) {
-      alert("You must use your Revere Public Schools email address.")
-      setDomain("");
-    }
-  }, [domain]);
+  // useEffect(() => {
+  //   if (domain.length > 2) {
+  //     alert("You must use your Revere Public Schools email address.")
+  //     setDomain("");
+  //   }
+  // }, [domain]);
 
 
   const stateArray = [
@@ -1211,7 +1211,7 @@ const signUpAdmin = () => {
               </ScrollView></View> : state && town && school && role === "Student" && second === ("No") ? <ScrollView contentContainerStyle={styles.container}>
                 <TextInput
                   style={styles.Newrow}
-                  placeholder='Email'
+                  placeholder='Phone #'
                   placeholderTextColor="#BEBEBE"
                   value={email}
                   onChangeText={setEmail} />
@@ -1253,7 +1253,7 @@ const signUpAdmin = () => {
               </ScrollView> : state && town && school && role === "Student" && second === "Yes" && typeof locallastname != "undefined" && typeof localfirstname != "undefined" ? <ScrollView contentContainerStyle={styles.container}>
                 <TextInput
                   style={styles.Newrow}
-                  placeholder='Email'
+                  placeholder='Phone #'
                   placeholderTextColor="#BEBEBE"
                   value={email}
                   onChangeText={setEmail} />

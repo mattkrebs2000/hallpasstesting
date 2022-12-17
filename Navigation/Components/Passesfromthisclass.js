@@ -44,6 +44,34 @@ export default function SignUp({ route, navigation }) {
     const [helpgiven, setHelpgiven] = useState(false);
     const [studentfirstname, setStudentfirstname] = useState();
 
+    const [currentmax2, setCurrentmax2] = useState();
+
+    useEffect(() => {
+        setCurrentmax2(maxstudentsbathroom);
+    }, []);
+
+    const letthenextstudentgo = () => {
+        console.log(currentmax);
+        setCurrentmax2(currentmax2 + 1);
+    }
+
+    const reducemaxbathroom = () => {
+        if (currentmax2 > 1) {
+            setCurrentmax2(currentmax2 - 1);
+        }
+    }
+
+    useEffect(() => {
+        if (currentmax2 > -2) {
+            updateDoc(doc(firebase, "classesbeingtaught", classid), {
+                bathroompassmaxstudents: currentmax2
+            }).catch((error) => {
+                console.log(error); alert(error);
+            })
+        } else {
+            null
+        }
+    }, [currentmax2]);
 
 
     useEffect(() =>
@@ -51,6 +79,8 @@ export default function SignUp({ route, navigation }) {
             checkDatabaseData2();
         }
         ), []);
+
+
 
     useEffect(() => {
         let classbegin = selectedclass.classbegin;
@@ -462,7 +492,7 @@ export default function SignUp({ route, navigation }) {
     return (
         <SafeAreaView style={styles.largercontainer}>
             <View style={styles.container1}>
-                <View><TouchableOpacity><Text style={styles.error}>Passes/Tardies:{'\n'}{coursename} -- Bathroom ({howmany}) </Text></TouchableOpacity></View>
+                <View><TouchableOpacity><Text style={styles.error}>Passes/Tardies:{'\n'}{coursename} -- Bathroom ({howmany}-{currentmax2}) </Text></TouchableOpacity></View>
             </View>
 
             <View style={styles.container2}>
@@ -494,6 +524,13 @@ export default function SignUp({ route, navigation }) {
                     {idselected2 ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : <Text style={styles.paragraph2}>    </Text>}
 
                     {idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> : <Text style={styles.paragraph2} onPress={(e) => ReturnStudnet2()}>Reset Bathroom Availability</Text>}
+
+                    <Pressable>
+                    <Text style={styles.paragraph2} onPress={() => letthenextstudentgo()}>Increase Total Number of{'\n'}Students Allowed in Bathroom{'\n'}</Text>
+                </Pressable>
+                {currentmax2 > 1 ? <Pressable onPress={() => reducemaxbathroom()}>
+                    <Text style={styles.paragraph2}>Decrease Total Number of{'\n'}Students Allowed in Bathroom{'\n'}</Text>
+                </Pressable> : null}
 
                     <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 

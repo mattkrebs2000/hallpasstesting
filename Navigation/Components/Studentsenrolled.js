@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Pressable } from 'react-native';
+import * as SMS from 'expo-sms';
 
 import Students from './Mapofstudentsenrolled/Mapofstudentsenrolled';
 
-import {Alert, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
+import {Alert, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator, Button } from 'react-native';
+
+
 
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, deleteUser, signInWithEmailAndPassword } from "@firebase/auth";
@@ -76,8 +79,40 @@ export default function SignUp({ route, navigation }) {
     const [consquenceid, setConsequenceid] = useState();
     const [localcode, setLocalcode] = useState();
     const [studentjustarrivedlate, setstudentjustarrivedlate] = useState();
- 
+   
+   
+    const [smsAvailable, setSmsAvailable] = React.useState(false);
+    const [emailphone, setEmailphone]= useState();
 
+    const onComposeSms = React.useCallback(async () => {
+       
+        const message = "hi " + {localfirstname} + "See if this works " +{localcode} +  " this is the consequence";
+
+        alert('Text funcion is being run!');
+      if (smsAvailable) {
+        console.log('2going for it!');
+        await SMS.sendSMSAsync(
+            ['6172307850', emailphone],
+          message,
+        );
+      } else {
+          alert("SMS is not available")
+      }
+    }, [smsAvailable]);
+
+
+    React.useEffect(() => {
+        SMS.isAvailableAsync().then(setSmsAvailable);
+      }, []);
+
+      useEffect(() => {
+      console.log("2hello", setSmsAvailable)
+      }, [setSmsAvailable]);
+
+      useEffect(() => {
+        console.log("1hello", setSmsAvailable)
+        }, []);
+    
 
     function compare_lname(a, b) {
 
@@ -344,7 +379,9 @@ export default function SignUp({ route, navigation }) {
         let change = selected.changemade;
         let consequence = selected.consequenceid;
         let idselect = selected.id;
+        let emai = selected.email;
 
+        setEmailphone(emai)
         setFirstname(selected.localfirstname)
         setLastname(selected.locallastname)
         setPhonetimestart(selected.phonetimestart)
@@ -837,9 +874,11 @@ export default function SignUp({ route, navigation }) {
                         setTemporary("true");
                         setChangehasbeenmade(true);
                         setLocalingoodstanding("In Penalty");
+                        onComposeSms();
                     })
                 }
             }
+          
         } else {
             if (idselected && (localstarttime < 10 || typeof localstarttime === "undefined")) {
 
@@ -896,6 +935,7 @@ export default function SignUp({ route, navigation }) {
                         setTemporary("true");
                         setChangehasbeenmade(true);
                         setLocalingoodstanding("In Penalty");
+                        onComposeSms();
                     })
 
 
@@ -903,7 +943,6 @@ export default function SignUp({ route, navigation }) {
 
                 }
             }
-
         }
     }
 
@@ -987,6 +1026,10 @@ export default function SignUp({ route, navigation }) {
     return (
         <SafeAreaView style={styles.largercontainer}>
             <View style={styles.container1} >
+<Pressable>
+            <Button onPress={onComposeSms} mode="contained" icon="message" title="hello"/>
+            </Pressable>
+      
 
                 <TouchableOpacity><Text style={styles.error}>{coursename} ({userdata.length}){'\n'}
                     Total Class Time: {Math.round(totalclasstime / 60000)} Min.</Text>

@@ -364,7 +364,7 @@ setNewoverunder(true);
     return (
         <SafeAreaView style={styles.largercontainer}>
             <View style={styles.container1}>
-                {allclasses === true ? <View><TouchableOpacity><Text style={styles.error} onPress={() => switchthis()}>Passes/Tardies Of:{'\n'}{firstname} {lastname}{'\n'}All Classes</Text></TouchableOpacity></View> : <View><TouchableOpacity><Text style={styles.error} onPress={() => switchthis()}>Passes/Tardies Of:{'\n'}{firstname} {lastname}{'\n'}{coursename}</Text></TouchableOpacity></View>}
+                {allclasses === true ? <View><TouchableOpacity><Text style={styles.error} onPress={() => switchthis()}>Penalties Of:{'\n'}{firstname} {lastname}{'\n'}All Classes</Text></TouchableOpacity></View> : <View><TouchableOpacity><Text style={styles.error} onPress={() => switchthis()}>Passes/Tardies Of:{'\n'}{firstname} {lastname}{'\n'}{coursename}</Text></TouchableOpacity></View>}
             </View>
 
             <View style={styles.container2}>

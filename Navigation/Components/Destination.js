@@ -77,16 +77,7 @@ const Destination = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log(getexistingpassid2, "getexistingpassid2");
-     }, []);
-
-     useEffect(() => {
-      console.log(seconddata, "seconddata", seconddata);
-       }, [seconddata]);
-     
-       useEffect(() => {
-         console.log(seconddata, "seconddata", seconddata);
-          }, []);
-     
+     }, []);     
 
   //onSnapshots
   if (classid) {
@@ -475,7 +466,6 @@ const Destination = ({ route, navigation }) => {
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
-    console.log(seconddata, "function 15 HERE IS THE DATA")
   }
 
   const getAvailableLocationsingrouptime0dww = () => {
@@ -493,7 +483,6 @@ const Destination = ({ route, navigation }) => {
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
-    console.log(seconddata, "function 14")
 
   }
 
@@ -513,7 +502,7 @@ const Destination = ({ route, navigation }) => {
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
-    console.log(seconddata, "function 11")
+
   }
 
   const getAvailableLocationsboth0dww = () => {
@@ -531,7 +520,7 @@ const Destination = ({ route, navigation }) => {
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
-    console.log(seconddata, "function 10")
+
   }
 
   const getAvailableLocationswithadmin = () => {
@@ -594,7 +583,6 @@ const Destination = ({ route, navigation }) => {
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
-    console.log(seconddata, "function 4 HERE IS THE DATA")
   }
 
   const getAvailableLocations2grouptime0dww = () => {
@@ -682,7 +670,7 @@ const Destination = ({ route, navigation }) => {
       });
 
       setPassid(userRec.id);
-      console.log(user, "This is the pass id");
+    
     })
       .catch((error) => {
         console.log(error); alert(error);
@@ -743,7 +731,7 @@ const Destination = ({ route, navigation }) => {
       });
 
       setPassid(userRec.id);
-      console.log(user, "This is the pass id");
+   
     })
       .catch((error) => {
         console.log(error); alert(error);
@@ -834,7 +822,7 @@ const Destination = ({ route, navigation }) => {
 
 
       setPassid(userRec.id);
-      console.log(user, "This is the pass id");
+     
     })
       .catch((error) => {
         console.log(error); alert(error);

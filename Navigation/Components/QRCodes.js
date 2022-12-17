@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, BackHandler, TouchableOpacity, Pressable, ScrollView, ContentContainerstyle} from 'react-native';
+// import { QRCode } from 'react-native-custom-qr-codes-expo';
 
-// import QRCode from 'react-native-qrcode-svg';
 
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification } from "@firebase/auth";
@@ -124,7 +124,6 @@ export default function App25rn({route}) {
                 <View style={styles.paragraph5}>
                 <Text style={styles.paragraph6}>Current User:</Text>
                 <Text style={styles.paragraph5}>{auth.currentUser.email}</Text>
-                <Text style={styles.paragraph5}>Print & Post In Your Room(s)</Text>
                 </View>
               
                 <View style={styles.container}>
@@ -132,7 +131,7 @@ export default function App25rn({route}) {
     
               <View style={styles.textContainer}>
                 <View style={styles.centerContainer}>
-                  {/* <QRCode value= {id} logoSize={30} size={250}/> */}
+                <Text style={styles.paragraph15}>create/post a QRCode which outputs:{'\n'}{'\n'}{'\n'}{id}</Text>
                 </View>
               </View>
     </ScrollView>
@@ -252,10 +251,18 @@ const styles = StyleSheet.create({
         height: "20%",
         alignItems: "center",
         width: "100%"
-
-
-
     },
+    paragraph15: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      justifyContent: "center",
+      backgroundColor: '#FFFFFFF',
+      color: "#000000",
+      height: "80%",
+      alignItems: "center",
+      width: "100%"
+  },
     paragraph6: {
         fontSize: 18,
         fontWeight: 'bold',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, View, StyleSheet, Button, TouchableOpacity, Pressable } from 'react-native';
-// import { BarCodeScanner } from 'expo-barcode-scanner';
-// import { Audio } from 'expo-av';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Audio } from 'expo-av';
 import { auth, firebase } from "../Firebase/Config";
 
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, arrayUnion, FieldValue } from "@firebase/firestore";
@@ -325,14 +325,14 @@ const Scanner = ({ route, navigation }) => {
   }, [sound]);
 
 
-  // async function playSound() {
-  //   const { sound } = await Audio.Sound.createAsync(
-  //     require('../../assets/Confirm.mp3')
-  //   );
-  //   setSound(sound);
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require('../../assets/Confirm.mp3')
+    );
+    setSound(sound);
 
-  //   await sound.playAsync();
-  // }
+    await sound.playAsync();
+  }
 
   async function finalizehallpass() {
     setGiveshortcut(false);
@@ -879,22 +879,22 @@ console.log("second if then");
 
 
 
-  // useEffect(() => {
-  //   const getBarCodeScannerPermissions = async () => {
-  //     const { status } = await BarCodeScanner.requestPermissionsAsync();
-  //     setHasPermission(status === 'granted');
-  //   };
+  useEffect(() => {
+    const getBarCodeScannerPermissions = async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    };
 
-  //   getBarCodeScannerPermissions();
-  // }, []);
+    getBarCodeScannerPermissions();
+  }, []);
 
-  // const askPermissions = () => {
-  //   (async () => {
-  //     console.log("Asking for permissions", hasPermission);
-  //     const { status } = await BarCodeScanner.requestPermissionsAsync();
-  //     setHasPermission(status == "granted");
-  //   })();
-  // };
+  const askPermissions = () => {
+    (async () => {
+      console.log("Asking for permissions", hasPermission);
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status == "granted");
+    })();
+  };
 
   // What happens when we scan the bar code
   const handleBarCodeScanned = ({ type, data }) => {
@@ -915,36 +915,48 @@ console.log("second if then");
   return (
     <View style={styles.container}>
     <ScrollView>
-    {giveshortcut === true ? <View style={styles.container}>
+    {giveshortcut === true && typeof day === "undefined" ? <View style={styles.container}>
 
 <View style={styles.barcodebox2}><View><Pressable
         onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Get{'\n'}Pass!</Text></Pressable></View>
       </View>
       
-      {/* <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable> */}
+      <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
 
       <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>Press on{'\n'}Shortcut Above</Text></Pressable>
 
 <Pressable>
       <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
    
-    </View> :  typeof day != "undefined" ? <View style={styles.container}>
-    <View style={styles.barcodebox2}><View><Pressable><Text style={styles.maintext11}>Ask The Teacher{'\n'}To Allow Pass Return.</Text></Pressable></View>
+    </View> : giveshortcut === true && typeof day != "undefined" ? <View style={styles.container}>
+
+<View style={styles.barcodebox2}><View><Pressable
+        onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Return{'\n'}Pass!</Text></Pressable></View>
       </View>
       
-      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintextred}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
+      <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
+
+      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>Press on{'\n'}Shortcut Above</Text></Pressable>
 
 <Pressable>
       <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
    
-    </View>  : <View style={styles.container}>
-    <View style={styles.barcodebox2}><View><Pressable><Text style={styles.maintext11}>Ask The Teacher{'\n'} To Free Up Pass.</Text></Pressable></View>
-      </View>
-    
-      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintextred}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
+    </View> :
 
-<Pressable>
-      <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
+
+<View style={styles.container}>
+
+<View style={styles.barcodebox}>
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={{ height: 300, width: 350 }} />
+        {scanned && <TouchableOpacity onPress={() => setScanned(false)}><Text></Text></TouchableOpacity>}
+
+      </View>
+      
+      <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
+      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
+
    
     </View>}
 
