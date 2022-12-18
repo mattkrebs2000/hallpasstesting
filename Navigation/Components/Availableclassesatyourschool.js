@@ -16,23 +16,27 @@ import { useNavigation } from '@react-navigation/native';
 export default function App25r({ route, navigation }) {
 
     const [data, setData] = useState([]);
-    const [idofclass, setIdofclass] = useState("");
+    const [idofclass, setIdofclass] = useState();
     const [coursesenrolled, setCoursesenrolled] = useState([]);
-    const [runonce, setRunonce] = useState("")
 
 
-    const { userinformation, firstname, lastname, teacherid, classid, id, coursename, section, location, school, teacher, town, state, percent, total2, getadjustments, getcurrentdifference } = route.params;
+    const { userinformation, firstname, lastname, teacherid, classid, id, coursename, section, location, school, teacher, town, state, percent, total2, getadjustments, getcurrentdifference, email } = route.params;
+
+    console.log(id, "id", school, "school", state, "state", town, "town", firstname, "firstname", lastname, "lastname", email, "email" )
+
 
     useEffect(() =>
-        onSnapshot(doc(firebase, "users", id), (doc) => {
-            getcoursesenrolledin();
-        }
-    
-        ), []);
+    onSnapshot(doc(firebase, "users", id), (doc) => {
+        getcoursesenrolledin();
+    }
+
+    ), []);
 
     useEffect(() => {
-        if (id.length > 2) {
+        if (typeof id != "undefined") {
             getcoursesenrolledin();
+        } else {
+            navigation.navigate("SignIn");
         }
     }, []);
 
@@ -51,7 +55,7 @@ export default function App25r({ route, navigation }) {
 
     async function getcoursesenrolledin() {
 
-        if (id) {
+        if (typeof id != "undefined") {
             const q = query(collection(firebase, "classesbeingtaught"), where(id, "==", id));
 
             const querySnapshot = await getDocs(q)
@@ -60,14 +64,11 @@ export default function App25r({ route, navigation }) {
                 .then(function (snapshot) {
                     const array = []
                     snapshot.forEach(doc => {
-                        console.log(doc.data().id)
                         array.push(doc.data().id)
                     })
                     setCoursesenrolled(array);
 
                 })
-
-            console.log("HERE are the courses enrolled", coursesenrolled, "Heres are the courses enfrolled", id, "id")
         }
     };
 
@@ -84,13 +85,14 @@ export default function App25r({ route, navigation }) {
                 })
                 setData(array)
             })
-        console.log("DID THEY RUN THIS FUNCTIONS RIGH THERE")
     }
 
 
     useEffect(() => {
-        if (school.length > 1) {
+        if (typeof school != "undefined" && typeof state != "undefined" && typeof town != "undefined") {
             getclasses();
+        } else {
+            navigation.navigate("SignIn");
         }
     }, [school, state, town, coursesenrolled]);
 
@@ -98,10 +100,7 @@ export default function App25r({ route, navigation }) {
 
 
     useEffect(() => {
-        if (idofclass.length > 2) {
-
-            console.log(id, "id", idofclass, "idofclass")
-
+        if (typeof idofclass != "undefined") {
             updateDoc(doc(firebase, "users", id), {
                 courseawaitingconfirmation: idofclass
             }).catch((error) => {
@@ -114,16 +113,16 @@ export default function App25r({ route, navigation }) {
     return (<View style={styles.container2}>
         <View style={styles.container}>
             <Text style={styles.paragraph6}>Current User:</Text>
-            {auth.currentUser ? <Text style={styles.paragraph5}>{auth.currentUser.email}</Text> : <Text style={styles.paragraph5}>Guest</Text>}
+            { typeof firstname != "undefined" && typeof lastname != "undefined" ? <Text style={styles.paragraph5}>{firstname} {lastname}</Text> : <Text style={styles.paragraph5}>Guest</Text>}
             <Text style={styles.paragraph}>Request access to available classes </Text>
             <RadioButton data={data} onSelect={(value) => setIdofclass(value)} idofclass={idofclass} />
         </View>
 
-        <View style={styles.section3}>{idofclass.length > 3 ? <Text style={styles.paragraph2}>  Let Your Teacher know {'\n'} You are awaiting entry.</Text> : <Text style={styles.paragraph2}> No Class is Selected</Text>}
+        <View style={styles.section3}>{typeof idofclass != "undefined" ? <Text style={styles.paragraph2}>  Let Your Teacher know {'\n'} You are awaiting entry.</Text> : <Text style={styles.paragraph2}> No Class is Selected</Text>}
 
             <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
             <Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenustudent", {
-                userinformation: userinformation, town: town, state: state, school: school, firstname: firstname, lastname: lastname, teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, percent: percent, total2: total2, getcurrentdifference: getcurrentdifference, getadjustments: getadjustments, id: id
+                userinformation: userinformation, town: town, state: state, school: school, firstname: firstname, lastname: lastname, teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, percent: percent, total2: total2, getcurrentdifference: getcurrentdifference, getadjustments: getadjustments, id: id, email: email
             })} >Return to Main Menu </Text>
         </View>
     </View>

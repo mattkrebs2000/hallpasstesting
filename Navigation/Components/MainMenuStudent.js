@@ -14,7 +14,7 @@ import { _DEFAULT_PROGRESS_UPDATE_INTERVAL_MILLIS } from "expo-av/build/AV";
 
 export default function Destination({ route, navigation }) {
 
-  const { teacherid, classid, coursename, section, location, teacher, youcangetpass, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, getadjustmentss, adjust, nowinpenalty, passid, overunderstatus, currentsessionid, endofclasssession, donewithworkplease, day,} = route.params;
+  const { teacherid, classid, coursename, section, location, teacher, youcangetpass, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, getadjustmentss, adjust, nowinpenalty, passid, overunderstatus, currentsessionid, endofclasssession, donewithworkplease, day, } = route.params;
 
 
 
@@ -61,49 +61,47 @@ export default function Destination({ route, navigation }) {
   const [email, setEmail] = useState();
   const [sound, setSound] = React.useState();
 
-const signoutfunction = () => {
-  
-  setTimeout(() => {
-    auth.signOut();
-    navigation.navigate("SignIn");
-
-  }, 3000);
- 
-}
-
-useEffect(() => {
-if (typeof day != "undefined"){
-playSound();
-}
-},[day]);
-
-async function playSound() {
-  const { sound } = await Audio.Sound.createAsync(
-    require('../../assets/Confirm.mp3')
-  );
-  setSound(sound);
-
-  await sound.playAsync();
-}
 
 
-const getAllKeys = async () => {
-  let keys = []
-  try {
-    keys = await AsyncStorage.getAllKeys()
-  } catch(e) {
-    // read key error
+  useEffect(() => {
+    if (typeof day != "undefined") {
+      playSound();
+    }
+  }, [day]);
+
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require('../../assets/Confirm.mp3')
+    );
+    setSound(sound);
+
+    await sound.playAsync();
   }
 
 
-}
+  const getAllKeys = async () => {
+    let keys = []
+    try {
+      keys = await AsyncStorage.getAllKeys()
+      console.log(keys.length, "these are the keys");
+      if (keys.length > 7) {
+        getstorage1()
+      } else {
+        navigation.navigate("SignIn");
+      }
+    } catch (e) {
+      // read key error
+    }
+
+
+  }
+
 
   useEffect(() => {
-   getAllKeys();
-    getMystate();
-    
+    getAllKeys();
+
     if (typeof id != "undefined") {
-    getadjustment2();
+      getadjustment2();
     }
 
     if (typeof coursename === "undefined") {
@@ -116,86 +114,155 @@ const getAllKeys = async () => {
   }, []);
 
   useEffect(() => {
-     if (typeof id != "undefined") {
-     getadjustment2();
-     }
-   }, [id]);
+    if (typeof id != "undefined" ) {
+      getadjustment2();
+    }
+  }, [id]);
 
-  const getMystate = async () => {
 
-    const stateValue = await AsyncStorage.getItem('state');
-    const schoolValue = await AsyncStorage.getItem('school');
-    const townValue = await AsyncStorage.getItem('town');
-    const roleValue = await AsyncStorage.getItem('role');
-    const firstnameValue = await AsyncStorage.getItem('firstname');
-    const lastnameValue = await AsyncStorage.getItem('lastname');
-    const emailValue = await AsyncStorage.getItem('email');
-    const idValue = await AsyncStorage.getItem('id');
 
-    if (stateValue != null) {
-      setState(stateValue);
-    }
-    else {
-      console.log("This was state");
-      signoutfunction();
-    }
+  async function getstorage1() {
 
-    if (townValue != null) {
-      setTown(townValue);
-    }
-    else {
-      console.log("This was town");
-      signoutfunction();
-    }
-    if (schoolValue != null) {
-      setSchool(schoolValue);
-    }
-    else {
-      console.log("This was school");
-      signoutfunction();
-    }
-    if (roleValue != null) {
-      setRole(roleValue);
-    }
-    else {
-      console.log("This was role");
-      signoutfunction();
-    }
-    if (firstnameValue != null) {
-      setFirstname(firstnameValue);
-    }
-    else {
-      console.log("This was firstname");
-      signoutfunction();
-    }
-    if (lastnameValue != null) {
-      setLastname(lastnameValue);
-    }
-    else {
-      console.log("This was lastname");
-      signoutfunction();
-    }
-    if (emailValue != null) {
-      setEmail(emailValue);
-    }
-    else {
-      console.log("This was email");
-      signoutfunction();
-    }
-    if (idValue != null) {
-      setId(idValue);
-    }
-    else {
-      console.log("This was id");
-      signoutfunction();
-    }
+    const stateValue = await AsyncStorage.getItem('state')
+
+      .then(async (userRec) => {
+        setState(userRec);
+        console.log(userRec, "thiis should be state");
+      })
   }
+
+  useEffect(() => {
+    if (typeof state != "undefined" ) {
+      getstorage2();
+    } else {
+      navigation.navigate("SignIn");
+    }
+  }, [state]);
+
+  async function getstorage2() {
+
+    const schoolValue = await AsyncStorage.getItem('school')
+
+      .then(async (userRec1) => {
+        setSchool(userRec1);
+        console.log(userRec1, "thiis should be school");
+      })
+  }
+
+  useEffect(() => {
+    if (typeof school != "undefined" ) {
+      getstorage3();
+    }else {
+      navigation.navigate("SignIn");
+    }
+  }, [school]);
+
+  async function getstorage3() {
+
+    const townValue = await AsyncStorage.getItem('town')
+
+      .then(async (userRec3) => {
+        setTown(userRec3);
+        console.log(userRec3, "thiis should be town");
+      })
+  }
+
+  useEffect(() => {
+    if (typeof town != "undefined" ) {
+      getstorage4();
+    }else {
+      navigation.navigate("SignIn");
+    }
+  }, [town]);
+
+  async function getstorage4() {
+
+    const roleValue = await AsyncStorage.getItem('role')
+
+      .then(async (userRec4) => {
+        setRole(userRec4);
+        console.log(userRec4, "thiis should be role");
+      })
+  }
+
+  useEffect(() => {
+    if (typeof role != "undefined" ) {
+      getstorage5();
+    }else {
+      navigation.navigate("SignIn");
+    }
+  }, [role]);
+
+  async function getstorage5() {
+
+    const firstnameValue = await AsyncStorage.getItem('firstname')
+
+      .then(async (userRec5) => {
+        setFirstname(userRec5);
+        console.log(userRec5, "thiis should be the firstname");
+      })
+  }
+
+  useEffect(() => {
+    if (typeof firstname != "undefined" ) {
+      getstorage6();
+    }else {
+      navigation.navigate("SignIn");
+    }
+  }, [firstname]);
+
+  async function getstorage6() {
+
+    const lastnameValue = await AsyncStorage.getItem('lastname')
+
+      .then(async (userRec6) => {
+        setLastname(userRec6);
+        console.log(userRec6, "thiis should be the lastname");
+      })
+  }
+
+  useEffect(() => {
+    if (typeof lastname != "undefined" ) {
+      getstorage7();
+    }else {
+      navigation.navigate("SignIn");
+    }
+  }, [lastname]);
+
+  async function getstorage7() {
+
+    const emailValue = await AsyncStorage.getItem('email')
+
+      .then(async (userRec7) => {
+        setEmail(userRec7);
+        console.log(userRec7, "thiis should be the email");
+      })
+  }
+
+  useEffect(() => {
+    if (typeof email != "undefined" ) {
+      getstorage8();
+    }else {
+      navigation.navigate("SignIn");
+    }
+  }, [email]);
+
+  async function getstorage8() {
+
+    const idValue = await AsyncStorage.getItem('id')
+
+      .then(async (userRec8) => {
+        setId(userRec8);
+        console.log(userRec8, "thiis should be the id");
+      })
+  }
+
 
   const getadjustment = () => {
 
     console.log("2", id, classid, role);
 
-    if (id && (typeof classid != "undefined") && (typeof role != "undefined")) {
+    if ((typeof id != "undefined") && (typeof classid != "undefined") && (typeof role != "undefined")) {
       console.log("300", id, classid, role);
 
       const docRef = doc(firebase, "users", id);
@@ -206,17 +273,17 @@ const getAllKeys = async () => {
 
           if (docSnap.exists()) {
 
-          let object = docSnap.data();
-          const getpenaltystatus = object.temporary;
-          const phonepassawardedd = object.phonepassawarded;
-          const statusupdate = object.status;
-          const idofpass = object.passid;
-          setNowinpenaltylocal(getpenaltystatus)
-          setIsthestudentdonewithwork(phonepassawardedd)
-          setGetstatus(statusupdate);
-          setGetexistingpassid(idofpass);
+            let object = docSnap.data();
+            const getpenaltystatus = object.temporary;
+            const phonepassawardedd = object.phonepassawarded;
+            const statusupdate = object.status;
+            const idofpass = object.passid;
+            setNowinpenaltylocal(getpenaltystatus)
+            setIsthestudentdonewithwork(phonepassawardedd)
+            setGetstatus(statusupdate);
+            setGetexistingpassid(idofpass);
           }
-     
+
         })
     }
   }
@@ -242,7 +309,7 @@ const getAllKeys = async () => {
 
           let object = docSnap.data();
 
-      
+
           const sessionid = object.classsessionid;
           const classid = object.classid;
           const location = object.comingfrom;
@@ -296,7 +363,7 @@ const getAllKeys = async () => {
   useEffect(() => {
 
     console.log("5");
-  
+
 
     updatedatabase();
   }, [percent]);
@@ -305,7 +372,7 @@ const getAllKeys = async () => {
 
     console.log("6");
 
-    if (classid && (typeof total3 != "undefined") && (typeof total2 != "undefined") && (typeof getadjustmentss != "undefined") && positivenegative) {
+    if ((typeof classid != "undefined") && (typeof total3 != "undefined") && (typeof total2 != "undefined") && (typeof getadjustmentss != "undefined") && positivenegative) {
 
       const percents = { id: classid, penaltyminutes: (total3 / 60000), overunder: total2, adjustments: getadjustmentss, level: overunderstatus }
 
@@ -343,7 +410,7 @@ const getAllKeys = async () => {
 
 
   const getadjustment2 = () => {
-    if (typeof id != "undefined") {
+    if (typeof id != "undefined" ) {
       console.log(id, "301 here is something else", classid);
       const docRef = doc(firebase, "users", id);
 
@@ -351,12 +418,12 @@ const getAllKeys = async () => {
 
         .then((docSnap) => {
           if (docSnap.exists()) {
-          let object = docSnap.data();
-          const statusupdate = object.status;
-          const idofpass = object.passid;
+            let object = docSnap.data();
+            const statusupdate = object.status;
+            const idofpass = object.passid;
 
-          setGetstatus(statusupdate);
-          setGetexistingpassid(idofpass);
+            setGetstatus(statusupdate);
+            setGetexistingpassid(idofpass);
           }
         })
     }
@@ -372,9 +439,9 @@ const getAllKeys = async () => {
     } else { navigation.navigate("Passisready", { id: id, passid: getexistingpassid, school: school, state: state, town: town, firstname: firstname, lastname: lastname, classid: passclassid, currentsessionid: passclasssessionid, currentlocation: passlocation, coursename: passcoursename, locationdestination: passdestination, teacherid: teacheridfrompass, drinkofwater: timeallowed, teacheridforreturn: passteacheridreturn, nonbathroomtime: timeallowed }); }
   }
 
-  if (id) {
+  if (typeof id != "undefined") {
 
-    console.log("9");
+    console.log("9", id, "9");
 
     onSnapshot(doc(firebase, "users", id), () => {
       getadjustment()
@@ -410,9 +477,9 @@ const getAllKeys = async () => {
   const newupdate = () => {
 
     console.log("13");
- 
+
     if (typeof coursename === "undefined") {
-   
+
     } else {
       setShowspinner(true);
       getpenaltytimeoneclass();
@@ -453,7 +520,7 @@ const getAllKeys = async () => {
 
   useEffect(() => {
     console.log("19");
-    if (classid) {
+    if (typeof classid != "undefined") {
       if (isNaN(getadjustmentsandplustotal2)) {
         setPositivenegative("positive");
       }
@@ -488,7 +555,7 @@ const getAllKeys = async () => {
       setGetadjustmentsandplustotal2(newnumber);
     }
     else if (typeof getadjustmentss != "undefined") {
- 
+
       const newnumber = ((Math.round((getadjustmentss) * 10)) / 10);
 
       setGetadjustmentsandplustotal2(newnumber);
@@ -507,7 +574,7 @@ const getAllKeys = async () => {
 
     const array = []
     const sum = 0;
-    if (id) {
+    if (typeof id != "undefined" && typeof classid != "undefined") {
       const q = query(collection(firebase, "passes"), where("studentid", "==", id), where("classid", "==", classid));
 
       const querySnapshot = await getDocs(q)
@@ -515,10 +582,10 @@ const getAllKeys = async () => {
         .then(async (snapshot) => {
           snapshot.forEach(doc => {
             if (isNaN(doc.data().differenceoverorunderinminutes) === true) {
-              console.log("this is Not a numbe",doc.data().differenceoverorunderinminutes, doc.data().id, "this is Not a number the array")
+              console.log("this is Not a numbe", doc.data().differenceoverorunderinminutes, doc.data().id, "this is Not a number the array")
             } else {
               array.push(doc.data().differenceoverorunderinminutes)
-              console.log("this is a number",doc.data().differenceoverorunderinminutes, doc.data().id, "this is a number the array")
+              console.log("this is a number", doc.data().differenceoverorunderinminutes, doc.data().id, "this is a number the array")
             }
           })
 
@@ -527,7 +594,7 @@ const getAllKeys = async () => {
         })
 
     }
-    
+
     setShowspinner(false);
   };
 
@@ -535,7 +602,7 @@ const getAllKeys = async () => {
 
     console.log("22");
 
-    if (id && classid) {
+    if (typeof id != "undefined" && typeof classid != "undefined") {
       setShowspinner(true);
 
       const array = [];
@@ -561,7 +628,7 @@ const getAllKeys = async () => {
       }
       console.log("HI7")
     }
-  
+
   };
 
 
@@ -570,10 +637,9 @@ const getAllKeys = async () => {
   async function gettotaltimeoneclass() {
 
     console.log("23");
-    if (id && classid) {
       const array = []
       const sum = 0;
-      if (id) {
+      if (typeof id != "undefined" && typeof classid != "undefined") {
         const q = query(collection(firebase, "classsessions"), where("classesbeingtaughtid", "==", classid));
 
         const querySnapshot = await getDocs(q)
@@ -584,12 +650,11 @@ const getAllKeys = async () => {
               array.push(number);
             })
           }).then(async () => {
-          
+
             setTotal5(array.reduce((a, b) => a + b, 0));
           })
       }
 
-    }
 
   };
 
@@ -607,7 +672,7 @@ const getAllKeys = async () => {
 
 
 
-          {coursename && ((nowinpenalty === "null" && typeof Nowinpenaltylocal === "undefined") || (Nowinpenaltylocal === "null")) ? <View style={styles.button}>
+          {coursename && ((nowinpenalty.length === 0 && typeof Nowinpenaltylocal === "undefined") || (Nowinpenaltylocal.length === 0)) ? <View style={styles.button}>
             <Text style={styles.btext}>{coursename}{'\n'}In Good Standing</Text></View> : coursename && (((nowinpenalty === "true" || nowinpenalty === "false") && typeof Nowinpenaltylocal === "undefined") || (Nowinpenaltylocal === "true" || Nowinpenaltylocal === "false")) ? <View style={styles.button}><Text style={styles.btext}>{coursename}{'\n'}In Penalty</Text></View> : null}
 
           {typeof coursename === "undefined" ? null : <Text>{'\n'}</Text>}
@@ -632,49 +697,50 @@ const getAllKeys = async () => {
           {coursename ? <View style={styles.button}>
 
             <Text style={styles.btext} onPress={() => navigation.navigate("ClassesStudent", {
-      teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
             }
             )}>Begin Making A Pass</Text>
-          </View> : <View style={styles.button}>
+          </View> : typeof id != "undefined" ? <View style={styles.button}>
 
             <Text style={styles.btext} onPress={() => navigation.navigate("ClassesStudent", {
               teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustments: getadjustmentss, getadjustmentsandplustotal2: getadjustmentsandplustotal2, total3: total3, getstatus: getstatus, passid: getexistingpassid
             })}>Select Your Location</Text>
-          </View>}
+          </View> : null}
 
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
           {coursename ? <View style={styles.button}>
             <Text style={styles.btext} onPress={() => navigation.navigate("Relatedrules", {
-             teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
             })}>Rules Set By This Teacher</Text>
           </View> : null}
 
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
           {coursename ? <View style={styles.button}>
             <Text style={styles.btext} onPress={() => navigation.navigate("StudentConsequences", {
-         teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
             })}>Consequences Given</Text>
           </View> : null}
 
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
           {coursename ? <View style={styles.button}>
             <Text style={styles.btext} onPress={() => navigation.navigate("Passesstudents", {
-           teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
             })}>My Passes/Tardies</Text>
           </View> : null}
 
           <Text>{'\n'}</Text>
-          {id ? <Text>{'\n'}</Text> : null}
+          { typeof id != "undefined" ? <Text>{'\n'}</Text> : null}
 
-          {id ? <View><Text style={styles.paragraph2}> ___________________ </Text></View> : null}
-          {id ? <View><Text style={styles.paragraph2}>Set-Up{'\n'}</Text></View> : null}
+          <View><Text style={styles.paragraph2}> ___________________ </Text></View>
+          <View><Text style={styles.paragraph2}>Set-Up{'\n'}</Text></View>
 
-          {id ? <View style={styles.button}>
+          <View style={styles.button}>
 
-            <Text style={styles.btext} onPress={() => navigation.navigate("Availableclasses", {
-            teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2
-            })}>Join A Class</Text></View> : null}
-          {id ? <Text>{'\n'}</Text> : null}
+            {typeof id != "undefined" ? <Text style={styles.btext} onPress={() => navigation.navigate("Availableclasses", {
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, email: email, getadjustmentsandplustotal2: getadjustmentsandplustotal2
+            })}>Join A Class</Text>:<Text style={styles.btext} onPress={() => getstorage1()}>Reset Needed</Text> }
+            </View>
+          <Text>{'\n'}</Text>
           <View><Text style={styles.paragraph2}> ___________________ </Text></View>
           <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
             <Text style={styles.paragraph2}>

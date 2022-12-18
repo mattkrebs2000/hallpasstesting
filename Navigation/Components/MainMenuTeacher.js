@@ -446,7 +446,7 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log(email)
-    if (email2 != "Mkrebs@rpsk12.org" && email2 != "Mjones@rpsk12.org" && email2 != "Nurse@rpsk12.org") {
+    if (email2 != "Mkrebs@rpsk12.org" && email2 != "Mjones@rpsk12.org" && email2 != "Nurse@rpsk12.org" && email2 != "mwkrebs@rpsk12.org" ) {
       navigation.navigate("SignIn");
       alert("This App is in Development. Direct inquiries to mattkrebsemail@gmail.com.")
     } else {

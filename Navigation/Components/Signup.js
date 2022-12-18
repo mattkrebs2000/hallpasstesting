@@ -35,6 +35,7 @@ export default function SignUp({ route, navigation }) {
   // const { role} = route.params;
 
   const [email, setEmail] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validationMessage, setValidationMessage] = useState("");
@@ -621,7 +622,6 @@ useEffect(() => {
 
   useEffect(() => {
     if (idselected ) {
-      console.log("1The old user Document has just been erased!");
       deleteDoc(doc(firebase, "users", idselected))
     }
     console.log("2The old user Document has just been erased!");
@@ -652,6 +652,7 @@ useEffect(() => {
           exclusivephonepassexpiration: 0,
           exclusivephonepassused: "",
           email: email,
+          phonenumber: phonenumber,
           localfirstname,
           locallastname,
           role: "Student",
@@ -749,6 +750,7 @@ useEffect(() => {
             localfirstname,
             locallastname,
             email,
+            phonenumber, 
             password: encrypt,
             passwordactual: password,
             school,
@@ -933,7 +935,7 @@ useEffect(() => {
             nonbathroompass: 10,
             phonepass: 10,
             drinkpass: 5,
-            maxstudentsphonepass: 5,
+            maxstudentsphonepass: 40,
             donewithworkphonepassavailable: true,
           };
 
@@ -1112,7 +1114,7 @@ const signUpAdmin = () => {
   const textsearchedstates = () => {
     setSearchingstate(true)
 
-    console.log("an array of states1", stateArray, "an array of states1")
+    console.log("an array of states1")
     let postss = [];
     for (let i in stateArray) {
       let match = false;
@@ -1209,9 +1211,17 @@ const signUpAdmin = () => {
                 <Text>{'\n'}</Text>
                 <Text>{'\n'}</Text>
               </ScrollView></View> : state && town && school && role === "Student" && second === ("No") ? <ScrollView contentContainerStyle={styles.container}>
+                
+              <TextInput
+                  style={styles.Newrow}
+                  placeholder='Phone Number'
+                  placeholderTextColor="#BEBEBE"
+                  value={phonenumber}
+                  onChangeText={setPhonenumber}
+                  maxLength={10} />
                 <TextInput
                   style={styles.Newrow}
-                  placeholder='Phone #'
+                  placeholder='Email'
                   placeholderTextColor="#BEBEBE"
                   value={email}
                   onChangeText={setEmail} />
@@ -1251,9 +1261,17 @@ const signUpAdmin = () => {
                 <Text>{'\n'}</Text>
                 <Text>{'\n'}</Text>
               </ScrollView> : state && town && school && role === "Student" && second === "Yes" && typeof locallastname != "undefined" && typeof localfirstname != "undefined" ? <ScrollView contentContainerStyle={styles.container}>
+               
+              <TextInput
+                  style={styles.Newrow}
+                  placeholder='Phone Number'
+                  placeholderTextColor="#BEBEBE"
+                  value={phonenumber}
+                  onChangeText={setPhonenumber}
+                  maxLength={10}  />
                 <TextInput
                   style={styles.Newrow}
-                  placeholder='Phone #'
+                  placeholder='Email'
                   placeholderTextColor="#BEBEBE"
                   value={email}
                   onChangeText={setEmail} />

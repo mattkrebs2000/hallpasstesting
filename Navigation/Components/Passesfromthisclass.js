@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Passes from './Mapofclasspasses/Mapofclasspasses';
 
-import { Alert, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
+import { Alert, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator, Pressable } from 'react-native';
 
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification } from "@firebase/auth";
@@ -15,7 +15,7 @@ export default function SignUp({ route, navigation }) {
     const { idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepassmaxstudents, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, location, teacherid, teacheriscalled,
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, sessionending, maxstudentsbathroom, totalclasstime, idselected, penaltyminutes, adjustments, abc, drinkpasslimit, linkedclass
     } = route.params;
-    console.log(totalinlineforbathroom, "totalinline", howmany, "howmanypeopleinline");
+    console.log(currentmax2, "current max",  maxstudentsbathroom, "maxstudentsbathroom", totalinlineforbathroom, "totalinline", howmany, "howmanypeopleinline");
 
     const [userdata, setUserdata] = useState([]);
     const [classdata, setClassdata] = useState();
@@ -51,7 +51,6 @@ export default function SignUp({ route, navigation }) {
     }, []);
 
     const letthenextstudentgo = () => {
-        console.log(currentmax);
         setCurrentmax2(currentmax2 + 1);
     }
 
@@ -526,11 +525,13 @@ export default function SignUp({ route, navigation }) {
                     {idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> : <Text style={styles.paragraph2} onPress={(e) => ReturnStudnet2()}>Reset Bathroom Availability</Text>}
 
                     <Pressable>
-                    <Text style={styles.paragraph2} onPress={() => letthenextstudentgo()}>Increase Total Number of{'\n'}Students Allowed in Bathroom{'\n'}</Text>
+                    <Text style={styles.paragraph2} onPress={() => letthenextstudentgo()}>Increase Total Number of{'\n'}Students Allowed in Bathroom</Text>
                 </Pressable>
                 {currentmax2 > 1 ? <Pressable onPress={() => reducemaxbathroom()}>
-                    <Text style={styles.paragraph2}>Decrease Total Number of{'\n'}Students Allowed in Bathroom{'\n'}</Text>
-                </Pressable> : null}
+                    <Text style={styles.paragraph2}>Decrease Total Number of{'\n'}Students Allowed in Bathroom</Text>
+                </Pressable> : <Pressable>
+                    <Text style={styles.paragraph2}>               {'\n'}           </Text>
+                </Pressable> }
 
                     <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 
@@ -539,6 +540,8 @@ export default function SignUp({ route, navigation }) {
                         email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, drinkpassduration: drinkpassduration, phonepassduration: phonepassduration, overunder: overunder, bathroompassduration: bathroompassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom,
                         newoverunder: newoverunder, penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass: linkedclass
                     })}  >Return to Main Menu</Text>
+
+<Text style={styles.paragraph2}>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
 
 
                 </View>

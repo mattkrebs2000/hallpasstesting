@@ -21,7 +21,7 @@ export default function SignUp({ route, navigation }) {
     const [classesarray, setClassesarray] = useState([]);
     const [selectedclass, setSelectedclass] = useState();
     const [coursename, setCoursename] = useState("");
-    const [idselected, setIdselected] = useState("");
+    const [idselected, setIdselected] = useState();
     const [section, setSection] = useState("");
     const [teacher, setTeacher] = useState("");
     const [youcangetpass, setYoucangetpass] = useState(false);
@@ -101,6 +101,7 @@ export default function SignUp({ route, navigation }) {
     }, []);
 
     async function getlocationsqrcodes() {
+        console.log(id, "see if this shows uppppp in Classesstudent");
 
 
         const array = []
@@ -245,7 +246,7 @@ export default function SignUp({ route, navigation }) {
 
     const getadjustment = () => {
 
-        if (id && idselected) {
+        if (typeof id != "undefined" && typeof idselected != "undefined") {
 
             const docRef = doc(firebase, "users", id);
 

@@ -82,24 +82,20 @@ export default function SignUp({ route, navigation }) {
    
    
     const [smsAvailable, setSmsAvailable] = React.useState(false);
-    const [emailphone, setEmailphone]= useState();
+    const [phone, setPhone]= useState();
 
-    const onComposeSms = React.useCallback(async () => {
-       
-        const message = "hi " + {localfirstname} + "See if this works " +{localcode} +  " this is the consequence";
-
-        alert('Text funcion is being run!');
-      if (smsAvailable) {
-        console.log('2going for it!');
-        await SMS.sendSMSAsync(
-            ['6172307850', emailphone],
-          message,
-        );
-      } else {
-          alert("SMS is not available")
-      }
-    }, [smsAvailable]);
-
+    async function onComposeSms() {
+        alert("this is being run")
+      if  (smsAvailable) {
+     alert("this is being run")
+    await SMS.sendSMSAsync(
+  [phone, '6172307850'],
+  'My sample HelloWorld message'
+);
+    }else {
+      alert("its not available");
+    }
+    }
 
     React.useEffect(() => {
         SMS.isAvailableAsync().then(setSmsAvailable);
@@ -379,9 +375,9 @@ export default function SignUp({ route, navigation }) {
         let change = selected.changemade;
         let consequence = selected.consequenceid;
         let idselect = selected.id;
-        let emai = selected.email;
+        let fon = selected.phonenumber;
 
-        setEmailphone(emai)
+        setPhone(fon)
         setFirstname(selected.localfirstname)
         setLastname(selected.locallastname)
         setPhonetimestart(selected.phonetimestart)
@@ -410,7 +406,7 @@ export default function SignUp({ route, navigation }) {
 
     useEffect(() => {
 
-        console.log(idselected2, empty, "empty", "This is the consequence");
+        console.log(phone, "Does the phone still retain its spot");
 
     }, [idselected2]);
 
