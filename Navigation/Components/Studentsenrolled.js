@@ -85,12 +85,12 @@ export default function SignUp({ route, navigation }) {
     const [phone, setPhone]= useState();
 
     async function onComposeSms() {
-        alert("this is being run")
+        const message = "Hi, " + firstname + ". This is a Mesasage From Your Teacher's Phone. You are now in Penalty for breaking class rule: " + localcode;
       if  (smsAvailable) {
      alert("this is being run")
     await SMS.sendSMSAsync(
-  [phone, '6172307850'],
-  'My sample HelloWorld message'
+  [phone, '6172307850', null, "undefined"],
+  message
 );
     }else {
       alert("its not available");

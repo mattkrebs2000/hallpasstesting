@@ -672,7 +672,7 @@ export default function Destination({ route, navigation }) {
 
 
 
-          {coursename && ((nowinpenalty.length === 0 && typeof Nowinpenaltylocal === "undefined") || (Nowinpenaltylocal.length === 0)) ? <View style={styles.button}>
+          {coursename && ((nowinpenalty === "null" && typeof Nowinpenaltylocal === "undefined") || (Nowinpenaltylocal === "null")) ? <View style={styles.button}>
             <Text style={styles.btext}>{coursename}{'\n'}In Good Standing</Text></View> : coursename && (((nowinpenalty === "true" || nowinpenalty === "false") && typeof Nowinpenaltylocal === "undefined") || (Nowinpenaltylocal === "true" || Nowinpenaltylocal === "false")) ? <View style={styles.button}><Text style={styles.btext}>{coursename}{'\n'}In Penalty</Text></View> : null}
 
           {typeof coursename === "undefined" ? null : <Text>{'\n'}</Text>}

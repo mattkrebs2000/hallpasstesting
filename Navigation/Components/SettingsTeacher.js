@@ -187,7 +187,7 @@ const Destination = ({ route, navigation }) => {
     console.log(lengthofclass, "starttime = ", starttime, "settingsteacher,", classid, coursename, bathroompasslimit, ifnegativeplusminus, userinformation, role, school, state, town, teacheriscalled, "SettingsTeacher");
 
     useEffect(() => {
-        if (typeof role === "undefined" || typeof userinformation === "undefined" || typeof school === "undefined" || typeof state === "undefined" || typeof town === "undefined") {
+        if (typeof role === "undefined" || typeof school === "undefined" || typeof state === "undefined" || typeof town === "undefined") {
             navigation.navigate("SignIn");
         } else {
             console.log("Everything is cool!")
