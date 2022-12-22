@@ -63,16 +63,9 @@ const Destination = ({ route, navigation }) => {
 
                 <Text style={styles.paragraph21}>I will try not to be late this time. This penalty of having to write this can be removed if i serve a detention with the teacher.</Text>
 
-
                 <Text style={styles.paragraph99}>{'\n'}Example of Text to be Transcribed - if Students Over/Under is at -10 or Lower.</Text>
 
                 <Text style={styles.paragraph21}>I understand that rules are important and they are in place for my benefit. And I understand that one of the rules in this class is that i need to be respectful of the time limits of passes that i am using. So i will try not to be late this time. This penalty of having to write this can be removed if I serve a detention with the teacher.</Text>
-
-                <Text style={styles.paragraph99}>{'\n'}'Break From Work Pass '</Text>
-                <Text style={styles.paragraph21}>This is a timed interval during which a student can 'play' on their technology. While a student is on a 'Break From Work Pass' the teachers ability to put a student into the 'In Penalty' category will be disabled. After a student uses a 'Break From Work Pass' one time in a class session it will be disabled from use for the rest of the class. A teacher can disable this feature altogether by setting "Time Limit for Break From Work Pass " to "Inaccessible."</Text>
-
-                <Text style={styles.paragraph99}>{'\n'}'Done With Work Phone Pass'</Text>
-                <Text style={styles.paragraph21}>This is a pass that is initiated by the student and confirmed by the teacher when a student is said to have completed their work. When a student is awarded an 'Done With Work Phone Pass' the teachers ability to put a student into the 'In Penalty' category will be disabled. Students will see this Pass option become accessible in each Class session after it is half over if the teacher is making the pass accessible. A teacher can disable this feature altogether by making the 'Done With Work Phone Pass' in Settings false (positioned to the left).</Text>
 
                 <Text style={styles.paragraph99}>{'\n'}'Bathroom Passes'</Text>
                 <Text style={styles.paragraph21}>A 'Bathroom Pass' Begins when a Student Zaps the QRCode in the class he/she is leaving from and ends when that student arrives back at class and zaps the same QR code.</Text>

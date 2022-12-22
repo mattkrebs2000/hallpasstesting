@@ -208,7 +208,7 @@ const Destination = ({ route, navigation }) => {
   useEffect(() => {
     console.log("7")
 
-    if (locationdestination === "Bathroom" || locationdestination === "Break From Work Pass " || locationdestination === "Get Drink of Water") {
+    if (locationdestination === "Bathroom" || locationdestination === "Get Drink of Water") {
       setTeacheridforreturn(teacherid);
     } else {
       setTeacheridforreturn(Teacheriddestination);
@@ -267,10 +267,6 @@ const Destination = ({ route, navigation }) => {
         } else {
           navigation.navigate("Passisready", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, maxstudentsbathroom: maxstudentsbathroom })
         }
-      } else if (locationdestination === "Break From Work Pass ") {
-
-        navigation.navigate("Passisready", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, })
-
       } else if (locationdestination === newlocation || locationdestination === "Get Drink of Water") {
         navigation.navigate("Passisready", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, })
       } else {
@@ -459,7 +455,7 @@ const Destination = ({ route, navigation }) => {
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
 
-        const arrayy = [{ location: "Break From Work Pass ", id: "Break From Work Pass " }, { location: "Done with work Phone Pass", id: "Done with work Phone Pass" }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
+        const arrayy = [{ location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
 
         snapshot.forEach(doc => {
             arrayy.push(doc.data())
@@ -476,7 +472,7 @@ const Destination = ({ route, navigation }) => {
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
 
-        const arrayy = [{ location: "Break From Work Pass ", id: "Break From Work Pass " }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
+        const arrayy = [{ location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
 
         snapshot.forEach(doc => {
             arrayy.push(doc.data())
@@ -495,7 +491,7 @@ const Destination = ({ route, navigation }) => {
       .then(function (snapshot) {
 
 
-        const arrayy = [{ location: "Done with work Phone Pass", id: "Done with work Phone Pass" }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
+        const arrayy = [{ location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
 
         snapshot.forEach(doc => {
             arrayy.push(doc.data())
@@ -574,7 +570,7 @@ const Destination = ({ route, navigation }) => {
 
         //   const arrayy = [{ location: newlocation, id: newlocation },]
 
-        const arrayy = [{ location: newlocation, id: newlocation }, { location: "Break From Work Pass ", id: "Break From Work Pass " }, { location: "Done with work Phone Pass", id: "Done with work Phone Pass" }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },]
+        const arrayy = [{ location: newlocation, id: newlocation }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },]
 
 
 
@@ -597,7 +593,7 @@ const Destination = ({ route, navigation }) => {
 
         //   const arrayy = [{ location: newlocation, id: newlocation },]
 
-        const arrayy = [{ location: newlocation, id: newlocation }, { location: "Break From Work Pass ", id: "Break From Work Pass " }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },]
+        const arrayy = [{ location: newlocation, id: newlocation }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },]
 
 
 
@@ -890,11 +886,8 @@ const Destination = ({ route, navigation }) => {
 
 
   async function custompassinfosent() {
-    if (locationdestination === "Done with work Phone Pass") {
-      navigation.navigate("Donewithwork", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, })
-    } else {
+
       navigation.navigate("Passisready", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, })
-    }
   }
 
   return (

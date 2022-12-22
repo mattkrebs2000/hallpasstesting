@@ -151,8 +151,8 @@ const Scanner = ({ route, navigation }) => {
 
 
   useEffect(() => {
-    console.log(currentdate, "currentdate");
-    if (typeof currentdate != "undefined" && locationdestination == "Break From Work Pass") {
+  
+    if (typeof day != "undefined" && locationdestination == "Break From Work Pass") {
 
       if (text == teacheridforreturn && scanned) {
         returnmakephonepass();
@@ -162,7 +162,7 @@ const Scanner = ({ route, navigation }) => {
         Alert("You have scanned the wrong @RCode1");
       }
 
-    } else if (typeof currentdate != "undefined" && locationdestination != "Break From Work Pass") {
+    } else if (typeof day != "undefined" && locationdestination != "Break From Work Pass") {
       if (text == teacheridforreturn && scanned) {
         returnfinalizehallpass();
       } else {
@@ -848,7 +848,7 @@ console.log("second if then");
 
   useEffect(() => {
     console.log(day, "is currentdateeend undefined?");
-    if (typeof day === "undefined" && typeof currentdate != "undefined") {
+    if (typeof day === "undefined") {
       console.log("teacherid and text", teacherid, text, "teacherid and texti");
       if (text == teacherid && scanned) {
         console.log("Play SOund Happened");

@@ -76,6 +76,7 @@ export default function SignUp({ route, navigation }) {
         const unsub = onSnapshot(doc(firebase, "classesbeingtaught", idselected), (doc) => {
             setYoucangetpass(doc.data().passesareavailable);
             setEndofclasssession(doc.data().currentsessionends);
+
         });
 
     }

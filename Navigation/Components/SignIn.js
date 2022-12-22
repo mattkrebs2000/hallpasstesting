@@ -2,8 +2,9 @@ import { Alert, ScrollView, SafeAreaView, Text, View, TextInput, ImageBackground
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 import { firebase, auth } from "../Firebase/Config";
-import { admin, getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, deleteUser} from "@firebase/auth";
+import { admin, getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, deleteUser } from "@firebase/auth";
 
 
 import { doc, getDoc } from '@firebase/firestore';
@@ -31,6 +32,12 @@ export default function Login({ route, navigation }) {
 
 
   const [someoneisloggedin, setsomeoneisloggedin] = useState();
+  const [passwordShown, setPasswordShown] = useState(true);
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
+
+
 
 
   const signoutfunction = () => {
@@ -91,7 +98,7 @@ export default function Login({ route, navigation }) {
   });
 
   useEffect(() => {
-    console.log("Here is id",id2)
+    console.log("Here is id", id2)
     if (id2) {
       getinfo()
     }
@@ -121,80 +128,80 @@ export default function Login({ route, navigation }) {
           } else {
             console.log("there was not an adminclass")
           }
-  
-        if (docSnap.data().teacheriscalled) {
-          AsyncStorage.setItem('teacheriscalled', docSnap.data().teacheriscalled);
-          console.log("there was a teacheriscalled")
-        } else {
-          console.log("there was not a teachers is called")
-        }
 
-        if (docSnap.data().localfirstname) {
-          AsyncStorage.setItem('firstname', docSnap.data().localfirstname);
-          console.log("there was a firstnaame")
-        } else {
-          console.log("there was not a firstname is called")
-        }
+          if (docSnap.data().teacheriscalled) {
+            AsyncStorage.setItem('teacheriscalled', docSnap.data().teacheriscalled);
+            console.log("there was a teacheriscalled")
+          } else {
+            console.log("there was not a teachers is called")
+          }
 
-        if (docSnap.data().locallastname) {
-          AsyncStorage.setItem('lastname', docSnap.data().locallastname);
-          console.log("there was a lastname")
-        } else {
-          console.log("there was not a lastname is called")
-        }
-        if (docSnap.data().role) {
-          AsyncStorage.setItem('role', docSnap.data().role);
-          console.log("there was a role")
-        } else {
-          console.log("there was not a role is called")
-        }
-        if (docSnap.data().id) {
-          AsyncStorage.setItem('id', docSnap.data().id);
-          console.log("there was an id")
-        } else {
-          console.log("there was not an id called")
-        } if (docSnap.data().school) {
-          AsyncStorage.setItem('school', docSnap.data().school);
-          console.log("there was an school")
-        } else {
-          console.log("there was not a school called")
-        }
-        if (docSnap.data().town) {
-          AsyncStorage.setItem('town', docSnap.data().town);
-          console.log("there was an town")
-        } else {
-          console.log("there was not a town called")
-        }
-        if (docSnap.data().state) {
-          AsyncStorage.setItem('state', docSnap.data().state);
-          console.log("there was an state")
-        } else {
-          console.log("there was not a state called")
-        }
-        if (docSnap.data().email) {
-          AsyncStorage.setItem('email', docSnap.data().email);
-          console.log("there was an email")
-        } else {
-          console.log("there was not a email called")
-        }
+          if (docSnap.data().localfirstname) {
+            AsyncStorage.setItem('firstname', docSnap.data().localfirstname);
+            console.log("there was a firstnaame")
+          } else {
+            console.log("there was not a firstname is called")
+          }
 
-
+          if (docSnap.data().locallastname) {
+            AsyncStorage.setItem('lastname', docSnap.data().locallastname);
+            console.log("there was a lastname")
+          } else {
+            console.log("there was not a lastname is called")
+          }
+          if (docSnap.data().role) {
+            AsyncStorage.setItem('role', docSnap.data().role);
+            console.log("there was a role")
+          } else {
+            console.log("there was not a role is called")
+          }
+          if (docSnap.data().id) {
+            AsyncStorage.setItem('id', docSnap.data().id);
+            console.log("there was an id")
+          } else {
+            console.log("there was not an id called")
+          } if (docSnap.data().school) {
+            AsyncStorage.setItem('school', docSnap.data().school);
+            console.log("there was an school")
+          } else {
+            console.log("there was not a school called")
+          }
+          if (docSnap.data().town) {
+            AsyncStorage.setItem('town', docSnap.data().town);
+            console.log("there was an town")
+          } else {
+            console.log("there was not a town called")
+          }
+          if (docSnap.data().state) {
+            AsyncStorage.setItem('state', docSnap.data().state);
+            console.log("there was an state")
+          } else {
+            console.log("there was not a state called")
+          }
+          if (docSnap.data().email) {
+            AsyncStorage.setItem('email', docSnap.data().email);
+            console.log("there was an email")
+          } else {
+            console.log("there was not a email called")
+          }
 
 
-        setEmail(docSnap.data().email)
-        setSchool(docSnap.data().school);
-        setTown(docSnap.data().town);
-        setState(docSnap.data().state);
-        setFirstname(docSnap.data().localfirstname);
-        setLastname(docSnap.data().locallastname);
-        setTeacheriscalled(docSnap.data().teacheriscalled);
-        setEmaillocal("");
-        setPasswordlocal("");
-        setRole(docSnap.data().role);
 
-      } else {
-    
-        Alert.alert('The user "Document" cannot be found. The user needs to recreate the account.');
+
+          setEmail(docSnap.data().email)
+          setSchool(docSnap.data().school);
+          setTown(docSnap.data().town);
+          setState(docSnap.data().state);
+          setFirstname(docSnap.data().localfirstname);
+          setLastname(docSnap.data().locallastname);
+          setTeacheriscalled(docSnap.data().teacheriscalled);
+          setEmaillocal("");
+          setPasswordlocal("");
+          setRole(docSnap.data().role);
+
+        } else {
+
+          Alert.alert('The user "Document" cannot be found. The user needs to recreate the account.');
         }
 
       })
@@ -212,14 +219,14 @@ export default function Login({ route, navigation }) {
 
       navigation.navigate("Mainmenuteacher", { school2: school2, state2: state2, town2: town2, role2: role2, teacheriscalled2: teacheriscalled2, id2: id2, email2: email2 });
 
-    } 
+    }
     if (role2 === "Admin") {
 
       navigation.navigate("Mainmenuadmin", { school2: school2, state2: state2, town2: town2, role2: role2, teacheriscalled2: teacheriscalled2, id2: id2, email2: email2 });
 
     }
-    
-    
+
+
     else {
       console.log("Slow your role");
     }
@@ -235,12 +242,12 @@ export default function Login({ route, navigation }) {
     });
   };
 
- 
+
 
   return (
     <SafeAreaView style={styles.largercontainer}>
       <View style={styles.container1}>
-        <Text style={styles.error}>Log In</Text>
+        {passwordShown ? <Text style={styles.error}  onPress={() => togglePasswordVisiblity()}>Hide{'\n'}Password</Text> : <Text style={styles.error}  onPress={() => togglePasswordVisiblity()}>Show{'\n'}Password</Text> }
       </View>
       <KeyboardAvoidingView
         style={styles.container2}
@@ -259,10 +266,9 @@ export default function Login({ route, navigation }) {
             style={styles.Newrow}
             placeholder='Password'
             placeholderTextColor="#BEBEBE"
-            secureTextEntry={true}
+            secureTextEntry={passwordShown ? false : true}
             value={passwordlocal.toLowerCase()}
-            onChangeText={setPasswordlocal} />
-
+            onChangeText={setPasswordlocal}/>
         </ScrollView>
       </KeyboardAvoidingView>
       <View style={styles.section3}>

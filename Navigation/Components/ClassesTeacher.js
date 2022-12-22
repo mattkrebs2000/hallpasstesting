@@ -698,6 +698,8 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
     async function priortocreateanewsession() {
 
+        setShowspinner(true);
+
         console.log("REsetting changemade has happende")
         const array = [];
         const array2 = [];
@@ -865,7 +867,7 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
                 <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 
-                {coursename && (!coursename.includes("Extra Help") &&!coursename.includes("Detention")) && (classisstillgoingon === false) ? <Text style={styles.paragraph2} onPress={() => priortocreateanewsession()} >Begin This Class</Text> : coursename && (!coursename.includes("Extra Help") && !coursename.includes("Detention")) && (classisstillgoingon === true) ? <Text style={styles.paragraph2} onPress={() =>
+                {showspinner === false && coursename && (!coursename.includes("Extra Help") &&!coursename.includes("Detention")) && (classisstillgoingon === false) ? <Text style={styles.paragraph2} onPress={() => priortocreateanewsession()} >Begin This Class</Text> : coursename && (!coursename.includes("Extra Help") && !coursename.includes("Detention")) && (classisstillgoingon === true) ? <Text style={styles.paragraph2} onPress={() =>
 
                     navigation.navigate("Mainmenuteacher", { classsessionbegun:classsessionbegun,
                         idofcurrentclass: idofcurrentclass, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit,drinkpasslimit:drinkpasslimit, 

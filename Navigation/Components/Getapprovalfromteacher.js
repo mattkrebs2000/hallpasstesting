@@ -176,7 +176,7 @@ const Destination = ({ route, navigation }) => {
         <ScrollView>
 
           <TextInput
-            style={styles.Newrowy}
+            style={initialtext.includes(inputtext) ? styles.Newrowyy: styles.Newrowy }
             placeholder="Create Contract Here"
             placeholderTextColor="#BEBEBE"
             onChangeText={(text) => setInputtext(text)}
@@ -344,6 +344,23 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: "center",
     color: "#fff",
+    borderRadius: 10,
+   
+    maxWidth: "90%",
+    maxHeight: "50%",
+    padding: 15
+
+  },
+  Newrowyy: {
+    backgroundColor: '#ffff00',
+    margin: 20,
+    textAlign: "center",
+    fontSize: 16,
+
+    borderColor: "#E43522",
+    borderWidth: 2,
+    justifyContent: "center",
+    color: "#000000",
     borderRadius: 10,
    
     maxWidth: "90%",

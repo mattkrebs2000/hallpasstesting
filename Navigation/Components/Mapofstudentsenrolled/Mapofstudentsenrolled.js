@@ -78,7 +78,7 @@ export default function Phonelessstudents({ setIdselected, idselected, userdata,
                   }>{item.localfirstname} {item.locallastname}-({item.email.split('@')[0]}){'\n'}{item.temporary === "null" ? "In Good Standing" : "In Penalty"}{'\n'}In Compliance: {Math.round((totalclasstime / 60000) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime / 60000) - (item[classid].penaltyminutes)) / (totalclasstime / 60000)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder + item[classid].adjustments)}{'\n'}{item[classid].level}</Text>
                 </Pressable> : <Pressable
                   style={
-                    item.id === idselected ? styles.selected : styles.unselected
+                    item.temporary === "null"  ? styles.unselected : styles.unselected2
                   }
                   onPress={() => selectHandler(item, i)}>
                   <Text style={styles.unselected
@@ -116,6 +116,16 @@ const styles = StyleSheet.create({
 
   unselected: {
     backgroundColor: '#013469',
+    textAlign: "center",
+    fontSize: 17,
+    margin: 6,
+    flex: 1,
+    color: "#ffffff",
+    borderWidth: 3,
+    borderColor: "#013469",
+  },
+  unselected2: {
+    backgroundColor: '#FF0000',
     textAlign: "center",
     fontSize: 17,
     margin: 6,
