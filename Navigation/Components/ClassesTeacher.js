@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import CryptoES from "crypto-es";
 import Results from "./Subcomponents/ResultsContainer";
@@ -281,31 +282,11 @@ console.log("endpasses is being run", usersesssionid, "endpasses is being run");
 
         console.log(coursename, "here is the userdataa");
 
-        if (id && coursename && (!coursename.includes("Extra Help") && !coursename.includes("Detention"))) {
+        if (id && coursename) {
             console.log("See if it enters here????????")
             updateDoc(doc(firebase, "users", id), {
                 currentclass: coursename,
-                currentlocation: location,
-                afterschool: ""
-            }).catch((error) => {
-                console.log(error); alert(error);
-            }),
-
-            updateDoc(doc(firebase, "classesbeingtaught", idselected), {
-                afterschool: ""
-            }).catch((error) => {
-                console.log(error); alert(error);
-            })
-
-        } else if (id && coursename && coursename.includes("Extra Help")) {
-            updateDoc(doc(firebase, "classesbeingtaught", idselected), {
-                afterschool: "Extra Help"
-            }).catch((error) => {
-                console.log(error); alert(error);
-            })
-        } else if (id && coursename && coursename.includes("Detention")) {
-            updateDoc(doc(firebase, "classesbeingtaught", idselected), {
-                afterschool: "Detention"
+                currentlocation: location
             }).catch((error) => {
                 console.log(error); alert(error);
             })
@@ -330,12 +311,7 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 .then(function (snapshot) {
                     let array = []
                     snapshot.forEach(doc => {
-                       
-                       const starter = {classname: doc.data().classname + " Extra Help", id: doc.data().id, location: doc.data().location};
-                       const starter2 = {classname: doc.data().classname + " Detention", id: doc.data().id, location: doc.data().location};
-
-                       array.push( doc.data(), starter, starter2);
-                   
+                       array.push( doc.data());
                     })
                     if (array.length === 0) {
                         setUserdata([{ classname: "You haven't Registered" }])
@@ -833,7 +809,7 @@ console.log("is qrcodes run before this?", id,"it knows the id");
         })
     }
 
-    return (
+     return (
         <SafeAreaView style={styles.largercontainer}>
             <View style={styles.container1}>
                 {coursename ? <View><Text style={styles.error}>Now Active:{'\n'}{coursename} - {section} </Text></View> : <View><Text style={styles.error}>No Class is Active</Text></View>}
@@ -861,13 +837,13 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                         bottom: 0,
                     }} /></View>
 
-                {userdata.map((item) => item.classname) == "You haven't Registered" ? <Text style={styles.paragraph2}>   </Text> : coursename && (!coursename.includes("Extra Help") && !coursename.includes("Detention")) ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Selected Class </Text> : <Text style={styles.paragraph2} onPress={(e) => createTwoButton()}>Delete All Classes </Text>}
+                {userdata.map((item) => item.classname) == "You haven't Registered" ? <Text style={styles.paragraph2}>   </Text> : coursename ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Selected Class </Text> : <Text style={styles.paragraph2} onPress={(e) => createTwoButton()}>Delete All Classes </Text>}
 
-                {coursename && (!coursename.includes("Extra Help") && !coursename.includes("Detention")) ? <Text style={styles.paragraph2} onPress={(e) => gotosettings()}>Change Class Settings</Text> : coursename && (coursename.includes("Extra Help") || coursename.includes("Detention"))? <Text style={styles.paragraph2}>The QR Code is now ready</Text>: <Text style={styles.paragraph2}>    </Text>}
+                {coursename ? <Text style={styles.paragraph2} onPress={(e) => gotosettings()}>Change Class Settings</Text> : <Text style={styles.paragraph2}>    </Text>}
 
                 <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 
-                {showspinner === false && coursename && (!coursename.includes("Extra Help") &&!coursename.includes("Detention")) && (classisstillgoingon === false) ? <Text style={styles.paragraph2} onPress={() => priortocreateanewsession()} >Begin This Class</Text> : coursename && (!coursename.includes("Extra Help") && !coursename.includes("Detention")) && (classisstillgoingon === true) ? <Text style={styles.paragraph2} onPress={() =>
+                {showspinner === false && coursename && (classisstillgoingon === false) ? <Text style={styles.paragraph2} onPress={() => priortocreateanewsession()} >Begin This Class</Text> : coursename && (classisstillgoingon === true) ? <Text style={styles.paragraph2} onPress={() =>
 
                     navigation.navigate("Mainmenuteacher", { classsessionbegun:classsessionbegun,
                         idofcurrentclass: idofcurrentclass, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit,drinkpasslimit:drinkpasslimit, 
@@ -876,9 +852,8 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                         overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, classid: idselected, currentsessionid: usersesssionid, sessionending: sessionending, maxstudentsbathroom: maxstudentsbathroom, linkedclass:linkedclass
                     })
                 }
-                >Enter Class</Text> : coursename && !coursename.includes("Extra Help") && !coursename.includes("Detention") && classiscurrent && !Shownewsessionbegan && (nameofcurrentclass != coursename) ? <Text style={styles.paragraph2} onPress={() => beginthisclassendotherone()} >Begin This Class</Text> : !coursename ? <Text style={styles.paragraph2}
-                >Select A Course</Text> : coursename && (coursename.includes("Extra Help") || coursename.includes("Detention")) ? <Text style={styles.paragraph2}
-                >        </Text> : <Text style={styles.paragraph2} onPress={() =>
+                >Enter Class</Text> : coursename && classiscurrent && !Shownewsessionbegan && (nameofcurrentclass != coursename) ? <Text style={styles.paragraph2} onPress={() => beginthisclassendotherone()} >Begin This Class</Text> : !coursename ? <Text style={styles.paragraph2}
+                >Select A Course</Text> : <Text style={styles.paragraph2} onPress={() =>
 
                     navigation.navigate("Mainmenuteacher", { classsessionbegun:classsessionbegun,
                         idofcurrentclass: idofcurrentclass, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit,drinkpasslimit:drinkpasslimit, 

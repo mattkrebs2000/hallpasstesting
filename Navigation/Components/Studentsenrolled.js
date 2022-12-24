@@ -85,14 +85,14 @@ export default function SignUp({ route, navigation }) {
     const [phone, setPhone]= useState();
 
     async function onComposeSms() {
-        const message = "Hi, " + firstname + ". This is a Mesasage From Your Teacher's Phone. . . You are now in Penalty for breaking class rule: " + localcode;
+        const message = "Hi " + firstname + "! This is a Mesasage From Your Teacher's Phone. . . You are now in Penalty for breaking class rule: " + localcode + ". This negatively impacts your grade.";
       if  (smsAvailable) {
      alert("this is being run")
     await SMS.sendSMSAsync(
   [phone],
   message
 );
-    }else {
+    } else {
       alert("its not available");
     }
     }
@@ -614,6 +614,7 @@ export default function SignUp({ route, navigation }) {
         if (classid) {
 
             const array = [];
+            const array2 = [];
             const sum = 0;
 
             const q = query(collection(firebase, "classsessions"), where("classesbeingtaughtid", "==", classid));
@@ -624,8 +625,10 @@ export default function SignUp({ route, navigation }) {
                     snapshot.forEach(doc => {
                         let number = doc.data().passesnolongeravailable - doc.data().classbeginnumber;
                         array.push(number);
+                        array2.push(Math.round(number/60000),doc.data().id);
                     })
                 }).then(async () => {
+                    console.log(array2, "this is the array that accounts for the bignumber")
                     setTotalclasstime(array.reduce((a, b) => a + b, 0));
                 })
         }

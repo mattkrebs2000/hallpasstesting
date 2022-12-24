@@ -652,41 +652,6 @@ const Destination = ({ route, navigation }) => {
                 </View>
                 {typeof nonbathroompasslimit != "undefined" ? <Text style={styles.paragraph2}>{nonbathroompasslimit} minutes </Text> : <Text style={styles.paragraph2}>  </Text>}
                 <Text style={styles.paragraph23}> ___________________ </Text>
-
-
-                <View><Text style={styles.paragraph2}>Time Limit for{'\n'} Break From Work Pass  </Text></View>
-                <View style={styles.button}>
-                    <Slider
-                        value={10}
-                        onValueChange={(event) => {
-                            setExclusivephonepasstimelimit(event);
-                        }}
-                        style={{ width: 300, height: 40 }}
-                        minimumValue={0}
-                        maximumValue={30}
-                        minimumTrackTintColor="#E43522"
-                        step={1}
-                        maximumTrackTintColor="gray"
-                    />
-                </View>
-                {exclusivephonepasstimelimit > 0 ? <Text style={styles.paragraph2}>{exclusivephonepasstimelimit} minutes</Text> : exclusivephonepasstimelimit == 0 ? <Text style={styles.paragraph2}>Inaccessible</Text> : <Text style={styles.paragraph2}>       </Text>}
-             
-                <Text style={styles.paragraph23}> ___________________ </Text>
-
-                <View style={styles.container}>
-
-                    <View>{changeismade1 == 0 ? <Text style={styles.paragraph2}>Done With Work Phone Pass {'\n'}       </Text> : offerdonewithworkphonepass ? <Text style={styles.paragraph2}>Done With Work Phone Pass {'\n'}Will be Accessible</Text> : <Text style={styles.paragraph2}>Done With Work Phone Pass {'\n'}Will be Inaccessible</Text>}</View>
-                    <Switch
-                        trackColor={{ false: 'gray', true: '#E43522' }}
-                        thumbColor={offerdonewithworkphonepass ? 'white' : 'white'}
-                        ios_backgroundColor="#E43522"
-                        onValueChange={() => setChangeismade1(changeismade1 + 1)}
-                        value={offerdonewithworkphonepass}
-                    />
-                </View>
-                <Text>  {'\n'}  </Text>
-                <Text style={styles.paragraph23}> ___________________ </Text>
-
                 <Text>{'\n'} {'\n'} {'\n'} {'\n'} {'\n'} {'\n'} {'\n'} {'\n'} </Text>
 
             </ScrollView>
