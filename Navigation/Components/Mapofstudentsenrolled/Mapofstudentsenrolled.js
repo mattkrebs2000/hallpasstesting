@@ -6,10 +6,31 @@ export default function Phonelessstudents({ setIdselected, idselected, userdata,
 
   const [scroll, setScroll] = useState(0);
 
+
+  const [dataSource, setDataSource] = useState([]);
+  const [scrollToIndex, setScrollToIndex] = useState(0);
+  const [dataSourceCords, setDataSourceCords] = useState([]);
+  const [ref, setRef] = useState(null);
+  const [pickindex, setPickindex] = useState(0);
+  const [height, setHeight] = useState();
+  const [height2, setHeight2] = useState(0);
+
+  useEffect(() => {
+
+if (height > height2) {
+  setHeight2(height)
+} else {
+  setHeight2(height2)
+}
+      }, [height]);
+
+
+
   const selectHandler = (item, i) => {
     if (item.id != idselected) {
       setSelected(item);
-      startAnimation();
+   
+     setPickindex(i);
     }
     else {
       setSelected("");
@@ -29,14 +50,17 @@ export default function Phonelessstudents({ setIdselected, idselected, userdata,
   };
 
 
+  useEffect(() => {
+startAnimation();
+  }, [pickindex, dataSourceCords, height, idselected]);
+
+
   const startAnimation = () => {
-  
       scrollview_ref.scrollTo({
         x: 0,
-        y: scroll,
+        y: (height2 * (pickindex/userdata.length)) + ((pickindex * 120)/userdata.length),
         animated: false
       });
-  
   };
 
   return (
@@ -45,7 +69,6 @@ export default function Phonelessstudents({ setIdselected, idselected, userdata,
 
       <ScrollView
         onScroll={(e) => setScroll(e.nativeEvent.contentOffset.y)}
-        // snapToInterval={1}
         scrollEventThrottle={0}
         ref={(ref) => {
           scrollview_ref = ref;
@@ -57,32 +80,29 @@ export default function Phonelessstudents({ setIdselected, idselected, userdata,
 
           return (
 
+            <View key={item.id} 
+            onLayout={(event) => {
+              const layout = event.nativeEvent.layout.y;
+              setHeight(layout);
+              // dataSourceCords[item.id] = layout.y;
+              // setDataSourceCords(dataSourceCords);
+            }}>
+              <View>
 
-            <View key={item.id}>
-              <View >
-
-
-                {item.exclusivephonepassexpiration > Date.now() ? <Pressable
-                  style={
-                    item.id === idselected ? styles.selected : styles.unselected
-                  }
-                  onPress={() => selectHandler(item)}>
-                  <Text style={styles.unselected
-                  }>{item.localfirstname} {item.locallastname} -({item.email.split('@')[0]}){'\n'}On Phone Pass{'\n'}In Compliance: {Math.round((totalclasstime / 60000) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime / 60000) - (item[classid].penaltyminutes)) / (totalclasstime / 60000)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder + item[classid].adjustments)}{'\n'}{item[classid].level}</Text>
-                </Pressable> : item.id === idselected ? <Pressable
+                {item.id === idselected ? <Pressable
                   style={
                     item.id === idselected ? styles.selected : styles.unselected
                   }
                   onPress={() => selectHandler(item, i)}>
                   <Text style={styles.unselected
-                  }>{item.localfirstname} {item.locallastname}-({item.email.split('@')[0]}){'\n'}{item.temporary === "null" ? "In Good Standing" : "In Penalty"}{'\n'}In Compliance: {Math.round((totalclasstime / 60000) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime / 60000) - (item[classid].penaltyminutes)) / (totalclasstime / 60000)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder + item[classid].adjustments)}{'\n'}{item[classid].level}</Text>
+                  }>{item.localfirstname} {item.locallastname}-{item.temporary === "null" ? "All Good" : "In Penalty"}{'\n'}{item.email} - {item.passwordactual}{'\n'}In Compliance: {Math.round((totalclasstime / 60000) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime / 60000) - (item[classid].penaltyminutes)) / (totalclasstime / 60000)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder + item[classid].adjustments)}{'\n'}{item[classid].level}</Text>
                 </Pressable> : <Pressable
                   style={
                     item.temporary === "null"  ? styles.unselected : styles.unselected2
                   }
                   onPress={() => selectHandler(item, i)}>
                   <Text style={styles.unselected
-                  }>{item.localfirstname} {item.locallastname}-({item.email.split('@')[0]}){'\n'}{item.temporary === "null" ? "In Good Standing" : "In Penalty"}{'\n'}In Compliance: {Math.round((totalclasstime / 60000) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime / 60000) - (item[classid].penaltyminutes)) / (totalclasstime / 60000)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder + item[classid].adjustments)}{'\n'}{item[classid].level}</Text>
+                  }>{item.localfirstname} {item.locallastname}-{item.temporary === "null" ? "All Good" : "In Penalty"}{'\n'}{item.email} - {item.passwordactual}{'\n'}In Compliance: {Math.round((totalclasstime / 60000) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime / 60000) - (item[classid].penaltyminutes)) / (totalclasstime / 60000)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder + item[classid].adjustments)}{'\n'}{item[classid].level}</Text>
                 </Pressable>}
               </View>
             </View>
@@ -105,6 +125,7 @@ export default function Phonelessstudents({ setIdselected, idselected, userdata,
             </View>
           );
         })}
+        <View><Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text></View>
       </ScrollView>
     </View>
 
