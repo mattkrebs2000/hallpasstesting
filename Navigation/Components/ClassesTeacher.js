@@ -123,7 +123,7 @@ console.log("endpasses is being run", usersesssionid, "endpasses is being run");
     }, [idsofpasses]);
 
     useEffect(() => {
-        setlengthofclasses(lengthofclass);
+        setlengthofclasses(lengthofclasses);
         setDrinkpassduration(drinkpasslimit);
         setPhonepassduration(exclusivephonepasstimelmit);
         setBathroompassduration(bathroompasslimit);
@@ -385,6 +385,7 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
 
         console.log("This is the selected class", selectedclass.id);
+      
         setEndlastclasssubstitute(false);
         setUsersessionid(usersession);
         setLocation(selectedclass.location)

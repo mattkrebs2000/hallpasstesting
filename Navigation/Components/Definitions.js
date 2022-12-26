@@ -43,8 +43,8 @@ const Destination = ({ route, navigation }) => {
                 <Text style={styles.paragraph19}>{'\n'}{'\n'}{'\n'}Definitions/Explanations{'\n'}{'\n'}___________________</Text>
 
 
-                <Text style={styles.paragraph99}>{'\n'}'In Good Standing'</Text>
-                <Text style={styles.paragraph21}>A student will be said to be 'In Good Standing' at the beginning of every class session. This is meant to indicate that the student is in compliance with the rules of the class. This phrase may appear in 'Main Menu' for Students and in the Students Enrolled screen for Teachers.</Text>
+                <Text style={styles.paragraph99}>{'\n'}'All Good' or 'In Good Standing'</Text>
+                <Text style={styles.paragraph21}>A student will be said to be 'All Good' or 'In Good Standing' at the beginning of every class session. This is meant to indicate that the student is in compliance with the rules of the class. This phrase may appear in 'Main Menu' for Students and in the Students Enrolled screen for Teachers.</Text>
 
 
                 <Text style={styles.paragraph99}>{'\n'}'In Penalty'</Text>

@@ -4,7 +4,7 @@ import * as SMS from 'expo-sms';
 
 import Students from './Mapofstudentsenrolled/Mapofstudentsenrolled';
 
-import {Alert, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator, Button } from 'react-native';
+import { Alert, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator, Button } from 'react-native';
 
 
 
@@ -79,50 +79,67 @@ export default function SignUp({ route, navigation }) {
     const [consquenceid, setConsequenceid] = useState();
     const [localcode, setLocalcode] = useState();
     const [studentjustarrivedlate, setstudentjustarrivedlate] = useState();
-   
-   
+
+
     const [smsAvailable, setSmsAvailable] = React.useState(false);
-    const [phone, setPhone]= useState();
+    const [phone, setPhone] = useState();
+
+
+    console.log(lengthofclasses, "studentsenrolled");
 
     async function onComposeSms() {
-        const message = "Hi " + firstname + "! This is a Mesasage From Your Teacher's Phone. . . You are now in Penalty for breaking class rule: " + localcode + ". This negatively impacts your grade.";
-      if  (smsAvailable) {
-     alert("this is being run")
-    await SMS.sendSMSAsync(
-  [phone],
-  message
-);
-    } else {
-      alert("its not available");
-    }
+
+        if (typeof localcode != "undefinded") {
+            const message = "Hi " + firstname + "! This is a Mesasage From Your Teacher's Phone. . . You are now in Penalty for not respecting a class rule: " + localcode + ". This negatively impacts your grade.";
+            if (smsAvailable) {
+                alert("this is being run")
+                await SMS.sendSMSAsync(
+                    [phone],
+                    message
+                );
+            } else {
+                alert("its not available");
+            }
+        } else {
+            const message = "Hi " + firstname + "! This is a Mesasage From Your Teacher's Phone. . . You are now in Penalty for not respecting a class rule. This negatively impacts your grade.";
+            if (smsAvailable) {
+                alert("this is being run")
+                await SMS.sendSMSAsync(
+                    [phone],
+                    message
+                );
+            } else {
+                alert("its not available");
+            }
+        }
     }
 
     React.useEffect(() => {
         SMS.isAvailableAsync().then(setSmsAvailable);
-      }, []);
+    }, []);
 
-      useEffect(() => {
-      console.log("2hello", setSmsAvailable)
-      }, [setSmsAvailable]);
+    useEffect(() => {
+        console.log("2hello", setSmsAvailable)
+    }, [setSmsAvailable]);
 
-      useEffect(() => {
+    useEffect(() => {
         console.log("1hello", setSmsAvailable)
-        }, []);
-    
+    }, []);
+
 
     function compare_lname(a, b) {
 
         if (typeof a.locallastname != "undefined" && typeof b.locallastname != "undefined") {
-        if (a.locallastname.toLowerCase() < b.locallastname.toLowerCase()) {
-            return -1;
+            if (a.locallastname.toLowerCase() < b.locallastname.toLowerCase()) {
+                return -1;
+            }
+            if (a.locallastname.toLowerCase() > b.locallastname.toLowerCase()) {
+                return 1;
+            }
+            return 0;
+        } else {
+            null
         }
-        if (a.locallastname.toLowerCase() > b.locallastname.toLowerCase()) {
-            return 1;
-        }
-        return 0;
-    } else {
-        null
-    }
     }
 
     useEffect(() => {
@@ -623,9 +640,14 @@ export default function SignUp({ route, navigation }) {
 
                 .then(async (snapshot) => {
                     snapshot.forEach(doc => {
-                        let number = doc.data().passesnolongeravailable - doc.data().classbeginnumber;
-                        array.push(number);
-                        array2.push(Math.round(number/60000),doc.data().id);
+                        let number = doc.data().lengthofclass;
+                        if (number > lengthofclasses) {
+                            console.log("mistake made");
+                            array.push(lengthofclasses);
+                        } else {
+                            array.push(number);
+                            array2.push(Math.round(number / 60000), doc.data().id);
+                        }
                     })
                 }).then(async () => {
                     console.log(array2, "this is the array that accounts for the bignumber")
@@ -734,13 +756,13 @@ export default function SignUp({ route, navigation }) {
                 console.log(error); alert(error);
             })
             updateDoc(doc(firebase, "classesbeingtaught", classid), {
-              [idselected]: ""
-              }).catch((error) => {
+                [idselected]: ""
+            }).catch((error) => {
                 console.log(error); alert(error);
-              })
-                .then((docSnap) => {
-               console.log("removed student")
             })
+                .then((docSnap) => {
+                    console.log("removed student")
+                })
             getlocationsqrcodes();
         }
 
@@ -877,7 +899,7 @@ export default function SignUp({ route, navigation }) {
                     })
                 }
             }
-          
+
         } else {
             if (idselected && (localstarttime < 10 || typeof localstarttime === "undefined")) {
 
@@ -1025,13 +1047,13 @@ export default function SignUp({ route, navigation }) {
     return (
         <SafeAreaView style={styles.largercontainer}>
             <View style={styles.container1} >
-<Pressable>
-            <Button onPress={onComposeSms} mode="contained" icon="message" title="hello"/>
-            </Pressable>
-      
+                <Pressable>
+                    <Button onPress={onComposeSms} mode="contained" icon="message" title="hello" />
+                </Pressable>
+
 
                 <TouchableOpacity><Text style={styles.error}>{coursename} ({userdata.length}){'\n'}
-                    Total Class Time: {Math.round(totalclasstime / 60000)} Min.</Text>
+                    Total Class Time: {Math.round(totalclasstime)} Min.</Text>
                     {(sessionending > Date.now()) && classiscurrent == true && empty === false ? <Text style={styles.error1}>Classify This Rule Violation</Text> : (sessionending > Date.now()) && classiscurrent == true ? <Text style={styles.error1}>Stats Include This Session</Text> : <Text style={styles.error1}>Class Is Not In Session</Text>}
                 </TouchableOpacity>
             </View>
@@ -1040,7 +1062,7 @@ export default function SignUp({ route, navigation }) {
                 <Students userdata={userdata} id={id} selected={selected} setSelected={setSelected}
                     selected2={selected2} setSelected2={setSelected2}
 
-                    idselected={idselected} setIdselected={setIdselected} changehasbeenmade={changehasbeenmade} temporary={temporary} indefinitepenalty={indefinitepenalty} classid={classid} overunderlocal={overunderlocal} currentlevel={currentlevel} abc={abc} updatecompleted={updatecompleted} totalpenaltyinutes={totalpenaltyinutes} localpercent={localpercent} localphonepassquote={localphonepassquote} totalclasstime={totalclasstime} over={over} consequences={consequences} empty={empty} idselected2={idselected2} setIdselected2={setIdselected2}/>
+                    idselected={idselected} setIdselected={setIdselected} changehasbeenmade={changehasbeenmade} temporary={temporary} indefinitepenalty={indefinitepenalty} classid={classid} overunderlocal={overunderlocal} currentlevel={currentlevel} abc={abc} updatecompleted={updatecompleted} totalpenaltyinutes={totalpenaltyinutes} localpercent={localpercent} localphonepassquote={localphonepassquote} totalclasstime={totalclasstime} over={over} consequences={consequences} empty={empty} idselected2={idselected2} setIdselected2={setIdselected2} />
             </View>
 
             {idselected && empty != false ? <ScrollView style={styles.container3}>

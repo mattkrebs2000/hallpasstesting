@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 
 
-export default function Phonelessstudents({ setCoursename, userdata, deleteToDo, id, idselected, setSelectedclass, selectedclass, setClasstrue, classtrue}) {
+export default function Phonelessstudents({ setCoursename, userdata, deleteToDo, id, idselected, setSelectedclass, selectedclass, setClasstrue, classtrue, lengthofclasses}) {
 
 //   useEffect(() => {
 //     console.log(userdata.length, "This is the userdata")
@@ -49,7 +49,7 @@ export default function Phonelessstudents({ setCoursename, userdata, deleteToDo,
             }
             onPress={() => selectHandler(item) }>
             <Text style ={styles.unselected
-            }> Class Number: {userdata.length - i}.{'\n'}{item.status} {'\n'}Began at {item.classbegin}{'\n'}on {item.todaysdate}.{'\n'}{item.lengthofclass} minute class.{'\n'}{(item.passesnolongeravailable - item.classbeginnumber)/60000} minute class.</Text>
+            }> Class Number: {userdata.length - i}.{'\n'}{item.status} {'\n'}Began at {item.classbegin}{'\n'}on {item.todaysdate}.{'\n'}{item.lengthofclass > lengthofclasses ? lengthofclasses : item.lengthofclass} minute class.</Text>
           </Pressable>
          
           

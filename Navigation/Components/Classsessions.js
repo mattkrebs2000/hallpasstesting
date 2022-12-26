@@ -20,6 +20,7 @@ import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification } from "@firebase/auth";
 import { onSnapshot, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, FieldValue, arrayUnion, orderBy } from "@firebase/firestore";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import AndroidSwipeRefreshLayoutNativeComponent from "react-native/Libraries/Components/RefreshControl/AndroidSwipeRefreshLayoutNativeComponent";
 
 const height = Dimensions.get("window").height;
 
@@ -43,8 +44,10 @@ export default function SignUp({ route, navigation }) {
     const [sessionended, setSessionended] = useState(false);
 
     const [idsofpasses, setIdsofpasses] = useState();
+    const [totalclasstime, setTotalclasstime] = useState();
 
 
+    console.log(lengthofclasses, "classsessions");
 
     const endpasses = () => {
 
@@ -189,17 +192,26 @@ export default function SignUp({ route, navigation }) {
 
 
                 .then(function (snapshot) {
+                    let numberarray = []
                     let statusarray = []
                     let array = []
                     snapshot.forEach(doc => {
+                        let number = doc.data().lengthofclass;
+                        if (number > lengthofclasses) {
+                            numberarray.push(lengthofclasses) 
+                            array.push(doc.data())
+                            statusarray.push(doc.data().status) 
+                        } else {
+                        numberarray.push(number)
                         array.push(doc.data())
                         statusarray.push(doc.data().status)
-
+                        }
                     })
                     if (array.length === 0) {
                         setUserdata([{ classname: "You haven't Registered" }])
                     } else {
                         setUserdata(array);
+                        setTotalclasstime(numberarray.reduce((a, b) => a + b, 0))
                     }
 
 
@@ -420,12 +432,12 @@ export default function SignUp({ route, navigation }) {
     return (
         <SafeAreaView style={styles.largercontainer}>
             <View style={styles.container1}>
-                {coursename ? <View><Text style={styles.error}>Now Active:{'\n'}{coursename} - {section} </Text></View> : <View><Text style={styles.error}>No Class is Active</Text></View>}
+                {coursename ? <View><Text style={styles.error}>Now Active:{'\n'}{coursename} - {section}  ({totalclasstime} min.)</Text></View> : <View><Text style={styles.error}>No Class is Active</Text></View>}
             </View>
 
             <View style={styles.container2}>
 
-                <Classes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected} />
+                <Classes userdata={userdata} id={id} setSelectedclass={setSelectedclass} selectedclass={selectedclass} idselected={idselected} lengthofclasses={lengthofclasses}/>
 
             </View>
 

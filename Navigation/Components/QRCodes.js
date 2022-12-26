@@ -5,7 +5,7 @@ import { Text, View, StyleSheet, Button, BackHandler, TouchableOpacity, Pressabl
 
 import { auth, firebase } from "../Firebase/Config";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification } from "@firebase/auth";
-import { orderBy, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc } from "@firebase/firestore";
+import { updateDoc, orderBy, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc } from "@firebase/firestore";
 
 import { useNavigation } from '@react-navigation/native';
 
