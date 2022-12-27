@@ -169,7 +169,7 @@ export default function SignUp({ route, navigation }) {
                     exclusivephonepassexpiration: 0,
                     phonepassawarded: false,
                     temporary: "null",
-                    email: localfirstname + locallastname + "@email.com",
+                    email: locallastname + "@email.com",
                     id: uid,
                     changemade: false, 
                 };

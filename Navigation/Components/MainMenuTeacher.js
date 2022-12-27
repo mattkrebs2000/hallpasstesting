@@ -392,7 +392,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
           currentsessionends: endtime,
           inusebathroompass: 0,
           inuseexclusivephonepass: 0,
-          passesareavailable: false,
           totalinlineforbathroom: 0,
           totalinlineforexclusivephone: 0,
         }).catch((error) => {
@@ -528,29 +527,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
   }
 
 
-
-  async function makeallpassesunavailable() {
-
-    const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
-
-    const querySnapshot = await getDocs(q)
-
-      .then(function (snapshot) {
-
-        snapshot.forEach(docs => {
-          updateDoc(doc(firebase, "classesbeingtaught", docs.data().id), {
-            passesareavailable: false
-          }).catch((error) => {
-            console.log(error); alert(error);
-          })
-
-        })
-
-      })
-
-  };
-
-
   async function makeallincomingpassesunavailable() {
     if (typeof id != "undefined") {
       const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
@@ -570,36 +546,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
         })
     }
   };
-
-
-
-
-  async function makeallpassesavailable() {
-    console.log("makeallpassesavailable was run")
-
-
-    const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
-
-    const querySnapshot = await getDocs(q)
-
-      .then(function (snapshot) {
-
-        snapshot.forEach(docs => {
-          updateDoc(doc(firebase, "classesbeingtaught", docs.data().id), {
-            passesareavailable: true,
-            currentsessionid: currentsessionid, sessionending: sessionending,
-          }).catch((error) => {
-            console.log(error); alert(error);
-          })
-
-        })
-
-      })
-
-  };
-
-
-
 
   async function makeallincomingpassesavailable() {
     console.log("makeallincomingpassesavailable was run")

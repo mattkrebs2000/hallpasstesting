@@ -776,7 +776,7 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 await updateDoc(doc(firebase, "classesbeingtaught", idselected), {
                     currentsessionid: user,
                     currentsessionends: starttime + lengthofclassesforacomputer,
-                    passesareavailable: false,
+                    passesareavailable: true,
                     inuseexclusivephonepass: 0,
                     inusebathroompass: 0,
                     totalinlineforexclusivephone: 0,

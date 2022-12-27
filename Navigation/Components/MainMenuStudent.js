@@ -83,10 +83,11 @@ export default function Destination({ route, navigation }) {
     let keys = []
     try {
       keys = await AsyncStorage.getAllKeys()
-      console.log(keys.length, "these are the keys");
-      if (keys.length > 7) {
+      console.log(keys, keys.length, "these are the keys");
+      if (keys.length > 6) {
         getstorage1()
       } else {
+        console.log("keys.length is not 6");
         navigation.navigate("SignIn");
       }
     } catch (e) {
@@ -135,6 +136,7 @@ export default function Destination({ route, navigation }) {
     if (typeof state != "undefined" ) {
       getstorage2();
     } else {
+      console.log("state tripped it up");
       navigation.navigate("SignIn");
     }
   }, [state]);
@@ -153,6 +155,7 @@ export default function Destination({ route, navigation }) {
     if (typeof school != "undefined" ) {
       getstorage3();
     }else {
+      console.log("school tripped it up");
       navigation.navigate("SignIn");
     }
   }, [school]);
@@ -171,6 +174,7 @@ export default function Destination({ route, navigation }) {
     if (typeof town != "undefined" ) {
       getstorage4();
     }else {
+      console.log("town tripped it up");
       navigation.navigate("SignIn");
     }
   }, [town]);
@@ -189,6 +193,7 @@ export default function Destination({ route, navigation }) {
     if (typeof role != "undefined" ) {
       getstorage5();
     }else {
+      console.log("role tripped it up");
       navigation.navigate("SignIn");
     }
   }, [role]);
@@ -207,6 +212,7 @@ export default function Destination({ route, navigation }) {
     if (typeof firstname != "undefined" ) {
       getstorage6();
     }else {
+      console.log("firstname tripped it up");
       navigation.navigate("SignIn");
     }
   }, [firstname]);
@@ -225,6 +231,7 @@ export default function Destination({ route, navigation }) {
     if (typeof lastname != "undefined" ) {
       getstorage7();
     }else {
+      console.log("lastname tripped it up");
       navigation.navigate("SignIn");
     }
   }, [lastname]);
@@ -243,6 +250,7 @@ export default function Destination({ route, navigation }) {
     if (typeof email != "undefined" ) {
       getstorage8();
     }else {
+      console.log("email tripped it up");
       navigation.navigate("SignIn");
     }
   }, [email]);

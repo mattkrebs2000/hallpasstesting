@@ -402,7 +402,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
           currentsessionends: endtime,
           inusebathroompass: 0,
           inuseexclusivephonepass: 0,
-          passesareavailable: false,
           totalinlineforbathroom: 0,
           totalinlineforexclusivephone: 0,
 
