@@ -654,6 +654,7 @@ const Destination = ({ route, navigation }) => {
 
       await updateDoc(doc(firebase, "classesbeingtaught", classid), {
         totalinlineforbathroom: totalinlineforbathroomlocal + 1,
+        addingnumber: Date.now()
       }).catch((error) => {
         console.log(error); alert(error);
       });
@@ -726,6 +727,12 @@ const Destination = ({ route, navigation }) => {
         console.log(error); alert(error);
       });
 
+      await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+        addingnumber: Date.now()
+      }).catch((error) => {
+        console.log(error); alert(error);
+      });
+
       setPassid(userRec.id);
    
     })
@@ -757,72 +764,6 @@ const Destination = ({ route, navigation }) => {
           alert("Someone is getting a drink now.")
         }
       })
-
-  }
-
-  async function exclusivephonepassinfosent() {
-    setShowspinner(true);
-    const r = new Date();
-
-    console.log("21")
-
-    const docRef = await addDoc(collection(firebase, "passes"), {
-
-      timepassinitiated: Date.now(),
-      timeallowedonpass: exclusivetime,
-      linkedclass: linkedclass,
-      returnteacherid: teacheridforreturn,
-      firstname: firstname,
-      lastname: lastname,
-      classid: classid,
-      coursename: coursename,
-      comingfrom: currentlocation,
-      teacherid: teacherid,
-      classesinvolved: [classid],
-      studentid: id,
-      school: school,
-      teacheriscalled: teacher,
-      destination: locationdestination,
-      timeleftclass: 0,
-      leftclass: 0,
-      returned: 0,
-      timereturned: 0,
-      placeinline: totalinlineforexclusivephonelocal,
-      classsessionid: currentsessionid,
-      whenlimitwillbereached: 0,
-      // returnedbeforetimelimit:"null",
-      differenceoverorunderinminutes: 0,
-      endofclasssession: endofclasssession,
-
-    }).then(async (userRec) => {
-      let user = userRec.id;
-      await updateDoc(doc(firebase, "passes", user), {
-        id: user,
-      }).catch((error) => {
-        console.log(error); alert(error);
-      });
-
-
-      await updateDoc(doc(firebase, "classesbeingtaught", classid), {
-        totalinlineforexclusivephone: totalinlineforexclusivephonelocal + 1,
-      }).catch((error) => {
-        console.log(error); alert(error);
-      });
-
-      await updateDoc(doc(firebase, "users", id), {
-        status: "inlineforphonepass",
-        passid: userRec.id
-      }).catch((error) => {
-        console.log(error); alert(error);
-      });
-
-
-      setPassid(userRec.id);
-     
-    })
-      .catch((error) => {
-        console.log(error); alert(error);
-      });
 
   }
 
@@ -874,6 +815,11 @@ const Destination = ({ route, navigation }) => {
         console.log(error); alert(error);
       });
 
+      await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+        addingnumber: Date.now()
+      }).catch((error) => {
+        console.log(error); alert(error);
+      });
 
       setPassid(userRec.id);
       console.log(user, "This is the pass id");
@@ -916,8 +862,6 @@ const Destination = ({ route, navigation }) => {
           }} /></View>
 
         {passid == "" && Selectedclassdestination && locationdestination === "Done with work Phone Pass" ? (<Text style={styles.paragraph2} onPress={() => custompassinfosent()} >Make A Pass </Text>) :
-
-          passid == "" && Selectedclassdestination && locationdestination === "Break From Work Pass " ? (<Text style={styles.paragraph2} onPress={() => exclusivephonepassinfosent()} >Make A Pass </Text>) :
 
             passid == "" && Selectedclassdestination && locationdestination === "Bathroom" && (bathroomepassinuselocal > 0 || totalinlineforbathroomlocal > 0) ? (<Text style={styles.paragraph2} onPress={() => bathroompassinfosent()} >Get In Line </Text>) :
               passid == "" && Selectedclassdestination && locationdestination === "Bathroom" ? (<Text style={styles.paragraph2} onPress={() => bathroompassinfosent()} >Make A Pass </Text>) :

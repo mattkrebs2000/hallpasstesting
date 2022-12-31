@@ -34,6 +34,10 @@ export default function Destination({ route, navigation }) {
 
   const [Nowinpenaltylocal, setNowinpenaltylocal] = useState();
   const [isthestudentdonewithwork, setIsthestudentdonewithwork] = useState(false);
+
+const [lastmistep, setLastmisstep] = useState();
+const [lastmissteptime, setLastmissteptime] = useState();
+
   const [getstatus, setGetstatus] = useState();
   const [getexistingpassid, setGetexistingpassid] = useState();
 
@@ -59,6 +63,7 @@ export default function Destination({ route, navigation }) {
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
+  const [teacheriscalled, setTeacheriscalled] = useState();
   const [sound, setSound] = React.useState();
 
 
@@ -78,26 +83,6 @@ export default function Destination({ route, navigation }) {
     await sound.playAsync();
   }
 
-
-  const getAllKeys = async () => {
-    let keys = []
-    try {
-      keys = await AsyncStorage.getAllKeys()
-      console.log(keys, keys.length, "these are the keys");
-      if (keys.length > 6) {
-        getstorage1()
-      } else {
-        console.log("keys.length is not 6");
-        navigation.navigate("SignIn");
-      }
-    } catch (e) {
-      // read key error
-    }
-
-
-  }
-
-
   useEffect(() => {
     getAllKeys();
 
@@ -115,10 +100,43 @@ export default function Destination({ route, navigation }) {
   }, []);
 
   useEffect(() => {
-    if (typeof id != "undefined" ) {
+    if (typeof id != "undefined") {
       getadjustment2();
     }
   }, [id]);
+
+  async function getAllKeys() {
+    const keys = await AsyncStorage.getAllKeys();
+    checkhowmany(keys);
+  }
+
+  const checkhowmany = (keys) => {
+    console.log(keys, "here are the keys")
+    if (keys.length < 2) {
+      navigation.navigate("SignIn");
+    }
+    else {
+      getstorage0();
+    }
+  }
+
+  async function getstorage0() {
+
+    const stateValue = await AsyncStorage.getItem('teacheriscalled')
+      .then(async (userRec) => {
+        setTeacheriscalled(userRec);
+
+      })
+  }
+
+  useEffect(() => {
+    if (typeof teacheriscalled != "undefined") {
+      getstorage1();
+      console.log(teacheriscalled, "finally set state")
+    } else {
+      console.log(state, "state tripped it up");
+    }
+  }, [teacheriscalled]);
 
 
 
@@ -128,16 +146,16 @@ export default function Destination({ route, navigation }) {
 
       .then(async (userRec) => {
         setState(userRec);
-        console.log(userRec, "thiis should be state");
+        console.log(state, "state", userRec, "thiis should be state");
       })
   }
 
   useEffect(() => {
-    if (typeof state != "undefined" ) {
+    if (typeof state != "undefined") {
       getstorage2();
+      console.log(state, "finally set state")
     } else {
-      console.log("state tripped it up");
-      navigation.navigate("SignIn");
+      console.log(state, "state tripped it up");
     }
   }, [state]);
 
@@ -152,11 +170,10 @@ export default function Destination({ route, navigation }) {
   }
 
   useEffect(() => {
-    if (typeof school != "undefined" ) {
+    if (typeof school != "undefined") {
       getstorage3();
-    }else {
+    } else {
       console.log("school tripped it up");
-      navigation.navigate("SignIn");
     }
   }, [school]);
 
@@ -171,34 +188,14 @@ export default function Destination({ route, navigation }) {
   }
 
   useEffect(() => {
-    if (typeof town != "undefined" ) {
+    if (typeof town != "undefined") {
       getstorage4();
-    }else {
+    } else {
       console.log("town tripped it up");
-      navigation.navigate("SignIn");
     }
   }, [town]);
 
   async function getstorage4() {
-
-    const roleValue = await AsyncStorage.getItem('role')
-
-      .then(async (userRec4) => {
-        setRole(userRec4);
-        console.log(userRec4, "thiis should be role");
-      })
-  }
-
-  useEffect(() => {
-    if (typeof role != "undefined" ) {
-      getstorage5();
-    }else {
-      console.log("role tripped it up");
-      navigation.navigate("SignIn");
-    }
-  }, [role]);
-
-  async function getstorage5() {
 
     const firstnameValue = await AsyncStorage.getItem('firstname')
 
@@ -209,15 +206,14 @@ export default function Destination({ route, navigation }) {
   }
 
   useEffect(() => {
-    if (typeof firstname != "undefined" ) {
-      getstorage6();
-    }else {
+    if (typeof firstname != "undefined") {
+      getstorage5();
+    } else {
       console.log("firstname tripped it up");
-      navigation.navigate("SignIn");
     }
   }, [firstname]);
 
-  async function getstorage6() {
+  async function getstorage5() {
 
     const lastnameValue = await AsyncStorage.getItem('lastname')
 
@@ -228,15 +224,14 @@ export default function Destination({ route, navigation }) {
   }
 
   useEffect(() => {
-    if (typeof lastname != "undefined" ) {
-      getstorage7();
-    }else {
+    if (typeof lastname != "undefined") {
+      getstorage6();
+    } else {
       console.log("lastname tripped it up");
-      navigation.navigate("SignIn");
     }
   }, [lastname]);
 
-  async function getstorage7() {
+  async function getstorage6() {
 
     const emailValue = await AsyncStorage.getItem('email')
 
@@ -247,15 +242,14 @@ export default function Destination({ route, navigation }) {
   }
 
   useEffect(() => {
-    if (typeof email != "undefined" ) {
-      getstorage8();
-    }else {
+    if (typeof email != "undefined") {
+      getstorage7();
+    } else {
       console.log("email tripped it up");
-      navigation.navigate("SignIn");
     }
   }, [email]);
 
-  async function getstorage8() {
+  async function getstorage7() {
 
     const idValue = await AsyncStorage.getItem('id')
 
@@ -264,6 +258,38 @@ export default function Destination({ route, navigation }) {
         console.log(userRec8, "thiis should be the id");
       })
   }
+  useEffect(() => {
+    if (typeof id != "undefined") {
+      getstorage8();
+    } else {
+      console.log("id tripped it up");
+    }
+  }, [id]);
+
+  async function getstorage8() {
+
+    const roleValue = await AsyncStorage.getItem('role')
+
+      .then(async (userRec4) => {
+        setRole(userRec4);
+        console.log(userRec4, "thiis should be role");
+      })
+  }
+
+  useEffect(() => {
+    if (typeof role != "undefined") {
+      if (role === "Teacher") {
+        navigation.navigate("Mainmenuteacher", { school2: school, id2: id, town2: town, role2: role, email2: email, teacheriscalled2: teacheriscalled, state2: state });
+      } else if (role === "Admin") {
+        navigation.navigate("Mainmenuadmin", { school2: school, id2: id, town2: town, role2: role, email2: email, teacheriscalled2: teacheriscalled, state2: state });
+      } else{
+        console.log("You are a student");
+      }
+    } else {
+      console.log("role tripped it up");
+    }
+  }, [role]);
+
 
 
   const getadjustment = () => {
@@ -286,8 +312,11 @@ export default function Destination({ route, navigation }) {
             const phonepassawardedd = object.phonepassawarded;
             const statusupdate = object.status;
             const idofpass = object.passid;
+            const lastmistep = object.lastmistake;
+            const lasttime = object.lastmistaketime;
             setNowinpenaltylocal(getpenaltystatus)
-            setIsthestudentdonewithwork(phonepassawardedd)
+            setLastmisstep(lastmistep)
+            setLastmissteptime(lasttime)
             setGetstatus(statusupdate);
             setGetexistingpassid(idofpass);
           }
@@ -418,7 +447,7 @@ export default function Destination({ route, navigation }) {
 
 
   const getadjustment2 = () => {
-    if (typeof id != "undefined" ) {
+    if (typeof id != "undefined") {
       console.log(id, "301 here is something else", classid);
       const docRef = doc(firebase, "users", id);
 
@@ -429,6 +458,12 @@ export default function Destination({ route, navigation }) {
             let object = docSnap.data();
             const statusupdate = object.status;
             const idofpass = object.passid;
+
+            const lastmistep = object.lastmistake;
+            const lasttime = object.lastmistaketime;
+            setLastmisstep(lastmistep)
+            setLastmissteptime(lasttime)
+
 
             setGetstatus(statusupdate);
             setGetexistingpassid(idofpass);
@@ -498,13 +533,13 @@ export default function Destination({ route, navigation }) {
   useEffect(() => {
     console.log("15");
     if (typeof coursename === "undefined") {
-      console.log("nothing done");
+      console.log(lastmistep, "lastmisstep", lastmissteptime,"lastmisteptime","nothing done");
     } else {
       setShowspinner(true);
       getpenaltytimeoneclass();
       getlocationsqrcodes2();
     }
-  }, [coursename]);
+  }, [coursename,lastmistep]);
 
   useEffect(() => {
     console.log("16");
@@ -645,23 +680,23 @@ export default function Destination({ route, navigation }) {
   async function gettotaltimeoneclass() {
 
     console.log("23");
-      const array = []
-      const sum = 0;
-      if (typeof id != "undefined" && typeof classid != "undefined") {
-        const q = query(collection(firebase, "classsessions"), where("classesbeingtaughtid", "==", classid));
+    const array = []
+    const sum = 0;
+    if (typeof id != "undefined" && typeof classid != "undefined") {
+      const q = query(collection(firebase, "classsessions"), where("classesbeingtaughtid", "==", classid));
 
-        const querySnapshot = await getDocs(q)
+      const querySnapshot = await getDocs(q)
 
-          .then(async (snapshot) => {
-            snapshot.forEach(doc => {
-              let number = doc.data().passesnolongeravailable - doc.data().classbeginnumber;
-              array.push(number);
-            })
-          }).then(async () => {
-
-            setTotal5(array.reduce((a, b) => a + b, 0));
+        .then(async (snapshot) => {
+          snapshot.forEach(doc => {
+            let number = doc.data().passesnolongeravailable - doc.data().classbeginnumber;
+            array.push(number);
           })
-      }
+        }).then(async () => {
+
+          setTotal5(array.reduce((a, b) => a + b, 0));
+        })
+    }
 
 
   };
@@ -688,9 +723,10 @@ export default function Destination({ route, navigation }) {
           {typeof coursename === "undefined" ? null : <View style={styles.button2}><View style={styles.btext2}><Text style={styles.btext}>{coursename}{'\n'}{'\n'}In Compliance{'\n'}With Class Rules</Text><Text style={styles.btext3}>{percent}%</Text></View><View style={styles.btext2}><Text style={styles.btext5}>{coursename}{'\n'}{'\n'}Respect For Self{'\n'}& Others Rating</Text><Text style={positivenegative === "negative" ? styles.btext4 : styles.btext44}>{positivenegative}</Text><Text style={styles.btext4}> {positivenegative === "negative" ? getadjustmentsandplustotal2 : ""}</Text></View></View>}
           {typeof coursename === "undefined" ? null : <Text>{'\n'}</Text>}
 
-          {coursename && isthestudentdonewithwork === false && donewithworkplease === true ? <View style={styles.button}>
-            <Text style={styles.btext}>Your work hasn't been checked yet!{'\n'}Before moving on{'\n'}Ask your teacher for conirmation.</Text></View> : coursename && isthestudentdonewithwork === false ? <View style={styles.button}>
-              <Text style={styles.btext}>As far as this App can tell{'\n'}You haven't completed your work yet.{'\n'}Keep at it!</Text></View> : coursename && isthestudentdonewithwork === true ? <View style={styles.button}><Text style={styles.btext}>According to our records{'\n'}You have completed your work.{'\n'}Good Job!</Text></View> : null}
+          {coursename && lastmistep === "Late On A Pass" && lastmissteptime > (Date.now() - 432000000) ? <View style={styles.button}>
+            <Text style={styles.btext27}>Try To Improve!</Text><Text style={styles.btext25}>Your Last Misstep:{'\n'}Taking Too Much Time On A Hall Pass.</Text></View> : coursename && lastmistep === "Late To Class" && lastmissteptime > (Date.now() - 432000000) ? <View style={styles.button}>
+            <Text style={styles.btext27}>Try To Improve!</Text><Text style={styles.btext25}>Your Last Misstep:{'\n'}Showing Up Late To Class.</Text></View> : coursename && lastmistep != "" && lastmistep != "Not Specified" && lastmissteptime > (Date.now() - 432000000) ? <View style={styles.button}>
+              <Text style={styles.btext27}>Try To Improve!</Text><Text  style={styles.btext25}>Class Rule You Didn't Follow:{'\n'}{lastmistep}</Text></View> : coursename ? <View style={styles.button}><Text style={styles.btext25}>According to our records{'\n'}You have not had any missteps.{'\n'}Good Job!</Text></View> : null}
 
           {typeof coursename === "undefined" && endofclasssession > Date.now() ? null : <Text>{'\n'}</Text>}
 
@@ -698,7 +734,7 @@ export default function Destination({ route, navigation }) {
 
         {typeof coursename === "undefined" ? null : <View><Text style={styles.paragraph2}> ___________________ </Text></View>}
 
-        <View><Text style={styles.paragraph2}>Daily Activity{'\n'}</Text></View>
+        {typeof id != "undefined" ?<View><Text style={styles.paragraph2}>Daily Activity{'\n'}</Text></View>: null}
 
         <View style={styles.centerscroll}>
 
@@ -737,17 +773,17 @@ export default function Destination({ route, navigation }) {
           </View> : null}
 
           <Text>{'\n'}</Text>
-          { typeof id != "undefined" ? <Text>{'\n'}</Text> : null}
+          {typeof id != "undefined" ? <Text>{'\n'}</Text> : null}
 
-          <View><Text style={styles.paragraph2}> ___________________ </Text></View>
-          <View><Text style={styles.paragraph2}>Set-Up{'\n'}</Text></View>
+         {typeof id != "undefined" ? <View><Text style={styles.paragraph2}> ___________________ </Text></View>: null }
+          <View><Text style={styles.paragraph2}>Set-Up{'\n'}</Text></View> 
 
           <View style={styles.button}>
 
             {typeof id != "undefined" ? <Text style={styles.btext} onPress={() => navigation.navigate("Availableclasses", {
               teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, email: email, getadjustmentsandplustotal2: getadjustmentsandplustotal2
-            })}>Join A Class</Text>:<Text style={styles.btext} onPress={() => getstorage1()}>Reset Needed</Text> }
-            </View>
+            })}>Join A Class</Text> : <Text style={styles.btext} onPress={() => getstorage0()}>Reset Needed</Text>}
+          </View>
           <Text>{'\n'}</Text>
           <View><Text style={styles.paragraph2}> ___________________ </Text></View>
           <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
@@ -872,7 +908,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: "#fff",
   },
-
+  btext27: {
+    marginTop: 10,
+    textAlign: "center",
+    fontSize: 16,
+    width: "100%",
+    justifyContent: "center",
+    color: "#fff",
+  },
+  btext25: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center",
+    fontSize: 14,
+    width: "100%",
+    justifyContent: "center",
+    color: "#fff",
+  },
   btext5: {
     marginTop: 10,
     marginBottom: 10,

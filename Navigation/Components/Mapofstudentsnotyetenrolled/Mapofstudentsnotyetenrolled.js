@@ -1,7 +1,7 @@
 import React, { useEffect, useState, } from 'react';
 import { ScrollView, View, Text, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Phonelessstudents({ setIdselected, idselected, userdata, deleteToDo, id, setSelected, selected, changehasbeenmade, temporary, indefinitepenalty, classid, overunderlocal, currentlevel, abc, updatecompleted, totalminustesincompliance, localpercent, localphonepassquote, totalclasstime, totalpenaltyinutes, over, consequences, empty, setSelected2, idselected2, selected2, emaill}) {
+export default function Phonelessstudents({ setIdselected, idselected, userdata, deleteToDo, id, setSelected, selected, changehasbeenmade, temporary, indefinitepenalty, classid, overunderlocal, currentlevel, abc, updatecompleted, totalminustesincompliance, localpercent, totalclasstime, totalpenaltyinutes, over, consequences, empty, setSelected2, idselected2, selected2, emaill}) {
 
   const [dot, setDot] = useState();
 

@@ -15,7 +15,7 @@ export default function SignUp({ route, navigation }) {
     const { idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepassmaxstudents, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, location, teacherid, teacheriscalled,
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, sessionending, maxstudentsbathroom, totalclasstime, idselected, penaltyminutes, adjustments, abc, drinkpasslimit, linkedclass
     } = route.params;
-    console.log(currentmax2, "current max",  maxstudentsbathroom, "maxstudentsbathroom", totalinlineforbathroom, "totalinline", howmany, "howmanypeopleinline");
+    console.log(currentmax2, "current max", maxstudentsbathroom, "maxstudentsbathroom", totalinlineforbathroom, "totalinline", howmany, "howmanypeopleinline");
 
     const [userdata, setUserdata] = useState([]);
     const [classdata, setClassdata] = useState();
@@ -76,6 +76,7 @@ export default function SignUp({ route, navigation }) {
     useEffect(() =>
         onSnapshot(doc(firebase, "classesbeingtaught", classid), (doc) => {
             checkDatabaseData2();
+            getlocationsqrcodes();
         }
         ), []);
 
@@ -473,12 +474,11 @@ export default function SignUp({ route, navigation }) {
 
         }).then(async (check) => {
             setHelpgiven(true);
+            setIdselected2(null);
         }).catch((error) => {
             console.log(error); alert(error);
         });
     }
-
-
 
 
     useEffect(() => {
@@ -525,13 +525,13 @@ export default function SignUp({ route, navigation }) {
                     {idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> : <Text style={styles.paragraph2} onPress={(e) => ReturnStudnet2()}>Reset Bathroom Availability</Text>}
 
                     <Pressable>
-                    <Text style={styles.paragraph2} onPress={() => letthenextstudentgo()}>Increase Total Number of{'\n'}Students Allowed in Bathroom</Text>
-                </Pressable>
-                {currentmax2 > 1 ? <Pressable onPress={() => reducemaxbathroom()}>
-                    <Text style={styles.paragraph2}>Decrease Total Number of{'\n'}Students Allowed in Bathroom</Text>
-                </Pressable> : <Pressable>
-                    <Text style={styles.paragraph2}>               {'\n'}           </Text>
-                </Pressable> }
+                        <Text style={styles.paragraph2} onPress={() => letthenextstudentgo()}>Increase Total Number of{'\n'}Students Allowed in Bathroom</Text>
+                    </Pressable>
+                    {currentmax2 > 1 ? <Pressable onPress={() => reducemaxbathroom()}>
+                        <Text style={styles.paragraph2}>Decrease Total Number of{'\n'}Students Allowed in Bathroom</Text>
+                    </Pressable> : <Pressable>
+                        <Text style={styles.paragraph2}>               {'\n'}           </Text>
+                    </Pressable>}
 
                     <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 
@@ -541,7 +541,7 @@ export default function SignUp({ route, navigation }) {
                         newoverunder: newoverunder, penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass: linkedclass
                     })}  >Return to Main Menu</Text>
 
-<Text style={styles.paragraph2}>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
+                    <Text style={styles.paragraph2}>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
 
 
                 </View>

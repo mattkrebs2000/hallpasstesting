@@ -55,7 +55,7 @@ const Scanner = ({ route, navigation }) => {
   const [currenttime, setCurrenttiime] = useState();
   const [giveshortcut, setGiveshortcut] = useState();
 
-  console.log(teacherid, teacheridforreturn, "teacherid", "teacheridforreturn", "In Scanner");
+  console.log(classid, "classid", locationdestination, "locationdestination", newlocation, "newlocation", teacherid, teacheridforreturn, "teacherid", "teacheridforreturn", "In Scanner");
 
   useEffect(() => {
 
@@ -89,15 +89,15 @@ const Scanner = ({ route, navigation }) => {
 
           if (typeof object[idd] != "undefined") {
 
-          const whatever = object[idd].adjustments;
-          const penaltyminutes = object[idd].penaltyminutes;
-          const ovunder = object[idd].overunder;
-          const level = object[idd].level;
+            const whatever = object[idd].adjustments;
+            const penaltyminutes = object[idd].penaltyminutes;
+            const ovunder = object[idd].overunder;
+            const level = object[idd].level;
 
-          setAdjust(whatever);
-          setPenaltyminutes(penaltyminutes);
-          setOverunderr(ovunder);
-          setLevell(level);
+            setAdjust(whatever);
+            setPenaltyminutes(penaltyminutes);
+            setOverunderr(ovunder);
+            setLevell(level);
 
           } else {
             setAdjust(0);
@@ -133,25 +133,32 @@ const Scanner = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log(expectedreturn, "expectedreturn", currenttime, "currenttime", "10Did it get this far? ");
-    if (expectedreturn > 10) {
-      console.log("10Did it get this far? ");
-      if (currenttime < expectedreturn) {
+    console.log("10Did it get this far? ");
+    if (currenttime < expectedreturn) {
 
-        console.log("22this was run");
-        setOntime(true);
-      } else {
-        console.log("23this was run");
-        setOntime(false);
-      }
+      console.log("22this was run");
+      setOntime(true);
+
+    } else {
+      console.log("23this was run");
+      setOntime(false);
+
+      updateDoc(doc(firebase, "users", id), {
+        lastmistake: "Late On A Pass",
+        lastmistaketime: Date.now()
+      }).catch((error) => {
+        console.log(error); alert(error);
+      })
+
+
     }
-
   }, [currenttime]);
 
 
 
 
   useEffect(() => {
-  
+
     if (typeof day != "undefined" && locationdestination == "Break From Work Pass") {
 
       if (text == teacheridforreturn && scanned) {
@@ -159,7 +166,7 @@ const Scanner = ({ route, navigation }) => {
       } else {
         setText('Not yet scanned')
         setScanned(false);
-        Alert("You have scanned the wrong @RCode1");
+        alert("You have scanned the wrong @RCode1");
       }
 
     } else if (typeof day != "undefined" && locationdestination != "Break From Work Pass") {
@@ -168,7 +175,7 @@ const Scanner = ({ route, navigation }) => {
       } else {
         setText('Not yet scanned')
         setScanned(false);
-        Alert("You have scanned the wrong @RCode2");
+        alert("You have scanned the wrong @RCode2");
       }
 
     } else {
@@ -242,7 +249,17 @@ const Scanner = ({ route, navigation }) => {
 
   useEffect(() => {
     if (typeof classid != "undefined") {
+
       checkDatabaseData();
+
+      if (newlocation === locationdestination) {
+        updateDoc(doc(firebase, "classesbeingtaught", classid), {
+          removescanneraddbutton: true,
+        }).catch((error) => {
+          console.log(error); alert(error);
+        })
+
+      }
     }
   }, []);
 
@@ -283,7 +300,7 @@ const Scanner = ({ route, navigation }) => {
       setTakenameoffwaitlist(docSnap.data().totalinlineforbathroom);
       setPhonetakenameoffwaitlist(docSnap.data().totalinlineforexclusivephone);
       setGiveshortcut(docSnap.data().removescanneraddbutton);
-    
+
 
     } else {
       // doc.data() will be undefined in this case
@@ -363,6 +380,7 @@ const Scanner = ({ route, navigation }) => {
       });
 
       await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+        addingnumber: Date.now(),
         inusebathroompass: howmanypeople + 1,
         totalinlineforbathroom: takenameoffwaitlist - 1,
         removescanneraddbutton: false
@@ -389,7 +407,13 @@ const Scanner = ({ route, navigation }) => {
         whenlimitwillbereached: expected,
         placeinline: null,
         passdetailrightnow: rightnow, passdetailcurrentdate: currentdate, passdetailrealtimeleave: realtimeleave
+      }).catch((error) => {
+        console.log(error); alert(error);
+      });
 
+      await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+        addingnumber: Date.now(),
+        removescanneraddbutton: false
       }).catch((error) => {
         console.log(error); alert(error);
       });
@@ -453,6 +477,7 @@ const Scanner = ({ route, navigation }) => {
         }),
 
         await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+          addingnumber: Date.now(),
           inuseexclusivephonepass: phonehowmanypeople + 1,
           totalinlineforexclusivephone: phonetakenameoffwaitlist - 1,
           removescanneraddbutton: false
@@ -477,7 +502,7 @@ const Scanner = ({ route, navigation }) => {
 
     setGiveshortcut(false);
 
-    console.log(howmanypeople2, "howmanypeople2", endofclasssession, "endofclasssession", locationdestination, "locationdestination", expectedreturn, "expectedreturn", ontime, "ontime", passid, "passid", id, "id", classid, "classid");
+    console.log(timeallowed, "timeallowed", howmanypeople2, "howmanypeople2", endofclasssession, "endofclasssession", locationdestination, "locationdestination", expectedreturn, "expectedreturn", ontime, "ontime", passid, "passid", id, "id", classid, "classid");
 
     if (Date.now() > endofclasssession) {
 
@@ -486,7 +511,7 @@ const Scanner = ({ route, navigation }) => {
 
       console.log("1 was this run?,", t, r, "endofclasssession", "newDate")
 
-      if (locationdestination == "Bathroom" && howmanypeople2 > 0) {
+      if (locationdestination == "Bathroom" && howmanypeople2 < 1) {
         console.log("first if then");
 
         const currentdiff = ((expectedreturn - t) / 60000);
@@ -519,6 +544,7 @@ const Scanner = ({ route, navigation }) => {
           }),
 
           await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+            addingnumber: Date.now(),
             inusebathroompass: 0,
             removescanneraddbutton: false
           }).catch((error) => {
@@ -534,7 +560,7 @@ const Scanner = ({ route, navigation }) => {
 
 
       } else if (locationdestination == "Bathroom" && howmanypeople2 > 0) {
-console.log("second if then");
+        console.log("second if then");
 
         const currentdiff = ((expectedreturn - t) / 60000);
 
@@ -566,6 +592,7 @@ console.log("second if then");
           }),
 
           await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+            addingnumber: Date.now(),
             inusebathroompass: howmanypeople2 - 1,
             removescanneraddbutton: false
           }).catch((error) => {
@@ -580,7 +607,7 @@ console.log("second if then");
           })
 
 
-      } else {
+      } else if ((Date.now() - (timeallowed * 60000)) < endofclasssession) {
 
         const currentdiff = ((expectedreturn - t) / 60000);
 
@@ -596,6 +623,53 @@ console.log("second if then");
           console.log(error); alert(error);
         }),
 
+
+          await updateDoc(doc(firebase, "users", id), {
+            [classid]: percentsss,
+            passid: "",
+            status: "",
+          }).catch((error) => {
+            console.log(error); alert(error);
+          }),
+
+          await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+            addingnumber: Date.now()
+          }).catch((error) => {
+            console.log(error); alert(error);
+          })
+            .then(async () => {
+
+              setHasPermission(null);
+              setText("Not yet scanned");
+              setScanned(false);
+              setCompleted2(true);
+            })
+
+      } else {
+
+
+        var s = leftclass2 + (timeallowed * 60000);
+        var w = new Date(s);
+
+        const currentdiff = ((expectedreturn - t) / 60000);
+
+        const percentsss = { id: classid, penaltyminutes: penaltyminutes, overunder: overunderr + currentdiff, adjustments: adjust, level: levell };
+
+        await updateDoc(doc(firebase, "passes", passid), {
+          returned: s,
+          timereturned: w.toLocaleTimeString([], { hour12: true }),
+          returnedbeforetimelimit: true,
+          differenceoverorunderinminutes: 0,
+
+        }).catch((error) => {
+          console.log(error); alert(error);
+        }),
+
+          await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+            addingnumber: Date.now()
+          }).catch((error) => {
+            console.log(error); alert(error);
+          }),
 
           await updateDoc(doc(firebase, "users", id), {
             [classid]: percentsss,
@@ -653,6 +727,7 @@ console.log("second if then");
           }),
 
           await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+            addingnumber: Date.now(),
             inusebathroompass: howmanypeople2 - 1,
             removescanneraddbutton: false,
           }).catch((error) => {
@@ -698,6 +773,7 @@ console.log("second if then");
           }),
 
           await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+            addingnumber: Date.now(),
             inusebathroompass: 0,
             removescanneraddbutton: false
           }).catch((error) => {
@@ -712,7 +788,7 @@ console.log("second if then");
 
           })
 
-      } 
+      }
       else {
         console.log("37was this run?,", text, scanned, ontime, expectedreturn, "text, scanned,  ontime, expectedreturn,")
 
@@ -729,6 +805,13 @@ console.log("second if then");
         }).catch((error) => {
           console.log(error); alert(error);
         }),
+
+          await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+            addingnumber: Date.now()
+          }).catch((error) => {
+            console.log(error); alert(error);
+
+          }),
 
 
           await updateDoc(doc(firebase, "users", id), {
@@ -852,7 +935,7 @@ console.log("second if then");
       console.log("teacherid and text", teacherid, text, "teacherid and texti");
       if (text == teacherid && scanned) {
         console.log("Play SOund Happened");
-   
+
         if (locationdestination == "Break From Work Pass ") {
           makephonepass();
         } else {
@@ -914,56 +997,56 @@ console.log("second if then");
 
   return (
     <View style={styles.container}>
-    <ScrollView>
-    {giveshortcut === true && typeof day === "undefined" ? <View style={styles.container}>
+      <ScrollView>
+        {giveshortcut === true && typeof day === "undefined" ? <View style={styles.container}>
 
-<View style={styles.barcodebox2}><View><Pressable
-        onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Get{'\n'}Pass!</Text></Pressable></View>
-      </View>
-      
-      <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
+          <View style={styles.barcodebox2}><View><Pressable
+            onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Get{'\n'}Pass!</Text></Pressable></View>
+          </View>
 
-      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>Press on{'\n'}Shortcut Above</Text></Pressable>
+          <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
 
-<Pressable>
-      <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
-   
-    </View> : giveshortcut === true && typeof day != "undefined" ? <View style={styles.container}>
+          <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>Press on{'\n'}Shortcut Above</Text></Pressable>
 
-<View style={styles.barcodebox2}><View><Pressable
-        onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Return{'\n'}Pass!</Text></Pressable></View>
-      </View>
-      
-      <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
+          <Pressable>
+            <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
 
-      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>Press on{'\n'}Shortcut Above</Text></Pressable>
+        </View> : giveshortcut === true && typeof day != "undefined" ? <View style={styles.container}>
 
-<Pressable>
-      <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
-   
-    </View> :
+          <View style={styles.barcodebox2}><View><Pressable
+            onPress={() => developmentshortcut()}><Text style={styles.maintext11}>Return{'\n'}Pass!</Text></Pressable></View>
+          </View>
 
+          <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
 
-<View style={styles.container}>
+          <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>Press on{'\n'}Shortcut Above</Text></Pressable>
 
-<View style={styles.barcodebox}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 300, width: 350 }} />
-        {scanned && <TouchableOpacity onPress={() => setScanned(false)}><Text></Text></TouchableOpacity>}
+          <Pressable>
+            <Text style={styles.maintext}>passid:{passid}{'\n'}canusebutton: {giveshortcut ? "true" : "false"}{'\n'}hasPermission: {hasPermission ? "true" : "false"}{'\n'}It Read: {text}{'\n'}It expects: {teacheridforreturn}{'\n'}{scanned ? "it scanned" : "it DID NOT scan"}</Text></Pressable>
 
-      </View>
-      
-      <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
-      <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
-
-   
-    </View>}
+        </View> :
 
 
-    </ScrollView>
+          <View style={styles.container}>
+
+            <View style={styles.barcodebox}>
+              <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={{ height: 300, width: 350 }} />
+              {scanned && <TouchableOpacity onPress={() => setScanned(false)}><Text></Text></TouchableOpacity>}
+
+            </View>
+
+            <Pressable onPress={() => askPermissions()}><Text style={styles.maintext}>Get Camera</Text></Pressable>
+            <Pressable onPress={() => checkDatabaseData()}><Text style={styles.maintext}>After Asking Teacher For Help{'\n'}Press Here for Shortcut.</Text></Pressable>
+
+
+          </View>}
+
+
+      </ScrollView>
     </View>
-   
+
   );
 }
 
@@ -1007,7 +1090,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 30,
     backgroundColor: '#E43522',
-    marginTop:50,
+    marginTop: 50,
   },
 
   barcodebox2: {
@@ -1018,7 +1101,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 30,
     backgroundColor: '#FFF',
-    marginTop:50,
+    marginTop: 50,
   },
   error5: {
 

@@ -80,7 +80,7 @@ export const Navigation = ({ navigation, route }) => {
         getComponent={() => require('./Components/MainMenuStudent').default}
         initialParams={{ Donewithworkpass: "" }}
         options={{
-          title: "Main Menu",
+          title: "Student Main Menu",
           headerTitleAlign: "center",
           headerStyle,
           headerTintcolor: "#FFF",
@@ -319,7 +319,7 @@ export const Navigation = ({ navigation, route }) => {
         name="Studentsenrolled"
         getComponent={() => require('./Components/Studentsenrolled').default}
         options={{
-          title: "Students Enrolled",
+          title: "Students",
           headerTitleAlign: "center",
           headerStyle,
           headerTintcolor: "#FFF",
@@ -364,8 +364,9 @@ export const Navigation = ({ navigation, route }) => {
       <AuthStack.Screen
         name="Mainmenuteacher"
         getComponent={() => require('./Components/MainMenuTeacher').default}
+        initialParams={{ Donewithworkpass: "" }}
         options={{
-          title: "Main Menu",
+          title: "Teacher Main Menu",
           headerTitleAlign: "center",
           headerStyle,
           headerTintcolor: "#FFF",
@@ -406,7 +407,6 @@ export const Navigation = ({ navigation, route }) => {
           },
         }}
       />
-
       <AuthStack.Screen
         name="RegisterClasses"
         getComponent={() => require('./Components/RegisterClasses').default}
@@ -540,7 +540,7 @@ export const Navigation = ({ navigation, route }) => {
         name="Mainmenuadmin"
         getComponent={() => require('./Components/Mainmenuadmin').default}
         options={{
-          title: "Main Menu",
+          title: "Admin Main Menu",
           headerTitleAlign: "center",
           headerStyle,
           headerTintcolor: "#FFF",

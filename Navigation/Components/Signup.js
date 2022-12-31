@@ -229,14 +229,6 @@ export default function SignUp({ route, navigation }) {
     { value: 'No' },
   ];
 
-
-  useEffect(() => {
-
-console.log(penaaltyminutes, "theses are the penaltyminutes", classid2, "classid2");
-
-  }, [answers, penaaltyminutes]);
-
-
   useEffect(() => {
     let idselect = selectedschool.id;
     let state = selectedschool.state;
@@ -261,14 +253,6 @@ console.log(penaaltyminutes, "theses are the penaltyminutes", classid2, "classid
     setTemporary2(temp);
 
   }, [selectedschool]);
-
-
-
-useEffect(() => {
-  console.log(selectedschool, "looking for classid2",temporary2, "temporary2", classid2, "classic2");
-
-}, [selectedschool, temporary2, classid2]);
-
 
   const getdomain = email.substring(email.lastIndexOf("@") + 1);
 
@@ -669,6 +653,8 @@ useEffect(() => {
           changemade: false,
           status: "",
           timeteacheradded: 0,
+          lastmistake:"",
+          lastmistaketime:0,
         };
 
         const usersRef = firebase;
@@ -766,6 +752,8 @@ useEffect(() => {
             temporary: "null",
             changemade: false,
             status: "",
+            lastmistake:"",
+            lastmistaketime:0,
             // phonepassavailable:"",
             // imageuri:"",
             // imageisapproved: false,
@@ -1231,14 +1219,14 @@ const signUpAdmin = () => {
                   placeholder='Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={password.toLowerCase()}
+                  value={password}
                   onChangeText={(value) => validateAndSet(value, confirmPassword, setPassword)} />
                 <TextInput
                   style={styles.Newrow}
                   placeholder='Confirm Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={confirmPassword.toLowerCase()}
+                  value={confirmPassword}
                   onChangeText={(value) => validateAndSet(value, password, setConfirmPassword)} />
                 <TextInput
                   style={styles.Newrow}
@@ -1281,14 +1269,14 @@ const signUpAdmin = () => {
                   placeholder='Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={password.toLowerCase()}
+                  value={password}
                   onChangeText={(value) => validateAndSet(value, confirmPassword, setPassword)} />
                 <TextInput
                   style={styles.Newrow}
                   placeholder='Confirm Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={confirmPassword.toLowerCase()}
+                  value={confirmPassword}
                   onChangeText={(value) => validateAndSet(value, password, setConfirmPassword)} />
                 <Text>{'\n'}</Text>
                 <Text>{'\n'}</Text>
@@ -1308,14 +1296,14 @@ const signUpAdmin = () => {
                   placeholder='Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={password.toLowerCase()}
+                  value={password}
                   onChangeText={(value) => validateAndSet(value, confirmPassword, setPassword)} />
                 <TextInput
                   style={styles.Newrow}
                   placeholder='Confirm Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={confirmPassword.toLowerCase()}
+                  value={confirmPassword}
                   onChangeText={(value) => validateAndSet(value, password, setConfirmPassword)} />
                 <TextInput
                   style={styles.Newrow}
@@ -1404,14 +1392,14 @@ const signUpAdmin = () => {
                   placeholder='Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={password.toLowerCase()}
+                  value={password}
                   onChangeText={(value) => validateAndSet(value, confirmPassword, setPassword)} />
                 <TextInput
                   style={styles.Newrow}
                   placeholder='Confirm Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={confirmPassword.toLowerCase()}
+                  value={confirmPassword}
                   onChangeText={(value) => validateAndSet(value, password, setConfirmPassword)} />
                 <TextInput
                   style={styles.Newrow}
@@ -1439,14 +1427,14 @@ const signUpAdmin = () => {
                   placeholder='Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={password.toLowerCase()}
+                  value={password}
                   onChangeText={(value) => validateAndSet(value, confirmPassword, setPassword)} />
                 <TextInput
                   style={styles.Newrow}
                   placeholder='Confirm Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={confirmPassword.toLowerCase()}
+                  value={confirmPassword}
                   onChangeText={(value) => validateAndSet(value, password, setConfirmPassword)} />
                 <TextInput
                   style={styles.Newrow}
@@ -1544,14 +1532,14 @@ const signUpAdmin = () => {
                   placeholder='Password -Use Lowercase'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={password.toLowerCase()}
+                  value={password}
                   onChangeText={(value) => validateAndSet(value, confirmPassword, setPassword)} />
                 <TextInput
                   style={styles.Newrow}
                   placeholder='Confirm Password'
                   placeholderTextColor="#BEBEBE"
                   secureTextEntry={true}
-                  value={confirmPassword.toLowerCase()}
+                  value={confirmPassword}
                   onChangeText={(value) => validateAndSet(value, password, setConfirmPassword)} />
                 <TextInput
                   style={styles.Newrow}

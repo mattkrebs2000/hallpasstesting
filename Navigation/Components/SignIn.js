@@ -91,7 +91,6 @@ export default function Login({ route, navigation }) {
 
     } else {
       setsomeoneisloggedin(false);
-      console.log("NOONE IS LOGGED IN", id2)
       setId("");
       setRole("");
     }
@@ -128,7 +127,6 @@ export default function Login({ route, navigation }) {
           } else {
             console.log("there was not an adminclass")
           }
-
           if (docSnap.data().teacheriscalled) {
             AsyncStorage.setItem('teacheriscalled', docSnap.data().teacheriscalled);
             console.log("there was a teacheriscalled")
@@ -267,7 +265,7 @@ export default function Login({ route, navigation }) {
             placeholder='Password'
             placeholderTextColor="#BEBEBE"
             secureTextEntry={passwordShown ? false : true}
-            value={passwordlocal.toLowerCase()}
+            value={passwordlocal}
             onChangeText={setPasswordlocal}/>
         </ScrollView>
       </KeyboardAvoidingView>

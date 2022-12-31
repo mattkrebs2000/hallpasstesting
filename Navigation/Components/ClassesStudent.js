@@ -24,7 +24,7 @@ export default function SignUp({ route, navigation }) {
     const [idselected, setIdselected] = useState();
     const [section, setSection] = useState("");
     const [teacher, setTeacher] = useState("");
-    const [youcangetpass, setYoucangetpass] = useState(false);
+    const [youcangetpass, setYoucangetpass] = useState();
     const [teacherid, setTeacherid] = useState("");
     const [currentlocation, setCurrrentlocation] = useState("");
     const [ledby, setLedby] = useState("");
@@ -66,7 +66,7 @@ export default function SignUp({ route, navigation }) {
 
     const { userinformation, classid, location, school, town, state, firstname, lastname, id, percent, total2, total3, getadjustments, } = route.params;
 
-    console.log(id, "id", "adjustmentoverunder", firstname, "firstname", " in CLassesStudent.js");
+    console.log(endofclasssession, "endofclasssession in CLassesStudent.js");
 
 
     //realtime updates!!!
@@ -348,15 +348,19 @@ export default function SignUp({ route, navigation }) {
                         bottom: 0,
                     }} /></View>
                 <View>
-                    {getadjustmentss < 0 && overunderstatus == "Consequences For Lateness" && selectedclass && youcangetpass && endofclasssession > Date.now() ? (<TouchableOpacity onPress={() => navigation.navigate("Getapprovalfromteacher", {
+                    {(selectedclass && youcangetpass && endofclasssession < Date.now()) && ledby == "Teacher" || (selectedclass && youcangetpass && typeof endofclasssession == "undefined" && ledby == "Teacher") ? (<TouchableOpacity onPress={() => navigation.navigate("Destination", {
                         userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
                         maxstudentsonphonepass: maxstudentsonphonepass,
                         bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass
-                    })} ><Text style={styles.paragraph2}>See pass options. </Text></TouchableOpacity>) : (selectedclass && youcangetpass && endofclasssession > Date.now()) || selectedclass && youcangetpass && ledby == "Admin" ? (<TouchableOpacity onPress={() => navigation.navigate("Destination", {
+                    })} ><Text style={styles.paragraph2}>This Class IS NOT in session.{'\n'} See LIMITED pass options. </Text></TouchableOpacity>) : getadjustmentss < 0 && overunderstatus == "Consequences For Lateness" && selectedclass && youcangetpass && endofclasssession > Date.now() && ledby == "Teacher" ? (<TouchableOpacity onPress={() => navigation.navigate("Getapprovalfromteacher", {
+                        userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
+                        maxstudentsonphonepass: maxstudentsonphonepass,
+                        bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass
+                    })} ><Text style={styles.paragraph2}>See pass options.{'\n'} </Text></TouchableOpacity>) : (selectedclass && youcangetpass && endofclasssession > Date.now()) || selectedclass && youcangetpass && ledby == "Admin" ? (<TouchableOpacity onPress={() => navigation.navigate("Destination", {
                         userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
                         maxstudentsonphonepass: maxstudentsonphonepass,
                         bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass, coursesstudentisin: coursesstudentisin
-                    })} ><Text style={styles.paragraph2}>See pass options. </Text></TouchableOpacity>) : selectedclass && youcangetpass === false && endofclasssession > Date.now() ? (<Text style={styles.paragraph2} onPress={() => refresh()} >Passes for this class{'\n'} are not available. {'\n'}{'\n'}You may ask the teacher {'\n'}to make them available.</Text>) : (<Text style={styles.paragraph2} >You have not{'\n'} Selected a Class{'\n'}That is 'In Session'</Text>)}
+                    })} ><Text style={styles.paragraph2}>See pass options.{'\n'}  </Text></TouchableOpacity>) : selectedclass && youcangetpass === false && endofclasssession > Date.now() ? (<Text style={styles.paragraph2} onPress={() => refresh()} >Passes for this class{'\n'} are not available. {'\n'}{'\n'}You may ask the teacher {'\n'}to make them available.</Text>) : (<Text style={styles.paragraph2} >You have not{'\n'} Selected a Class{'\n'}That is 'In Session'</Text>)}
                 </View>
 
                 <Text style={styles.paragraph2}>___________________</Text>

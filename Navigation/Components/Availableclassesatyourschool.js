@@ -18,19 +18,23 @@ export default function App25r({ route, navigation }) {
     const [data, setData] = useState([]);
     const [idofclass, setIdofclass] = useState();
     const [coursesenrolled, setCoursesenrolled] = useState([]);
+    const [updatenumber, setUpdatenumber] = useState();
 
 
     const { userinformation, firstname, lastname, teacherid, classid, id, coursename, section, location, school, teacher, town, state, percent, total2, getadjustments, getcurrentdifference, email } = route.params;
 
-    console.log(id, "id", school, "school", state, "state", town, "town", firstname, "firstname", lastname, "lastname", email, "email" )
+    console.log(id, "id", school, "school", state, "state", town, "town", firstname, "firstname", lastname, "lastname", email, "email")
 
+    useEffect(() => {
+        setUpdatenumber(Date.now())
+    }, []);
 
     useEffect(() =>
-    onSnapshot(doc(firebase, "users", id), (doc) => {
-        getcoursesenrolledin();
-    }
+        onSnapshot(doc(firebase, "users", id), (doc) => {
+            getcoursesenrolledin();
+        }
 
-    ), []);
+        ), []);
 
     useEffect(() => {
         if (typeof id != "undefined") {
@@ -41,16 +45,16 @@ export default function App25r({ route, navigation }) {
     }, []);
 
     useEffect(() => {
-            navigation.setOptions({
-                headerLeft: () => (
-                    <TouchableOpacity>
+        navigation.setOptions({
+            headerLeft: () => (
+                <TouchableOpacity>
 
-                        <Text accessibilityLabel="Guest" style={styles.error}>
-                        </Text>
-                    </TouchableOpacity>
-                ),
-            });
-    
+                    <Text accessibilityLabel="Guest" style={styles.error}>
+                    </Text>
+                </TouchableOpacity>
+            ),
+        });
+
     }, []);
 
     async function getcoursesenrolledin() {
@@ -97,23 +101,31 @@ export default function App25r({ route, navigation }) {
     }, [school, state, town, coursesenrolled]);
 
 
-
+    useEffect(() => {
+        console.log(idofclass, "here is the idofclass")
+    }, [idofclass]);
 
     useEffect(() => {
-        if (typeof idofclass != "undefined") {
+        if (typeof idofclass != "undefined" && idofclass != "") {
             updateDoc(doc(firebase, "users", id), {
                 courseawaitingconfirmation: idofclass
             }).catch((error) => {
                 console.log(error); alert(error);
             })
-        }
 
+            updateDoc(doc(firebase, "classesbeingtaught", idofclass), {
+                addingnumber: updatenumber
+            }).catch((error) => {
+                console.log(error); alert(error);
+            })
+        }
+        setUpdatenumber(Date.now())
     }, [idofclass]);
 
     return (<View style={styles.container2}>
         <View style={styles.container}>
             <Text style={styles.paragraph6}>Current User:</Text>
-            { typeof firstname != "undefined" && typeof lastname != "undefined" ? <Text style={styles.paragraph5}>{firstname} {lastname}</Text> : <Text style={styles.paragraph5}>Guest</Text>}
+            {typeof firstname != "undefined" && typeof lastname != "undefined" ? <Text style={styles.paragraph5}>{firstname} {lastname}</Text> : <Text style={styles.paragraph5}>Guest</Text>}
             <Text style={styles.paragraph}>Request access to available classes </Text>
             <RadioButton data={data} onSelect={(value) => setIdofclass(value)} idofclass={idofclass} />
         </View>

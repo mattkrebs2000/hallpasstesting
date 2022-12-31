@@ -1,7 +1,7 @@
 import React, { useEffect, useState, } from 'react';
 import { Alert, nativeEvent, Animated, ScrollView, View, Text, Pressable, StyleSheet, TouchableOpacity } from 'react-native'
 
-export default function Phonelessstudents({ setIdselected, idselected, userdata, deleteToDo, id, setSelected, selected, changehasbeenmade, temporary, indefinitepenalty, classid, overunderlocal, currentlevel, abc, updatecompleted, totalminustesincompliance, localpercent, localphonepassquote, totalclasstime, totalpenaltyinutes, over, consequences, empty, setSelected2, idselected2, selected2, }) {
+export default function Phonelessstudents({ setIdselected, idselected, userdata, deleteToDo, id, setSelected, selected, changehasbeenmade, temporary, indefinitepenalty, classid, overunderlocal, currentlevel, abc, updatecompleted, totalminustesincompliance, localpercent, totalclasstime, totalpenaltyinutes, over, consequences, empty, setSelected2, idselected2, selected2, }) {
 
 
   const [scroll, setScroll] = useState(0);
@@ -123,7 +123,7 @@ startAnimation();
             </View>
           );
         })}
-        <View><Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text></View>
+         {empty === true || typeof empty === "undefined" ? <View><Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text></View>: <View><Text>{'\n'}{'\n'}</Text></View>}
       </ScrollView>
     </View>
 

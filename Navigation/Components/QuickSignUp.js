@@ -172,6 +172,8 @@ export default function SignUp({ route, navigation }) {
                     email: locallastname + "@email.com",
                     id: uid,
                     changemade: false, 
+                    lastmistake:"",
+                    lastmistaketime:0,
                 };
 
                 const usersRef = firebase;

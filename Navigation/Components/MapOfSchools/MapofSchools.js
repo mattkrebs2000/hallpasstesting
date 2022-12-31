@@ -6,7 +6,6 @@ export default function Phonelessstudents({  second,listofmadestudents ,original
 
 
   const selectHandler = (value) => {
-      console.log("selected School was run", value, second, value.locallastname);
     setSelectedschool(value);
   };
 

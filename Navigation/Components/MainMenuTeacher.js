@@ -49,31 +49,37 @@ const TeacherMainMenu = ({ route, navigation }) => {
     starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, sessionended, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, sessionending, maxstudentsbathroom, classsessionbegun, linkedclass
   } = route.params;
 
-  console.log(drinkofwater, " Drink of Water ,Main Menu ", id, "this is the id");
+  console.log(youcangetpassclass, "youcangetpassclass", id2, role2, "id2", "role");
 
 
   const getData = async () => {
     try {
-      const value = await AsyncStorage.getItem('email').then((value) => {
-        setEmail(value);
+      const value= await AsyncStorage.getItem('email').then((valueb) => {
+        setEmail(valueb)
       })
-      const value2 = await AsyncStorage.getItem('id')
-      const value5 = await AsyncStorage.getItem('town')
-      const value6 = await AsyncStorage.getItem('school')
-      const value7 = await AsyncStorage.getItem('state')
-      const value8 = await AsyncStorage.getItem('teacheriscalled')
-      const value9 = await AsyncStorage.getItem('role')
-
-      console.log(email, value2, value9, value5, value6, value7, value8, value9, "This is the stored value");
+      const value2 = await AsyncStorage.getItem('id').then((valuea) => {
+        setId(valuea)
+      })
+      const value5 = await AsyncStorage.getItem('town').then((valuec) => {
+        setTown(valuec)
+      })
+      const value6 = await AsyncStorage.getItem('school').then((valued) => {
+        setSchool(valued)
+      })
+      const value7 = await AsyncStorage.getItem('state').then((valuee) => {
+        setState(valuee)
+      })
+      const value8 = await AsyncStorage.getItem('teacheriscalled').then((valuef) => {
+        setTeacheriscalled(valuef)
+      })
+      const value9 = await AsyncStorage.getItem('role').then((valueg) => {
+        setRole(valueg)
+      })
 
     } catch (e) {
       // error reading value
     }
   }
-
-  useEffect(() => {
-    getData()
-  }, [id]);
 
   useEffect(() => {
     console.log(email, "email was just set")
@@ -93,16 +99,17 @@ const TeacherMainMenu = ({ route, navigation }) => {
   }, [id2]);
 
   useEffect(() => {
-    if (typeof id2 != "undefined") {
+
       setId(id2);
       setSchool(school2);
       setState(state2);
       setTown(town2);
       setRole(role2);
       setTeacheriscalled(teacheriscalled2);
+      setEmail(email2);
 
-    }
-  }, [id2]);
+    
+  }, []);
 
   const resetinfo = () => {
     if (typeof id != "undefined") {
@@ -120,25 +127,11 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
         })
     } else {
-      const auth = getAuth();
-
-      onAuthStateChanged(auth, (user) => {
-
-        if (user) {
-          const uid = user.uid;
-          setId(uid);
-        } else {
-          navigation.navigate("SignIn");
-        }
-      });
+  console.log("nothting hereeeeeeeee")
     }
 
   }
 
-
-  useEffect(() => {
-    setYoucangetpassclass(false);
-  }, [currentsessionid]);
 
 
   async function runthisfunction() {
@@ -196,13 +189,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
       null;
     }
   }, [sessionending]);
-
-  useEffect(() => {
-    if (typeof classsessionbegun != "undefined") {
-      setYoucangetpassclass(false);
-    }
-  }, [classsessionbegun]);
-
 
   const signoutfunction = () => {
     auth.signOut();
@@ -442,8 +428,8 @@ const TeacherMainMenu = ({ route, navigation }) => {
   }, [teacheriscalled]);
 
   useEffect(() => {
-    console.log(email)
-    if (email2 != "Mkrebs@rpsk12.org" && email2 != "Mjones@rpsk12.org" && email2 != "Nurse@rpsk12.org" && email2 != "mwkrebs@rpsk12.org" ) {
+    console.log(email2, "THIS IS THE EMAIL");
+    if (typeof email2 != "undefined" && email2 != "Mkrebs@rpsk12.org" && email2 != "Mjones@rpsk12.org" && email2 != "Nurse@rpsk12.org" && email2 != "mkrebs@rpsk12.org" && typeof email != "undefined" && email != "Mkrebs@rpsk12.org" && email != "Mjones@rpsk12.org" && email != "Nurse@rpsk12.org" && email != "mkrebs@rpsk12.org" ) {
       navigation.navigate("SignIn");
       alert("This App is in Development. Direct inquiries to mattkrebsemail@gmail.com.")
     } else {
@@ -467,7 +453,7 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
 
   useEffect(() => {
-    if (coursename) {
+    if (typeof coursename != "undefined") {
       if (youcangetpassclass) {
         makepassesavailable();
       } else {
@@ -603,10 +589,10 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
 
-          {coursename ? null : <View style={styles.button}><Text style={styles.btext} onPress={(e) => navigation.navigate("ClassesTeacher", {
+          {coursename ? null : typeof id != "undefined" ? <View style={styles.button}><Text style={styles.btext} onPress={(e) => navigation.navigate("ClassesTeacher", {
             idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, drinkpasslimit: drinkpasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
             email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, drinkpassduration: drinkpassduration, bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass
-          })}>Select a Class</Text></View>}
+          })}>Select a Class</Text></View>: <View style={styles.button}><Text style={styles.btext} onPress={() => getData()}>Reset Needed</Text></View>}
 
           {coursename ? null : <Text>{'\n'}{'\n'}</Text>}
 
@@ -640,12 +626,10 @@ const TeacherMainMenu = ({ route, navigation }) => {
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
 
 
-          {classiscurrent == true && currentsessionid && youcangetpassclass && coursename ? <View style={styles.button}>
-            <Text style={styles.btext} onPress={() => setYoucangetpassclass(false)}>Turn Outgoing Passes OFF</Text></View> : classiscurrent == true && currentsessionid && !youcangetpassclass && coursename ? <View style={styles.button}><Text style={styles.btext} onPress={() => setYoucangetpassclass(true)}>Turn Outgoing Passes ON</Text></View> : null}
+          {youcangetpassclass && coursename ? <View style={styles.button}>
+            <Text style={styles.btext} onPress={() => setYoucangetpassclass(false)}>Turn Outgoing Passes OFF</Text></View> : !youcangetpassclass && coursename ? <View style={styles.button}><Text style={styles.btext} onPress={() => setYoucangetpassclass(true)}>Turn Outgoing Passes ON</Text></View> : null}
 
-
-
-          {classiscurrent == true && currentsessionid && coursename ? <Text>{'\n'}{'\n'}</Text> : null}
+          {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
 
           {currentsessionid && youcangetincomingpassclass && coursename ? <View style={styles.button}>
 
@@ -666,13 +650,13 @@ const TeacherMainMenu = ({ route, navigation }) => {
           <View><Text style={styles.paragraph2}> ___________________ </Text></View>
           <View><Text style={styles.paragraph2}>Set-Up{'\n'}</Text></View>
 
-          <View style={styles.button}>
+          {typeof id != "undefined" ?  <View style={styles.button}>
 
-            <Text style={styles.btext} onPress={() => navigation.navigate("RegisterClasses", {
+           <Text style={styles.btext} onPress={() => navigation.navigate("RegisterClasses", {
               idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, drinkpasslimit: drinkpasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
               email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, drinkpassduration: drinkpassduration, bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass
-            })}>Create A Class</Text></View>
-          <Text>{'\n'} {'\n'}</Text>
+            })}>Create A Class</Text></View>: null}
+            {typeof id != "undefined" ? <Text>{'\n'} {'\n'}</Text>: null}
 
           {coursename ? <View style={styles.button}>
             <Text style={styles.btext} onPress={() => navigation.navigate("Studentsawaitingconfirmation", {
@@ -717,14 +701,14 @@ const TeacherMainMenu = ({ route, navigation }) => {
               idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, drinkpasslimit: drinkpasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
               email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, drinkpassduration: drinkpassduration, bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass
 
-            })}>Settings for the 'Active' Class</Text></View> : <View style={styles.button}>
+            })}>Settings for the 'Active' Class</Text></View> : typeof id != "undefined" ?  <View style={styles.button}>
 
             <Text style={styles.btext} onPress={() => navigation.navigate("Settingsteacher", {
               idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
               email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, drinkpassduration: drinkpassduration, bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass
 
-            })}>Settings</Text></View>}
-          <Text>{'\n'} {'\n'}</Text>
+            })}>Settings</Text></View> : null}
+             {typeof id != "undefined" ?<Text>{'\n'} {'\n'}</Text>: null}
 
           <View style={styles.button}>
 
@@ -734,12 +718,12 @@ const TeacherMainMenu = ({ route, navigation }) => {
             })}>Definitions/Explanations</Text></View>
           <Text>{'\n'} {'\n'}</Text>
 
-          <View style={styles.button}>
+          {typeof id != "undefined" ? <View style={styles.button}>
 
             <Text style={styles.btext} onPress={() => navigation.navigate("QRCodes", {
               idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
               email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, exclusivetime: exclusivetime, drinkofwater: drinkofwater, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, drinkpassduration: drinkpassduration, phonepassduration: phonepassduration, bathroompassduration: bathroompassduration, overunder: overunder, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass
-            })}>Get Your QR Codes</Text></View>
+            })}>Get Your QR Codes</Text></View>: null}
           <Text>{'\n'} {'\n'}</Text>
 
           <View><Text style={styles.paragraph2}> ___________________ </Text></View>

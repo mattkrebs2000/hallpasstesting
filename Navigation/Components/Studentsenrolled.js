@@ -36,7 +36,7 @@ export default function SignUp({ route, navigation }) {
     const [available, setAvailable] = useState(true);
     const [bathroomoccupied, setBathroomoccupied] = useState(false);
     const [destination, setDestination] = useState("");
-    const [phonepassawarded, setphonepassawarded] = useState(false);
+ 
     const [phonetimestart, setPhonetimestart] = useState(0);
     const [currenttime, setCurrenttime] = useState(0);
     const [tallyphonetimeingoodstanding, setTallyphonetimeingoodstanding] = useState(0);
@@ -65,7 +65,6 @@ export default function SignUp({ route, navigation }) {
     const [updatecompleted, setUpdatecompleted] = useState();
     const [totalpenaltyinutes, setTotalpenaltyminutes] = useState();
     const [localpercent, setLocalpercent] = useState();
-    const [localphonepassquote, setlocalphonepassquote] = useState();
     const [localingoodstanding, setLocalingoodstanding] = useState();
     const [trythispercent, setTrythispercent] = useState();
 
@@ -232,21 +231,23 @@ export default function SignUp({ route, navigation }) {
         }
     }, [idsofpasses]);
 
-
     useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <TouchableOpacity onPress={() =>
+                    navigation.navigate("Mainmenuteacher", {
+                        idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
+                        email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, overunder: overunder, bathroompassduration: bathroompassduration, drinkpassduration: drinkpassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, totalclasstime: totalclasstime, linkedclass: linkedclass, maxstudentsbathroom: maxstudentsbathroom,
+                    })}
+                >
+                    <Text accessibilityLabel="Guest" style={styles.error5}>
+                        Main Menu
+                    </Text>
+                </TouchableOpacity>
+            ),
+        });
 
-        if (coursename) {
-            navigation.setOptions({
-                headerLeft: () => (
-                    <TouchableOpacity>
-                        <Text accessibilityLabel="Guest" style={styles.error}>
-                        </Text>
-                    </TouchableOpacity>
-                ),
-            });
-        }
-
-    }, []);
+}, []);
 
     useEffect(() => {
         if (typeof newconsequence != "undefined") {
@@ -287,23 +288,6 @@ export default function SignUp({ route, navigation }) {
             getlocationsqrcodes();
         }
     }, [over]);
-
-    useEffect(() => {
-        if (phonepassawarded === false) {
-            setlocalphonepassquote("");
-        } else {
-            setlocalphonepassquote("- Done With Work.");
-        }
-    }, []);
-
-    useEffect(() => {
-        if (phonepassawarded === false) {
-            setlocalphonepassquote("");
-        } else {
-            setlocalphonepassquote("- Done With Work.");
-        }
-    }, [phonepassawarded]);
-
 
 
     useEffect(() => {
@@ -346,12 +330,10 @@ export default function SignUp({ route, navigation }) {
                     const penaltyminutes = object[idd].penaltyminutes;
                     const ovunder = object[idd].overunder;
                     const level = object[idd].level;
-                    const donewithwork = object.phonepassawarded;
                     setAdjustments(whatever);
                     setPenaltyminutes(penaltyminutes);
                     setOverunderlocal(ovunder);
                     setAbc(level);
-                    setphonepassawarded(donewithwork);
 
                 })
         }
@@ -404,7 +386,6 @@ export default function SignUp({ route, navigation }) {
         setChangehasbeenmade(change)
         setNewconsequenceid(consequence)
         serPhonepassexpiration(selected.exclusivephonepassexpiration)
-        setphonepassawarded(selected.phonepassawarded)
         setstudentjustarrivedlate(selected.latetoclass)
 
         setIdselected(idselect)
@@ -441,39 +422,6 @@ export default function SignUp({ route, navigation }) {
         }
 
     }, [idselected]);
-
-
-
-    useEffect(() => {
-
-        if (idselected) {
-            if (phonepassawarded) {
-                makeeligibleforphonepass();
-            } else {
-                makeineligibleforphonepass();
-            }
-        }
-    }, [phonepassawarded]);
-
-    const makeeligibleforphonepass = () => {
-
-        updateDoc(doc(firebase, "users", idselected), {
-            phonepassawarded: true
-        }).catch((error) => {
-            console.log(error); alert(error);
-        })
-
-    }
-
-    const makeineligibleforphonepass = () => {
-
-        updateDoc(doc(firebase, "users", idselected), {
-            phonepassawarded: false
-        }).catch((error) => {
-            console.log(error); alert(error);
-        })
-
-    }
 
 
     // This will be a new function to got to recent activity of student where you will be able to take a student off suspension if you want to. But it is not supposed to be Adding a DOc to passes. 
@@ -613,7 +561,9 @@ export default function SignUp({ route, navigation }) {
             });
 
             await updateDoc(doc(firebase, "users", idselected), {
-                latetoclass: true
+                latetoclass: true,
+                lastmistake: "Late To Class",
+                lastmistaketime:Date.now()
             }).catch((error) => {
                 console.log(error); alert(error);
             });
@@ -794,10 +744,8 @@ export default function SignUp({ route, navigation }) {
     }, [count]);
 
 
-
-
     async function showexpectations() {
-
+console.log("expectations was run!");
         if (teacherid) {
             const q = query(collection(firebase, "Expectations"), where("teacherid", "==", id));
 
@@ -813,7 +761,7 @@ export default function SignUp({ route, navigation }) {
                     } else {
                         setEmpty(false);
                         setConsequences(array);
-                        console.log("HEEEEEEEEYYYYY,", idselected, "HEEEEEEEEEEEEy");
+                        console.log("HEEEEEEEEYYYYY,", idselected, "HEEEEEEEEEEEEy",consequences);
                     }
 
                 })
@@ -887,7 +835,9 @@ export default function SignUp({ route, navigation }) {
                         updateDoc(doc(firebase, "users", idselected), {
                             consequenceid: user,
                             temporary: "true",
-                            changemade: true
+                            changemade: true,
+                            lastmistake: localcode,
+                            lastmistaketime:Date.now()
                         }).catch((error) => {
                             console.log(error); alert(error);
                         })
@@ -948,7 +898,9 @@ export default function SignUp({ route, navigation }) {
                         updateDoc(doc(firebase, "users", idselected), {
                             consequenceid: user,
                             temporary: "true",
-                            changemade: true
+                            changemade: true,
+                            lastmistake: "Not Specified",
+                            lastmistaketime:Date.now()
                         }).catch((error) => {
                             console.log(error); alert(error);
                         })
@@ -1058,27 +1010,40 @@ export default function SignUp({ route, navigation }) {
                 </TouchableOpacity>
             </View>
 
-            <View style={idselected ? styles.container2 : styles.container23}>
+            <View style={!idselected ? styles.container23 : empty === false ? styles.container233 : styles.container2}>
                 <Students userdata={userdata} id={id} selected={selected} setSelected={setSelected}
                     selected2={selected2} setSelected2={setSelected2}
 
-                    idselected={idselected} setIdselected={setIdselected} changehasbeenmade={changehasbeenmade} temporary={temporary} indefinitepenalty={indefinitepenalty} classid={classid} overunderlocal={overunderlocal} currentlevel={currentlevel} abc={abc} updatecompleted={updatecompleted} totalpenaltyinutes={totalpenaltyinutes} localpercent={localpercent} localphonepassquote={localphonepassquote} totalclasstime={totalclasstime} over={over} consequences={consequences} empty={empty} idselected2={idselected2} setIdselected2={setIdselected2} />
+                    idselected={idselected} setIdselected={setIdselected} changehasbeenmade={changehasbeenmade} temporary={temporary} indefinitepenalty={indefinitepenalty} classid={classid} overunderlocal={overunderlocal} currentlevel={currentlevel} abc={abc} updatecompleted={updatecompleted} totalpenaltyinutes={totalpenaltyinutes} localpercent={localpercent}totalclasstime={totalclasstime} over={over} consequences={consequences} empty={empty} idselected2={idselected2} setIdselected2={setIdselected2} />
             </View>
 
             {idselected && empty != false ? <ScrollView style={styles.container3}>
+            
+            <View><ActivityIndicator
+                    size="large"
+                    color="#FFF"
+                    animating={showspinner}
+                    style={{
+                        position: 'absolute',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                    }} /></View>
+
+
 
                 {idselected && empty != false && (sessionending > Date.now()) && classiscurrent == true && coursename ? <View>
                     <Text>{'\n'}</Text>
 
                     <Pressable style={styles.section5}>
-                        {(changehasbeenmade === false) && ((temporary === "null")) ? <Text style={(phonepassexpiration < Date.now()) && (phonepassawarded === false) ? styles.paragraph3 : styles.paragraph33} onPress={(phonepassexpiration < Date.now()) && (phonepassawarded === false) ? () => setIndefinitepenalty("false") : () => console.log("hello")}>Toggle Status{'\n'}"In Good Standing"/"In Penalty"{'\n'}{'\n'}</Text> : null}
+                        {(changehasbeenmade === false) && ((temporary === "null")) ? <Text style ={styles.paragraph3} onPress={() => setIndefinitepenalty("false")}>Toggle Status{'\n'}"In Good Standing"/"In Penalty"{'\n'}{'\n'}</Text> : null}
 
                         {(changehasbeenmade === true && temporary === "true") ? <Text style={styles.paragraph3} onPress={() => takeoffpenalty1()}>This Toggle Status{'\n'}"In Good Standing"/"In Penalty"{'\n'}{'\n'}</Text> : null}
                     </Pressable>
 
-                    <Pressable style={styles.section5}>
-                        {phonepassawarded === true ? <Text style={styles.paragraph3} onPress={() => setphonepassawarded(false)} >Student has been Awarded{'\n'}Done With Work{'\n'} Phone Pass{'\n'}-Touch To Undo-{'\n'}{'\n'}</Text> : (phonepassawarded === false || typeof phonepassawarded === "undefined") && idselected ? <Text style={styles.paragraph3} onPress={() => setphonepassawarded(true)} >Not Yet Eligible For{'\n'}Done With Work{'\n'}Phone Pass{'\n'}-Touch To Award{'\n'}{'\n'}</Text> : null}
-                    </Pressable>
 
                     <Pressable style={styles.section5}>
                         {idselected && (studentjustarrivedlate === false || typeof studentjustarrivedlate === "undefined") ? <Text style={(starttimeofcurrentclass + 300000) < Date.now() ? styles.paragraph3 : styles.paragraph33} onPress={(starttimeofcurrentclass + 300000) < Date.now() ? () => logunauthorizedpass() : () => console.log("late")}>This Student Just Arrived{'\n'}Late To Class{'\n'}-Press to Record Time-</Text> : (studentjustarrivedlate === true) && idselected ? <Text style={styles.paragraph3}>This student was{'\n'}marked tardy for this session.</Text> : null}
@@ -1116,6 +1081,7 @@ export default function SignUp({ route, navigation }) {
                         {idselected ? <Text style={styles.paragraph3} onPress={() => createTwoButtonAlert()} >Remove Student{'\n'}From this class</Text> : <Text style={styles.paragraph3} ></Text>}
                         <Text>{'\n'}</Text>
                     </Pressable>
+                    <View><Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text></View>
 
                 </View> : null}
 
@@ -1124,35 +1090,7 @@ export default function SignUp({ route, navigation }) {
             {idselected2 && empty === false ? <View style={styles.container33}><Pressable style={styles.section55}><Text style={styles.paragraph35} onPress={() => indefinitechange()}>Classify it as this.</Text></Pressable></View> : empty === false ? <View style={styles.container33}><Pressable style={styles.section55}><Text style={styles.paragraph35} onPress={() => indefinitechange()}>Don't Categorize Consequence</Text></Pressable></View> : null}
 
 
-            <View style={styles.section3}>
-
-                <View><ActivityIndicator
-                    size="large"
-                    color="#FFF"
-                    animating={showspinner}
-                    style={{
-                        position: 'absolute',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0,
-                    }} /></View>
-
-
-
-                <Text style={styles.paragraph2}>___________________ {'\n'}{'\n'}</Text>
-
-                <Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenuteacher", {
-                    idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
-                    email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, overunder: overunder, bathroompassduration: bathroompassduration, drinkpassduration: drinkpassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, totalclasstime: totalclasstime, linkedclass: linkedclass, maxstudentsbathroom: maxstudentsbathroom,
-                })} >Return to Main Menu </Text>
-
-                <Text></Text>
-
-
-            </View>
+     
         </SafeAreaView>
     );
 }
@@ -1204,13 +1142,19 @@ const styles = StyleSheet.create({
 
     },
     container23: {
+        height: "85%",
+        backgroundColor: "#013469",
+        width: "100%",
+
+    },
+    container233: {
         height: "55%",
         backgroundColor: "#013469",
         width: "100%",
 
     },
     container3: {
-        height: "30%",
+        height: "60%",
         backgroundColor: "#000",
         width: "100%",
 
@@ -1368,6 +1312,7 @@ const styles = StyleSheet.create({
         color: "#fff",
         alignContent: "center",
         justifyContent: "center",
+        height: "30%",
 
 
 
@@ -1393,6 +1338,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#000000',
         color: "#fff",
         fontWeight: 'bold',
+
+    },
+    error5: {
+
+        backgroundColor: '#000',
+        color: "#FFF",
+        marginLeft: "3%",
+        marginRight: "3%",
+        fontSize: 17,
+        fontWeight: 'bold',
+        textAlign: "center",
 
     },
 

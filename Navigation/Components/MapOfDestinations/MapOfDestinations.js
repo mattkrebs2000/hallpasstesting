@@ -27,7 +27,14 @@ export default function Phonelessstudents({ Currentlocation, Teacherdestination,
         return (
           <View key={item.id}>
          
-          {(classisover === false || typeof classisover === "undefined") && newlocation && disable && disabledonewithworkphonepass ? <Pressable
+          {classisover === true ? <Pressable
+            style={
+              item.id === Idselecteddestination ? styles.selected : styles.unselected
+            }
+            onPress={item.location === "Bathroom" || item.location === "Get Drink of Water" ? null : () => selectHandler(item) }>
+            {item.location === newlocation ? <Text style ={styles.unselected}>{item.location}</Text> : item.location === "Bathroom" || item.location === "Get Drink of Water" ? <Text style ={styles.disable}>{item.location}</Text> : <Text style ={styles.unselected
+            }>{item.teacheriscalled} - {item.location}</Text> }
+          </Pressable> : (classisover === false || typeof classisover === "undefined") && newlocation && disable && disabledonewithworkphonepass ? <Pressable
             style={
               item.id === Idselecteddestination ? styles.selected : styles.unselected
             }
