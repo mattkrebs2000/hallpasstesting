@@ -305,15 +305,9 @@ export default function SignUp({ route, navigation }) {
         let classbegin = selectedclass.classbegin;
         let duration = selectedclass.lengthofclass;
         let idselect = selectedclass.id;
-
-
         setduration(duration);
         setclassbegin(classbegin);
-
         setIdselected2(idselect);
-
-
-        console.log(selectedclass, "This is the selected class", selectedclass.id);
     }, [selectedclass]);
 
 

@@ -33,10 +33,6 @@ const Scanner = ({ route, navigation }) => {
   const [howmanypeople, setHowmanypeople] = useState();
   const [howmanypeople2, setHowmanypeople2] = useState();
   const [takenameoffwaitlist, setTakenameoffwaitlist] = useState();
-
-  const [phonehowmanypeople, setPhonehowmanypeople] = useState();
-  const [phonehowmanypeople2, setPhonehowmanypeople2] = useState();
-  const [phonetakenameoffwaitlist, setPhonetakenameoffwaitlist] = useState();
   const [rightnow, setRightnow] = useState();
 
   const [ontime, setOntime] = useState();
@@ -120,7 +116,6 @@ const Scanner = ({ route, navigation }) => {
 
     if (docSnap.exists()) {
       setHowmanypeople2(docSnap.data().inusebathroompass)
-      setPhonehowmanypeople2(docSnap.data().inuseexclusivephonepass)
 
     } else {
       // doc.data() will be undefined in this case
@@ -159,17 +154,7 @@ const Scanner = ({ route, navigation }) => {
 
   useEffect(() => {
 
-    if (typeof day != "undefined" && locationdestination == "Break From Work Pass") {
-
-      if (text == teacheridforreturn && scanned) {
-        returnmakephonepass();
-      } else {
-        setText('Not yet scanned')
-        setScanned(false);
-        alert("You have scanned the wrong @RCode1");
-      }
-
-    } else if (typeof day != "undefined" && locationdestination != "Break From Work Pass") {
+    if (typeof day != "undefined") {
       if (text == teacheridforreturn && scanned) {
         returnfinalizehallpass();
       } else {
@@ -295,10 +280,7 @@ const Scanner = ({ route, navigation }) => {
 
     if (docSnap.exists()) {
       setHowmanypeople(docSnap.data().inusebathroompass);
-      setPhonehowmanypeople(docSnap.data().inuseexclusivephonepass);
-
       setTakenameoffwaitlist(docSnap.data().totalinlineforbathroom);
-      setPhonetakenameoffwaitlist(docSnap.data().totalinlineforexclusivephone);
       setGiveshortcut(docSnap.data().removescanneraddbutton);
 
 
@@ -440,61 +422,6 @@ const Scanner = ({ route, navigation }) => {
       setScanned(false);
       setCompleted(true);
 
-    }
-  }
-
-
-  async function makephonepass() {
-
-    setGiveshortcut(false);
-
-    console.log("phone pass ran")
-
-    const expected = (rightnow + (exclusivetime * 60000));
-
-    if (classid && passid) {
-
-      await updateDoc(doc(firebase, "passes", passid), {
-
-        leftclass: rightnow,
-        timeleftclass: leavetimeGlobal.toLocaleTimeString([], { hour12: true }),
-        whenlimitwillbereached: expected,
-        placeinline: null,
-        passdetailrightnow: rightnow, passdetailcurrentdate: currentdate, passdetailrealtimeleave: realtimeleave
-
-      }).catch((error) => {
-        console.log(error); alert(error);
-      }),
-
-        await updateDoc(doc(firebase, "users", id), {
-
-          exclusivephonepassused: currentsessionid,
-          exclusivephonepassexpiration: expected,
-          status: "On Pass",
-
-        }).catch((error) => {
-          console.log(error); alert(error);
-        }),
-
-        await updateDoc(doc(firebase, "classesbeingtaught", classid), {
-          addingnumber: Date.now(),
-          inuseexclusivephonepass: phonehowmanypeople + 1,
-          totalinlineforexclusivephone: phonetakenameoffwaitlist - 1,
-          removescanneraddbutton: false
-        }).catch((error) => {
-          console.log(error); alert(error);
-        })
-          .then(async () => {
-
-            setExpectedreturn(expected);
-            setHasPermission(null);
-            setText("Not yet scanned");
-            setScanned(false);
-            setCompleted(true);
-          })
-    }
-    else {
-      null
     }
   }
 
@@ -835,113 +762,13 @@ const Scanner = ({ route, navigation }) => {
     }
   }
 
-
-  async function returnmakephonepass() {
-
-    setGiveshortcut(false);
-
-    console.log("return phone pass ran");
-
-    if (Date.now() > endofclasssession) {
-
-      var t = endofclasssession;
-      var r = new Date(t);
-
-      const currentdiff = ((expectedreturn - t) / 60000);
-
-      const percentsss = { id: classid, penaltyminutes: penaltyminutes, overunder: overunderr + currentdiff, adjustments: adjust, level: levell };
-
-      await updateDoc(doc(firebase, "passes", passid), {
-        returned: t,
-        timereturned: r.toLocaleTimeString([], { hour12: true }),
-        returnedbeforetimelimit: currentdiff === 0 || currentdiff > 0,
-        differenceoverorunderinminutes: (expectedreturn - t) / 60000,
-
-      }).catch((error) => {
-        console.log(error); alert(error);
-      }),
-
-        await updateDoc(doc(firebase, "users", id), {
-          [classid]: percentsss,
-          passid: "",
-          status: "",
-        }).catch((error) => {
-          console.log(error); alert(error);
-        });
-
-
-      await updateDoc(doc(firebase, "classesbeingtaught", classid), {
-        inuseexclusivephonepass: phonehowmanypeople2 - 1,
-        removescanneraddbutton: false
-      }).catch((error) => {
-        console.log(error); alert(error);
-
-      }).then(async () => {
-
-        setHasPermission(null);
-        setText("Not yet scanned");
-        setScanned(false);
-        setCompleted2(true);
-      })
-
-    } else {
-
-      var r = new Date();
-      var t = Date.now();
-
-      const currentdiff = ((expectedreturn - t) / 60000);
-
-      const percentsss = { id: classid, penaltyminutes: penaltyminutes, overunder: overunderr + currentdiff, adjustments: adjust, level: levell };
-
-      await updateDoc(doc(firebase, "passes", passid), {
-        returned: t,
-        timereturned: r.toLocaleTimeString([], { hour12: true }),
-        returnedbeforetimelimit: currentdiff === 0 || currentdiff > 0,
-        differenceoverorunderinminutes: (expectedreturn - t) / 60000,
-
-      }).catch((error) => {
-        console.log(error); alert(error);
-      }),
-
-        await updateDoc(doc(firebase, "users", id), {
-          [classid]: percentsss,
-          passid: "",
-          status: "",
-        }).catch((error) => {
-          console.log(error); alert(error);
-        });
-
-
-      await updateDoc(doc(firebase, "classesbeingtaught", classid), {
-        inuseexclusivephonepass: phonehowmanypeople2 - 1,
-        removescanneraddbutton: false
-      }).catch((error) => {
-        console.log(error); alert(error);
-
-      }).then(async () => {
-
-        setHasPermission(null);
-        setText("Not yet scanned");
-        setScanned(false);
-        setCompleted2(true);
-      })
-    }
-  }
-
-
   useEffect(() => {
     console.log(day, "is currentdateeend undefined?");
     if (typeof day === "undefined") {
       console.log("teacherid and text", teacherid, text, "teacherid and texti");
       if (text == teacherid && scanned) {
         console.log("Play SOund Happened");
-
-        if (locationdestination == "Break From Work Pass ") {
-          makephonepass();
-        } else {
           finalizehallpass();
-        }
-
       }
       if (teacherid != text && scanned) {
 
@@ -952,14 +779,9 @@ const Scanner = ({ route, navigation }) => {
     }
   }, [currentdate]);
 
+
+
   // Request Camera Permission
-
-
-
-
-
-
-
 
 
   useEffect(() => {

@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
     disable: {
       backgroundColor: '#013469',
-      color: "#999",
+      color: "#FF0000",
       textAlign: "center",
       fontSize: 17,
       margin: 6,

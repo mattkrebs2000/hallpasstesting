@@ -30,7 +30,6 @@ import Passisready from "./Components/Passisready";
 import Settingsteacher from "./Components/SettingsTeacher";
 import Classsessions from "./Components/Classsessions";
 import Bathroomline from "./Components/Lineforbathroom";
-import Bathroomlineforteacher from "./Components/Lineforbathroomteacher";
 import Passhistory from "./Components/Passhistory";
 import Penaltyhistory from "./Components/Penaltyhistory";
 import Passesstudents from "./Components/Passesforstudents";
@@ -301,20 +300,6 @@ export const Navigation = ({ navigation, route }) => {
         }}
       />
 
-<AuthStack.Screen
-        name="Lineforbathroompassteacher"
-        getComponent={() => require('./Components/Lineforbathroomteacher').default}
-        options={{
-          title: "Line For Bathroom Pass",
-          headerTitleAlign: "center",
-          headerStyle,
-          headerTintcolor: "#FFF",
-          headerTitleStyle: {
-            fontSize: 17, fontWeight: 'bold',
-            color: '#ffffff'
-          },
-        }}
-      />
       <AuthStack.Screen
         name="Studentsenrolled"
         getComponent={() => require('./Components/Studentsenrolled').default}

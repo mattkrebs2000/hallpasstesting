@@ -1004,7 +1004,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
 
     color: '#FFF',
-    backgroundColor: '#FF0000',
+    backgroundColor: '#E43522',
     width: "100%",
     flex: .4,
 

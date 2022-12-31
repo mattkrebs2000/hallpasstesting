@@ -289,25 +289,10 @@ export default function SignUp({ route, navigation }) {
         let classbegin = selectedclass.classbegin;
         let duration = selectedclass.lengthofclass;
         let idselect = selectedclass.id;
-
         setduration(duration);
         setclassbegin(classbegin);
-
-        console.log(selectedclass, "This is the selected class", selectedclass.id);
-
-
         setIdselected(idselect);
-
-
     }, [selectedclass]);
-
-
-
-
-
-
-
-
 
     // Deletes a class and then reruns classes that are still there.
 

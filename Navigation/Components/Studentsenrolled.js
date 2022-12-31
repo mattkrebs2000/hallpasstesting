@@ -1236,7 +1236,7 @@ const styles = StyleSheet.create({
     paragraph33: {
 
         backgroundColor: '#000',
-        color: "#999",
+        color: "#FF0000",
         textDecorationLine: 'line-through',
         fontSize: 16,
         textAlign: "center",

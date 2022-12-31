@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     borderColor: "#013469",
   },
   unselected2: {
-    backgroundColor: '#FF0000',
+    backgroundColor: '#E43522',
     textAlign: "center",
     fontSize: 17,
     margin: 6,
