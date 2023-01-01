@@ -66,10 +66,10 @@ const Destination = ({ route, navigation }) => {
 
   useEffect(() => {
     if (adjustmentandoverunder < 0 && adjustmentandoverunder >= -10) {
-      setTextonscreen("i will try not to be late this time. this penalty of having to write this can be removed if i serve a detention with the teacher.")
+      setTextonscreen("i will try not to be late this time. this penalty of having to write this can be reduced if I am quicker on my passes and it can be removed if i serve a detention with the teacher.")
     }
     else {
-      setTextonscreen("i understand that rules are important and they are in place for my benefit. and i understand that one of the rules in this class is that i need to be respectful of the time limits of passes that i am using. so i will try not to be late this time. this penalty of having to write this can be removed if i serve a detention with the teacher.")
+      setTextonscreen("i understand that rules are important and they are in place for my benefit. and i understand that one of the rules in this class is that i need to be respectful of the time limits of passes that i am using. so i will try not to be late this time. this penalty of having to write this can be reduced if I am quicker on my passes and it can be removed if i serve a detention with the teacher.")
     }
 
     //Not needed if its not complex complex
@@ -93,9 +93,9 @@ const Destination = ({ route, navigation }) => {
 
   useEffect(() => {
     if (adjustmentandoverunder < 0 && adjustmentandoverunder >= -10) {
-      setInitialtext("I will try not to be late this time. This penalty of having to write this can be removed if i serve a detention with the teacher.")
+      setInitialtext("i will try not to be late this time. this penalty of having to write this can be reduced if I am quicker on my passes and it can be removed if i serve a detention with the teacher.")
     } else {
-      setInitialtext("I understand that rules are important and they are in place for my benefit. And I understand that one of the rules in this class is that i need to be respectful of the time limits of passes that i am using. So i will try not to be late this time. This penalty of having to write this can be removed if I serve a detention with the teacher.")
+      setInitialtext("i understand that rules are important and they are in place for my benefit. and i understand that one of the rules in this class is that i need to be respectful of the time limits of passes that i am using. so i will try not to be late this time. this penalty of having to write this can be reduced if I am quicker on my passes and it can be removed if i serve a detention with the teacher.")
     }
   
   }, []);
