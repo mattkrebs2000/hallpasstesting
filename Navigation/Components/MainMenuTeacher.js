@@ -606,8 +606,8 @@ const TeacherMainMenu = ({ route, navigation }) => {
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
 
 
-          {youcangetpassclass && coursename ? <View style={styles.button}>
-            <Text style={styles.btext} onPress={() => setYoucangetpassclass(false)}>Turn Outgoing Passes OFF</Text></View> : !youcangetpassclass && coursename ? <View style={styles.button}><Text style={styles.btext} onPress={() => setYoucangetpassclass(true)}>Turn Outgoing Passes ON</Text></View> : null}
+          {(youcangetpassclass && coursename) || (typeof youcangetpassclass == "undefined" && coursename) ? <View style={styles.button}>
+            <Text style={styles.btext} onPress={() => setYoucangetpassclass(false)}>Turn Outgoing Passes OFF</Text></View> : youcangetpassclass == false && coursename ? <View style={styles.button}><Text style={styles.btext} onPress={() => setYoucangetpassclass(true)}>Turn Outgoing Passes ON</Text></View> : null}
 
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
 
