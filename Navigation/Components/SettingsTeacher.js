@@ -14,9 +14,6 @@ const Destination = ({ route, navigation }) => {
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, sessionended, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration,otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, sessionending, maxstudentsbathroom,linkedclass
     } = route.params;
 
-    console.log("In Teaceher Settings", ifnegativeplusminus, "ifnegativeplusminus", bathroompasslimit, "bathroompasslimit", currentsessionid, "currentsessionid", starttime, "starttime", timeincomputer, "timeincomputer", classid, "classid", "In Teacher Settings")
-
-
     LogBox.ignoreAllLogs();
 
     const [bathroompasslimit, setBathroompasslimit] = useState();
@@ -51,7 +48,7 @@ const Destination = ({ route, navigation }) => {
                     if (array.length === 0) {
                         console.log("No passes to change")
                     } else {
-                        setIdsofpasses(array); console.log(array, "This is the pass ");
+                        setIdsofpasses(array); 
                     }
                 })
         }
@@ -173,18 +170,9 @@ const Destination = ({ route, navigation }) => {
     useEffect(() => {
         if (changeismade1 > 0) {
             toggleSwitch();
-            console.log(changeismade1, offerdonewithworkphonepass)
         }
     }, [changeismade1]);
 
-    useEffect(() => {
-
-        console.log(changeismade1, offerdonewithworkphonepass, offerdonewithworkphonepass)
-
-    }, [offerdonewithworkphonepass]);
-
-
-    console.log(lengthofclass, "starttime = ", starttime, "settingsteacher,", classid, coursename, bathroompasslimit, ifnegativeplusminus, userinformation, role, school, state, town, teacheriscalled, "SettingsTeacher");
 
     useEffect(() => {
         if (typeof role === "undefined" || typeof school === "undefined" || typeof state === "undefined" || typeof town === "undefined") {
@@ -201,8 +189,6 @@ const Destination = ({ route, navigation }) => {
 
     const thisclassupdatesettings1 = () => {
 
-        console.log(currentsessionid, "currentsessionid", "thisclassupdatesettings1 was run");
-        //Copy from here. . .
         if (classid) {
 
 
@@ -228,7 +214,7 @@ const Destination = ({ route, navigation }) => {
             }
 
             if (drinkpasslimit) {
-                console.log("bathroomtimelimit");
+          
                 updateDoc(doc(firebase, "classesbeingtaught", classid), {
                     drinkofwater: drinkpasslimit
 
@@ -238,7 +224,6 @@ const Destination = ({ route, navigation }) => {
             }
 
             if (nonbathroompasslimit) {
-                console.log("nonbathroompasslimit");
                 updateDoc(doc(firebase, "classesbeingtaught", classid), {
                     timelimitnonbathroompass: nonbathroompasslimit
 

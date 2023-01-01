@@ -46,9 +46,6 @@ const Destination = ({ route, navigation }) => {
         setTwotextsaretrue(false);
       }
 
-      console.log(inputtext, initialtext, startingnumber, adjustmentandoverunder, "WHATEVEEEREEE")
-
-
   }
   }, [inputtext, initialtext]);
  

@@ -80,8 +80,6 @@ export default function SignUp({ route, navigation }) {
                     }
 
                 })
-
-            console.log("Was this run", userdata, "Was this run")
             setShowspinner(false);
 
         }
@@ -100,15 +98,6 @@ export default function SignUp({ route, navigation }) {
     }, []);
 
 
-
-    // useEffect(() => {
-
-    //     if (typeof classesarray != "undefined") {
-    // console.log(classesarray[0].classname, "this is the classesarrayYYYYYY")
-    //     }
-    // }, [classesarray]);
-
-
     useEffect(() => {
         let classbegin = selectedclass.classbegin;
         let duration = selectedclass.lengthofclass;
@@ -120,8 +109,6 @@ export default function SignUp({ route, navigation }) {
 
         setIdselected2(idselect);
 
-
-        console.log(selectedclass, "This is the selected class", selectedclass.id);
     }, [selectedclass]);
 
 

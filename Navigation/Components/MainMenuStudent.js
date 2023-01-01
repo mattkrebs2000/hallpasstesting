@@ -165,7 +165,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
       .then(async (userRec1) => {
         setSchool(userRec1);
-        console.log(userRec1, "thiis should be school");
       })
   }
 
@@ -183,7 +182,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
       .then(async (userRec3) => {
         setTown(userRec3);
-        console.log(userRec3, "thiis should be town");
       })
   }
 
@@ -201,7 +199,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
       .then(async (userRec5) => {
         setFirstname(userRec5);
-        console.log(userRec5, "thiis should be the firstname");
       })
   }
 
@@ -219,7 +216,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
       .then(async (userRec6) => {
         setLastname(userRec6);
-        console.log(userRec6, "thiis should be the lastname");
       })
   }
 
@@ -237,7 +233,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
       .then(async (userRec7) => {
         setEmail(userRec7);
-        console.log(userRec7, "thiis should be the email");
       })
   }
 
@@ -255,7 +250,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
       .then(async (userRec8) => {
         setId(userRec8);
-        console.log(userRec8, "thiis should be the id");
       })
   }
   useEffect(() => {
@@ -272,7 +266,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
       .then(async (userRec4) => {
         setRole(userRec4);
-        console.log(userRec4, "thiis should be role");
       })
   }
 
@@ -294,11 +287,8 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
   const getadjustment = () => {
 
-    console.log("2", id, classid, role);
-
     if ((typeof id != "undefined") && (typeof classid != "undefined") && (typeof role != "undefined")) {
-      console.log("300", id, classid, role);
-
+  
       const docRef = doc(firebase, "users", id);
 
       const docData = getDoc(docRef)
@@ -333,8 +323,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
   }, [getexistingpassid]);
 
   const getpassdetails = () => {
-
-    console.log("4 ", getexistingpassid, " 4");
 
     if (typeof getexistingpassid != "undefined" && getexistingpassid != "") {
 
@@ -533,7 +521,6 @@ const [lastmissteptime, setLastmissteptime] = useState();
   useEffect(() => {
     console.log("15");
     if (typeof coursename === "undefined") {
-      console.log(lastmistep, "lastmisstep", lastmissteptime,"lastmisteptime","nothing done");
     } else {
       setShowspinner(true);
       getpenaltytimeoneclass();

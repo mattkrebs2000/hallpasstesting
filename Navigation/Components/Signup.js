@@ -133,7 +133,7 @@ export default function SignUp({ route, navigation }) {
         if (array.length === 0) {
           console.log("No passes to change", classid2, "classid2")
         } else {
-          setIdsofpasses(array); console.log(array, "This is the pass ");
+          setIdsofpasses(array);
         }
       })
 
@@ -152,7 +152,7 @@ export default function SignUp({ route, navigation }) {
         if (array.length === 0) {
           console.log("No passes to change")
         } else {
-          setIdsofconsequences(array); console.log(array, "This is the pass ");
+          setIdsofconsequences(array); 
         }
       })
 
@@ -529,14 +529,14 @@ export default function SignUp({ route, navigation }) {
   };
 
   useEffect(() => {
-    console.log("Temporary2", temporary2, "tempoerarry 2")
+ 
     if (password === confirmPassword && (state != "" && town != "" && school != "")) {
       setValidationMessage("Sign Up");
     }
   }, [state, town, school]);
 
   useEffect(() => {
-    console.log("Temporary2", temporary2, "tempoerarry 2")
+ 
     if (temporary2) {
       getadjustment();
     }
@@ -567,7 +567,7 @@ export default function SignUp({ route, navigation }) {
           setAbc2(level);
         })
     }
-    console.log(idselected, classid2, "2DOES IT KNOW WHAT IDSELECTED IS")
+
   }
 
   const auth = getAuth();
@@ -583,7 +583,6 @@ export default function SignUp({ route, navigation }) {
         .then((userCredential) => {
           const usera = auth.currentUser;
 
-          console.log(userCredential.uid, usera, usera.uid, "Here is the iiddddddd", password)
           if (usera.uid === idselected && (usera.email != "mkrebs@rpsk12.org" && usera.email != "Mkrebs@rpsk12.org" && usera.email != "nurse@rpsk12.org"  && usera.email != "Nurse@rpsk12.org")) {
 
             deleteUser(usera).then(() => {

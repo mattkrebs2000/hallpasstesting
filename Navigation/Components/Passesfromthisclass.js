@@ -15,7 +15,7 @@ export default function SignUp({ route, navigation }) {
     const { idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepassmaxstudents, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, location, teacherid, teacheriscalled,
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, sessionending, maxstudentsbathroom, totalclasstime, idselected, penaltyminutes, adjustments, abc, drinkpasslimit, linkedclass
     } = route.params;
-    console.log(currentmax2, "current max", maxstudentsbathroom, "maxstudentsbathroom", totalinlineforbathroom, "totalinline", howmany, "howmanypeopleinline");
+    console.log(currentmax2, "current max");
 
     const [userdata, setUserdata] = useState([]);
     const [classdata, setClassdata] = useState();
@@ -120,12 +120,6 @@ export default function SignUp({ route, navigation }) {
     }, [idselected2]);
 
 
-
-    useEffect(() => {
-        console.log(howmany, "howmanypeople")
-    }, [howmany]);
-
-
     async function checkDatabaseData2() {
         console.log("12Did it get this far? ");
 
@@ -155,7 +149,7 @@ export default function SignUp({ route, navigation }) {
                     if (array.length === 0) {
                         console.log("No passes to change")
                     } else {
-                        setIdsofpasses(array); console.log(array, "This is the pass ");
+                        setIdsofpasses(array);
                     }
                 })
         }
@@ -231,17 +225,6 @@ export default function SignUp({ route, navigation }) {
         console.log("THIS IS THE IDddddddddddddd");
         getlocationsqrcodes();
     }, [test]);
-
-
-
-
-
-    useEffect(() => {
-        userdata.forEach(obj => {
-            console.log(obj.id, obj.differenceoverorunderinminutes, "THI SI SIS THE USSERDATA")
-        });
-    }, [userdata]);
-
 
 
     // useEffect(() => {
@@ -406,8 +389,6 @@ export default function SignUp({ route, navigation }) {
         const t = Date.now();
 
         const ontime = limitreached > t;
-
-        console.log("2 was this run?,", t, r, "endofclasssession", "newDate")
 
         const currentdiff = ((limitreached - t) / 60000);
 

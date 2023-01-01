@@ -51,7 +51,7 @@ const Scanner = ({ route, navigation }) => {
   const [currenttime, setCurrenttiime] = useState();
   const [giveshortcut, setGiveshortcut] = useState();
 
-  console.log(classid, "classid", locationdestination, "locationdestination", newlocation, "newlocation", teacherid, teacheridforreturn, "teacherid", "teacheridforreturn", "In Scanner");
+  console.log("In Scanner");
 
   useEffect(() => {
 
@@ -127,8 +127,6 @@ const Scanner = ({ route, navigation }) => {
 
 
   useEffect(() => {
-    console.log(expectedreturn, "expectedreturn", currenttime, "currenttime", "10Did it get this far? ");
-    console.log("10Did it get this far? ");
     if (currenttime < expectedreturn) {
 
       console.log("22this was run");
@@ -166,9 +164,7 @@ const Scanner = ({ route, navigation }) => {
     } else {
 
       if (leavetimeGlobal) {
-        console.log("1was this run?", text, scanned, ontime, "expectedreturn2, ontime, text, scanned,")
-        // const newtime = leavetimeGlobal.toLocaleTimeString();
-
+      
         const formatAMPM = () => {
           let hours = leavetimeGlobal.getHours();
           let minutes = leavetimeGlobal.getMinutes();
@@ -208,8 +204,7 @@ const Scanner = ({ route, navigation }) => {
 
 
   useEffect(() => {
-    console.log("2was this run?", text, scanned, ontime, "expectedreturn2, ontime, text, scanned,")
-
+   
     if (locationdestination == "Bathroom") {
       setAllottedtime(bathroomtime);
     } else if (locationdestination == "Get Drink of Water") {
@@ -249,8 +244,6 @@ const Scanner = ({ route, navigation }) => {
   }, []);
 
   useEffect(() => {
-
-    console.log(completed, "completed", day, "day");
 
     if (typeof completed != "undefined" && typeof day == "undefined") {
 
@@ -296,8 +289,7 @@ const Scanner = ({ route, navigation }) => {
   //shortcut() to be used in development
 
   const developmentshortcut = () => {
-    console.log(teacherid, "teacherid this should be the same as the text");
-
+  
     var r = new Date();
     var s = Date.now();
 
@@ -429,14 +421,10 @@ const Scanner = ({ route, navigation }) => {
 
     setGiveshortcut(false);
 
-    console.log(timeallowed, "timeallowed", howmanypeople2, "howmanypeople2", endofclasssession, "endofclasssession", locationdestination, "locationdestination", expectedreturn, "expectedreturn", ontime, "ontime", passid, "passid", id, "id", classid, "classid");
-
     if (Date.now() > endofclasssession) {
 
       var t = endofclasssession;
       var r = new Date(t);
-
-      console.log("1 was this run?,", t, r, "endofclasssession", "newDate")
 
       if (locationdestination == "Bathroom" && howmanypeople2 < 1) {
         console.log("first if then");
@@ -621,8 +609,6 @@ const Scanner = ({ route, navigation }) => {
       var r = new Date();
       var t = Date.now();
 
-      console.log("2 was this run?,", t, r, "endofclasssession", "newDate")
-
       if (locationdestination == "Bathroom" && howmanypeople2 > 0) {
         const currentdiff = ((expectedreturn - t) / 60000);
 
@@ -717,7 +703,6 @@ const Scanner = ({ route, navigation }) => {
 
       }
       else {
-        console.log("37was this run?,", text, scanned, ontime, expectedreturn, "text, scanned,  ontime, expectedreturn,")
 
         const currentdiff = ((expectedreturn - t) / 60000);
 
@@ -763,9 +748,8 @@ const Scanner = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-    console.log(day, "is currentdateeend undefined?");
+
     if (typeof day === "undefined") {
-      console.log("teacherid and text", teacherid, text, "teacherid and texti");
       if (text == teacherid && scanned) {
         console.log("Play SOund Happened");
           finalizehallpass();
@@ -795,7 +779,6 @@ const Scanner = ({ route, navigation }) => {
 
   const askPermissions = () => {
     (async () => {
-      console.log("Asking for permissions", hasPermission);
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status == "granted");
     })();

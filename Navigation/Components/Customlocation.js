@@ -13,8 +13,6 @@ import { Alert } from 'react-native-web';
 const App = ({ route, navigation }) => {
 
   const { userinformation, teacherid, coursename, classid, teacher,  Selectedclassdestination,  youcangetpass, section, currentlocation, school, state, town,locationdestination, firstname,  lastname, ledby, exclusivetime, drinkofwater,  donewithworkpass, bathroomtime,  nonbathroomtime,  currentsessionid, bathroompassinuse, totalinlineforbathroomlocal, passid, id, teacheridforreturn, maxstudentsonphonepass, endofclasssession, lengthofclasssession, } = route.params;
-
-  console.log("userinformation now in CustomLocation.js", userinformation, "userinformation now in CustomLocation.js");
   
   const [newlocation, setNewlocation] = useState();
   const { control, handleSubmit } = useForm();

@@ -30,8 +30,7 @@ export default function SignUp({ route, navigation }) {
     const { idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepassmaxstudents, drinkpasslimit, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, location, teacherid, teacheriscalled,
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, sessionending, maxstudentsbathroom, totalclasstime, idselected, penaltyminutes, adjustments, abc, linkedclass
     } = route.params;
-    console.log("this is the class id", classid, "this is the class id", currentsessionid, "starttime = ", starttime, "userinformation now in ClassesSessions.js", userinformation, "userinformation now in CLassesTeacher.js");
-
+  
     const [userdata, setUserdata] = useState([]);
     const [classdata, setClassdata] = useState();
     const [classesarray, setClassesarray] = useState([]);
@@ -66,7 +65,7 @@ export default function SignUp({ route, navigation }) {
                     if (array.length === 0) {
                         console.log("No passes to change")
                     } else {
-                        setIdsofpasses(array); console.log(array, "This is the pass ");
+                        setIdsofpasses(array);
                     }
                 })
         }
@@ -143,10 +142,6 @@ export default function SignUp({ route, navigation }) {
         setEmpty(false);
     }, []);
 
-    useEffect(() => {
-        console.log(empty, "setEmpgy")
-    }, [empty]);
-
     const createTwoButtonAlert = () =>
 
 
@@ -198,7 +193,7 @@ export default function SignUp({ route, navigation }) {
             setEmpty(true);
 
         } else {
-            console.log(classesarray, "This is my classes dataa")
+            console.log("This is my classes dataa")
         }
         
 
@@ -229,7 +224,6 @@ export default function SignUp({ route, navigation }) {
                         setIdselected2();
                         setEmpty(false);
                         setUserdata(array);
-                        console.log("HEEEEEEEEYYYYY,", idselected, "HEEEEEEEEEEEEy");
                     }
 
 
@@ -242,7 +236,6 @@ export default function SignUp({ route, navigation }) {
 
                 })
 
-            console.log("Was this run", userdata, "Was this run")
             setShowspinner(false);
 
         }
@@ -290,16 +283,6 @@ export default function SignUp({ route, navigation }) {
         }
 
     }, [coursename]);
-
-
-
-    // useEffect(() => {
-
-    //     if (typeof classesarray != "undefined") {
-    // console.log(classesarray[0].classname, "this is the classesarrayYYYYYY")
-    //     }
-    // }, [classesarray]);
-
 
     useEffect(() => {
         let classbegin = selectedclass.classbegin;
@@ -350,7 +333,6 @@ setNewoverunder(true);
                 snapshot.forEach(docs => {
                     deleteDoc(doc(firebase, "consequencephoneuse", docs.data().id))
                 })
-                console.log("Did anything change?")
             })
 
     }

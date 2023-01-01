@@ -16,7 +16,6 @@ export default function SignUp({ route, navigation }) {
     const { idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepassmaxstudents, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, location, teacherid, teacheriscalled,
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, sessionending, maxstudentsbathroom, totalclasstime, idselected, penaltyminutes, adjustments, abc, drinkpasslimit, linkedclass, adminclass
     } = route.params;
-    console.log(totalinlineforbathroom, "totalinline howmanypeopleinline");
 
     const [userdata, setUserdata] = useState([]);
     // const [classdata, setClassdata] = useState();
@@ -85,12 +84,6 @@ export default function SignUp({ route, navigation }) {
     //     }
     //     setHelpgiven(false);
     // }, []);
-
-    useEffect(() => {
-        console.log(adminclass, "classid", returnedzero, "this is returnedzero")
-    }, [idselected2]);
-
-
 
     // useEffect(() => {
     //  console.log(howmany, "howmanypeople")

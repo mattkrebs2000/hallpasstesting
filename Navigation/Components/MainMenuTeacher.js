@@ -81,10 +81,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
     }
   }
 
-  useEffect(() => {
-    console.log(email, "email was just set")
-  }, [email]);
-
 
   useEffect(() => {
     if (typeof id2 != "undefined") {
@@ -217,12 +213,9 @@ const TeacherMainMenu = ({ route, navigation }) => {
   const endsessionprematurely = () => {
 
 
-    console.log(sessionending, getdatedotnow, "sessionending, getdatedotnow", currentsessionid, "currentsessionid")
-
     if (sessionending < getdatedotnow) {
-      console.log(sessionending, rightnow, "sessionending,rightnow")
+ 
       setClassiscurrent(false);
-
 
       updateDoc(doc(firebase, "classsessions", currentsessionid), {
         status: "Completed"
@@ -249,7 +242,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
   useEffect(() => {
 
-    console.log(sessionending, "sessionending",)
     if (currentsessionid) {
       const array = [];
 
@@ -312,18 +304,13 @@ const TeacherMainMenu = ({ route, navigation }) => {
         const array = [];
         const truefalse = false;
         let noww = Date.now();
-        console.log("Step 1, ", Date.now())
         snapshot.forEach(doc => {
 
-          console.log("Step 2, ", doc.data(), doc.data().id, noww, doc.data().passesnolongeravailable, "2 variables")
           if (noww > (doc.data().passesnolongeravailable)) {
             array.push(doc.data().id);
             let truefalse = true;
-            console.log(doc.data().id, "TRUE HAPPENED --- class should be over", array);
-            //Because class is over should say - "Begin A Class". 
           }
           else if (noww < (doc.data().passesnolongeravailable)) {
-            console.log("CLASS IS HAPPENING!!!!!!!!!!!!!!!!")
             setClassiscurrent(true);
             setNameofcurrentclass(doc.data().classname);
             setIdofcurrentclass(doc.data().id);
@@ -355,7 +342,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
 
   useEffect(() => {
-    console.log("ENDING CLASSr ", currentsessionid, thelastid, "+ ", starttime, "starttime", endtime, "endtime");
 
     const rightnow = Date.now();
 
@@ -387,12 +373,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
         setEndlastclass(true);
     }
   }, [endtime]);
-
-  useEffect(() => {
-    console.log(currentsessionid, "get all consequences that need to be reset and update there time thaat passes are no longer accepted. ")
-  }, [endtime]);
-
-
 
   useEffect(() => {
     navigation.setOptions({

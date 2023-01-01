@@ -600,7 +600,6 @@ export default function SignUp({ route, navigation }) {
                         }
                     })
                 }).then(async () => {
-                    console.log(array2, "this is the array that accounts for the bignumber")
                     setTotalclasstime(array.reduce((a, b) => a + b, 0));
                 })
         }
@@ -634,8 +633,6 @@ export default function SignUp({ route, navigation }) {
                 .then(async (snapshot1) => {
 
                     snapshot1.forEach(doc => {
-
-                        console.log(doc.data().id);
 
                         sum.push(doc.data().totaltimeinpenalty);
                     })
@@ -761,14 +758,12 @@ console.log("expectations was run!");
                     } else {
                         setEmpty(false);
                         setConsequences(array);
-                        console.log("HEEEEEEEEYYYYY,", idselected, "HEEEEEEEEEEEEy",consequences);
                     }
 
                 })
         }
 
     };
-
 
     useEffect(() => {
         if (indefinitepenalty === "false") {

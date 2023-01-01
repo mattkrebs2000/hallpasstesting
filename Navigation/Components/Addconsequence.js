@@ -26,6 +26,7 @@ export default function SignUp({ route, navigation }) {
     const { idofcurrentclass, currentsessionid, endlastclass, userinformation, role, bathroompasslimit, nonbathroompasslimit, ifnegativeplusminus, exclusivephonepassmaxstudents, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, id, school, town, state, location, teacherid, teacheriscalled,
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, sessionended, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, drinkpasslimit, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, sessionending, maxstudentsbathroom, linkedclass
     } = route.params;
+
     console.log(teacheriscalled, "teacheriscalled", "userinformation now in QuickSignup.js");
 
     const [code, setCode] = useState();
@@ -50,7 +51,7 @@ export default function SignUp({ route, navigation }) {
                     if (array.length === 0) {
                         console.log("No passes to change")
                     } else {
-                        setIdsofpasses(array); console.log(array, "This is the pass ");
+                        setIdsofpasses(array);
                     }
                 })
         }
@@ -102,7 +103,7 @@ export default function SignUp({ route, navigation }) {
                 status: "Completed"
             })
                 .catch(error => {
-                    console.log(error); alert("2", error);
+                    console.log(error); alert(error);
                 })
             endpasses();
         }

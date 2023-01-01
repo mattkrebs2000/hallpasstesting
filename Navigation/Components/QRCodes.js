@@ -16,7 +16,7 @@ export default function App25rn({route}) {
     email, starttime, sessionended, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, thelastid, phonepassduration, overunder, drinkpassduration, bathroompassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, sessionending, maxstudentsbathroom, linkedclass
 } = route.params;
 
-  console.log("userinformation now in QRCodes.js", id, "Here",teacherid, "userinformation now in QRCodes.js");
+  console.log(" now in QRCodes.js");
 
     const [userdata, setUserdata] = useState([]);
     const [idsofpasses, setIdsofpasses] = useState();
@@ -48,7 +48,7 @@ export default function App25rn({route}) {
                     if (array.length === 0) {
                         console.log("No passes to change")
                     } else {
-                        setIdsofpasses(array); console.log(array, "This is the pass ");
+                        setIdsofpasses(array);
                     }
                 })
         }

@@ -100,11 +100,6 @@ export default function App25r({ route, navigation }) {
         }
     }, [school, state, town, coursesenrolled]);
 
-
-    useEffect(() => {
-        console.log(idofclass, "here is the idofclass")
-    }, [idofclass]);
-
     useEffect(() => {
         if (typeof idofclass != "undefined" && idofclass != "") {
             updateDoc(doc(firebase, "users", id), {

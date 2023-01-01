@@ -46,9 +46,6 @@ export default function SignUp({ route, navigation }) {
     const [idsofpasses, setIdsofpasses] = useState();
     const [totalclasstime, setTotalclasstime] = useState();
 
-
-    console.log(lengthofclasses, "classsessions");
-
     const endpasses = () => {
 
         if (sessionending < Date.now()) {
@@ -63,7 +60,7 @@ export default function SignUp({ route, navigation }) {
                     if (array.length === 0) {
                         console.log("No passes to change")
                     } else {
-                        setIdsofpasses(array); console.log(array, "This is the pass ");
+                        setIdsofpasses(array);
                     }
                 })
         }
@@ -143,12 +140,6 @@ export default function SignUp({ route, navigation }) {
     }
 
 
-
-
-    const updateallstudentswhohadthisclass = () => {
-        console.log("YOU CAN DELETE ALL RECORDS")
-    }
-
     const createTwoButton = () => {
 
 
@@ -223,8 +214,6 @@ export default function SignUp({ route, navigation }) {
 
 
                 })
-
-            console.log("Was this run", userdata, "Was this run")
             setShowspinner(false);
 
         }

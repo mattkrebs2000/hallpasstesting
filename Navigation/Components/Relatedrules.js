@@ -88,8 +88,6 @@ export default function SignUp({ route, navigation }) {
     useEffect(() => {
 
         let idselect = selectedclass.id;
-     
-        console.log(selectedclass, "This is the selected class", selectedclass.id);
       
         setIdselected(idselect);
        

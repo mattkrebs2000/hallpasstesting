@@ -68,17 +68,6 @@ const Destination = ({ route, navigation }) => {
   const [classsessionending2, setClasssessionending] = useState();
 
 
-  console.log( classid, id, "this should say classid,", totalinlineforbathroomlocal, "totalinlineforbathroomlocal",bathroomepassinuselocal, "bathroomepassinuselocal", "id, and role");
-
-
-  useEffect(() => {
- console.log(Idselecteddestination, "idselecteddestinatiion");
-  }, [Idselecteddestination]);
-
-  useEffect(() => {
-    console.log(getexistingpassid2, "getexistingpassid2");
-     }, []);     
-
   //onSnapshots
   if (classid) {
 
@@ -86,10 +75,6 @@ const Destination = ({ route, navigation }) => {
 
       setBathroomepassinuselocal(doc.data().inusebathroompass);
       setTotalinlineforbathroomlocal(doc.data().totalinlineforbathroom);
-
-      setExclusivephonepassinuselocal(doc.data().inuseexclusivephonepass);
-      setTotalinlineforexclusivephonelocal(doc.data().totalinlineforexclusivephone);
-
 
     }
     )
@@ -103,9 +88,6 @@ const Destination = ({ route, navigation }) => {
       } else {
         setDisable(false);
       }
-      console.log(doc.data().exclusivephonepassused, currentsessionid, "currentsessionid and whats in the daatabase");
-
-      // seeifpassexists();
     }
     ), []);
 
@@ -151,12 +133,6 @@ const Destination = ({ route, navigation }) => {
     }
 
   }, []);
-
-  useEffect(() => {
-
-    console.log(bathroomepassinuselocal, maxstudentsbathroom, totalinlineforbathroomlocal, maxstudentsbathroom, "bathroomepassinuselocal, maxstudentsbathroom , totalinlineforbathroomlocal,  maxstudentsbathroom,", "Destination");
-
-  }, [bathroomepassinuselocal, maxstudentsbathroom, totalinlineforbathroomlocal, maxstudentsbathroom]);
 
   useEffect(() => {
 
@@ -250,12 +226,7 @@ const Destination = ({ route, navigation }) => {
 
   useEffect(() => {
 
-    console.log("19", passid, locationdestination, getstatus2)
-
     if (passid.length > 1) {
-
-
-      console.log(passid, "THIS IS THE PASS IDDDD")
 
       setShowspinner(false);
 
@@ -294,8 +265,6 @@ const Destination = ({ route, navigation }) => {
 
     if (typeof id != "undefined") {
 
-      console.log(id, "301 here is something else", classid);
-
       const docRef = doc(firebase, "users", id);
 
       const docData = getDoc(docRef)
@@ -333,8 +302,6 @@ const Destination = ({ route, navigation }) => {
 
 
   const getpassdetails = () => {
-
-    console.log("existing pass id", getexistingpassid2, "existing pass id");
 
     if (typeof getexistingpassid2 != "undefined" && getexistingpassid2 != "") {
 
@@ -386,8 +353,6 @@ const Destination = ({ route, navigation }) => {
 
   useEffect(() => {
 
-    console.log("10");
-
     const timenow = Date.now();
 
     if (passclassid2 && passclasssessionid2 && passlocation2 && passcoursename2 && passdestination2 && timeallowed2 && (classsessionending2 > timenow)) {
@@ -396,7 +361,6 @@ const Destination = ({ route, navigation }) => {
   }, [passdestination2]);
 
   const sendtoplace = () => {
-    console.log("19" ,"sendtoplace is happening now", getstatus2);
 
     if (getstatus2 === "On Pass") {
       navigation.navigate("Pass", { id: id, passid: getexistingpassid2, school: school, state: state, town: town, firstname: firstname, lastname: lastname, classid: passclassid2, currentsessionid: passclasssessionid2, currentlocation: passlocation2, coursename: passcoursename2, locationdestination: passdestination2, bathroomtime: timeallowed2, teacheridforreturn: passteacheridreturn2, teacherid: teacheridfrompass2, timeallowed: timeallowed2, expectedreturn: expectedreturnfrompass2, rightnow: passrightnow2, currentdate: passcurrentdate2, realtimeleave: passrealtimeleave2 });
@@ -425,10 +389,6 @@ const Destination = ({ route, navigation }) => {
 
   const getTeachers = () => {
 
-    console.log("IS SOMETHING BEING GOYYEN HERE?")
-
-    console.log("9")
-
     const f = query(collection(firebase, "users"), where("school", "==", school), where("state", "==", state), where("town", "==", town), where("role", "!=", "Student"));
     const docDATAA = getDocs(f)
 
@@ -449,8 +409,6 @@ const Destination = ({ route, navigation }) => {
 
   const getAvailableLocationsingrouptime0 = () => {
 
-    console.log("1000")
-
     const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
@@ -465,8 +423,6 @@ const Destination = ({ route, navigation }) => {
   }
 
   const getAvailableLocationsingrouptime0dww = () => {
-
-    console.log("11")
 
     const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
     const docDATAA = getDocs(g)
@@ -555,7 +511,7 @@ const Destination = ({ route, navigation }) => {
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
-    console.log(seconddata, "function 1")
+
   }
 
   const getAvailableLocations2grouptime0 = () => {
@@ -602,7 +558,7 @@ const Destination = ({ route, navigation }) => {
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
-    console.log(seconddata, "function 5")
+
   }
 
   async function bathroompassinfosent() {
@@ -822,7 +778,6 @@ const Destination = ({ route, navigation }) => {
       });
 
       setPassid(userRec.id);
-      console.log(user, "This is the pass id");
     })
       .catch((error) => {
         console.log(error); alert(error);

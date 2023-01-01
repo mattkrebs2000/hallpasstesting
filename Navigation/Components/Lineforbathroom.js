@@ -87,8 +87,6 @@ useEffect(() =>
 
         setGetlocaldifference(-1);
 
-        console.log(currentsessionid, "currentsessionid is this the last thing to get run? in LIneForBathroom")
-
         const trythis = collection(firebase, "passes");
 
         const q = query(trythis, where("classsessionid", "==", currentsessionid), where("destination", "==", "Bathroom"), where("leftclass", "==", 0), orderBy("placeinline", "asc"), limit(getlocaldifference));
@@ -163,7 +161,6 @@ useEffect(() =>
 
 
                 snapshot.forEach(doc => {
-                    console.log("Here is the id", doc.data().id);
                     setOtherid(doc.data().id)
                 })
 
@@ -215,15 +212,13 @@ useEffect(() =>
         if (listofids) {
 
             for (let i = 0; i < lengthoflist; i++) {
-                console.log(listofids, listofids[i].id, "HERE IS THT LEST OF THE IDS.")
             
                 updateDoc(doc(firebase, "passes", listofids[i].id), {
                     placeinline: i
                 }).catch((error) => {
                     console.log(error); alert(error);
                 })
-    
-            console.log(listofids, lengthoflist, "HERE IS THT LEST OF THE IDS.")
+
             }
     }
     }, [listofids]);

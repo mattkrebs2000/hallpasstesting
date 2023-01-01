@@ -16,7 +16,7 @@ export default function SignUp({ route, navigation }) {
     const { idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepassmaxstudents, drinkpasslimit, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, location, teacherid, teacheriscalled,
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, sessionended, thelastid, phonepassduration, overunder, bathroompassduration,  drinkpassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, sessionending, maxstudentsbathroom, linkedclass
     } = route.params;
-    console.log(idsfromgroup, "Studentsawwaitingconfirmataion.js", classid, "Studentsawwaitingconfirmataion.js");
+    console.log("Studentsawwaitingconfirmataion.js", classid, "Studentsawwaitingconfirmataion.js");
 
 
     const [userdata, setUserdata] = useState([]);
@@ -47,7 +47,7 @@ export default function SignUp({ route, navigation }) {
                     if (array.length === 0) {
                         console.log("No passes to change")
                     } else {
-                        setIdsofpasses(array); console.log(array, "This is the pass ");
+                        setIdsofpasses(array); 
                     }
                 })
         }
@@ -81,7 +81,6 @@ export default function SignUp({ route, navigation }) {
 
         setShowspinner(true);
 
-        console.log(selected, "This is the Selected Value")
         setFirstname(selected.localfirstname)
         setLastname(selected.locallastname)
         setIdselected(selected.id)
@@ -167,8 +166,6 @@ onSnapshot(doc(firebase, "classesbeingtaught", classid), (doc) => {
                 setShowspinner(false);
             })
 
-        console.log(idsfromgroup, "here are the ids from the group")
-
     };
 
 
@@ -177,11 +174,8 @@ onSnapshot(doc(firebase, "classesbeingtaught", classid), (doc) => {
         let variable = "";
 
         idsfromgroup.forEach((item) => {
-            console.log(item, "item THIS IS "),
-
+        
                 variable = item,
-                console.log(item, "item", variable, "THIS IS WHAT I printed"),
-
                 updateDoc(doc(firebase, "users", variable), {
                     [classid]: percents,
                     courseawaitingconfirmation: "",

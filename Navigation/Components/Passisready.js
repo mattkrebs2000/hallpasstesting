@@ -13,8 +13,6 @@ const Destination = ({route, navigation}) => {
 
   const { userinformation, teacherid, coursename, classid, teacher, Selectedclassdestination, youcangetpass, section, currentlocation, school, state, town, locationdestination,  firstname, lastname, ledby, exclusivetime, drinkofwater, donewithworkpass, bathroomtime, nonbathroomtime, currentsessionid, bathroompassinuse, totalinlineforbathroom, id, passid, teacheridforreturn,   maxstudentsonphonepass,  newlocation, adjustmentandoverunder, total2, getcurrentdifference, endofclasssession} = route.params;
 
-  console.log(totalinlineforbathroom, "totalinlineforbathroom", "passisready");
-
   const [timeallowed, setTimeallowed] = useState();
 
   useEffect(() => {

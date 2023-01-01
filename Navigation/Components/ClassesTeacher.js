@@ -28,7 +28,7 @@ export default function ClassesTeacher({ route, navigation }) {
 
     const { teacheriscalled, idofcurrentclass, currentsessionid, endlastclass, userinformation, school, state, town, role, id, bathroompasslimit, drinkpasslimit, ifnegativeplusminus, nonbathroompasslimit, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, email, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, exclusivetime, drinkofwater, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, sessionended, thelastid, consequenceid,
     } = route.params;
-    console.log("id", id, selectedclass, coursename, "coursename", classiscurrent, "CLassesTeacher.js", Date.now());
+    console.log("id", id, coursename, "coursename", classiscurrent, "CLassesTeacher.js");
 
     const [userdata, setUserdata] = useState([]);
     const [classesarray, setClassesarray] = useState([]);
@@ -71,11 +71,7 @@ export default function ClassesTeacher({ route, navigation }) {
     const [idsofpasses, setIdsofpasses] = useState();
     const [linkedclass, setLinkedclass] = useState();
 
-console.log(id, "id", idselected, "idselected");
-
     const endpasses = () => {
-
-console.log("endpasses is being run", usersesssionid, "endpasses is being run");
 
         if (sessionending < Date.now()) {
             const q = query(collection(firebase, "passes"), where("classsessionid", "==", usersesssionid), where("returned", "==", 0));
@@ -90,7 +86,6 @@ console.log("endpasses is being run", usersesssionid, "endpasses is being run");
                         console.log("No passes to change")
                     } else {
                         setIdsofpasses(array);
-                        console.log(array, "This is the pass ");
                     }
                 })
         }
@@ -104,8 +99,6 @@ console.log("endpasses is being run", usersesssionid, "endpasses is being run");
         for (let s = 0; s < idsofpasses.length; s++) {
 
             const r = new Date(idsofpasses[s].endofclasssession);
-
-            console.log(idsofpasses[s] ,"this is the object");
 
             updateDoc(doc(firebase, "passes", idsofpasses[s].id), {
 
@@ -243,7 +236,6 @@ console.log("endpasses is being run", usersesssionid, "endpasses is being run");
     useEffect(() => {
         setStarttime(Date.now());
         dayofweekFinder();
-        console.log("THIIS IS WHAT COMES UP?", Date.now())
     }, [idselected, usersesssionid, sessionending]);
 
     useEffect(() => {
@@ -273,17 +265,13 @@ console.log("endpasses is being run", usersesssionid, "endpasses is being run");
 
     useEffect(() => {
         if (typeof id != "undefined") {
-        console.log("THIS IS THE IDddddddddddddd", id);
         getlocationsqrcodes();
         }
     }, [id]);
 
     useEffect(() => {
 
-        console.log(coursename, "here is the userdataa");
-
         if (id && coursename) {
-            console.log("See if it enters here????????")
             updateDoc(doc(firebase, "users", id), {
                 currentclass: coursename,
                 currentlocation: location
@@ -293,16 +281,7 @@ console.log("endpasses is being run", usersesssionid, "endpasses is being run");
         } else (null)
     }, [id, coursename]);
 
-
-
-    useEffect(() => {
-        console.log("It Changed", teacheriscalled, coursename, "coursename","teacheriscalled", " in MainMenuTeacher");
-      }, [coursename]);
-
-
     async function getlocationsqrcodes() {
-
-console.log("is qrcodes run before this?", id,"it knows the id");
 
         if (typeof id != "undefined" && userdata.length === 0) {
             const q = query(collection(firebase, "classesbeingtaught"), where("teacherid", "==", id));
@@ -328,7 +307,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
 
     useEffect(() => {
-        console.log(classsessionbegun, "Classsessionbegun")
         if (classsessionbegun) {
             navigation.setOptions({
                 headerLeft: () => (
@@ -383,9 +361,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
         let section = selectedclass.period;
         let usersession = selectedclass.currentsessionid;
 
-
-        console.log("This is the selected class", selectedclass.id);
-      
         setEndlastclasssubstitute(false);
         setUsersessionid(usersession);
         setLocation(selectedclass.location)
@@ -417,11 +392,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
     }, [selectedclass]);
 
     useEffect(() => {
-        console.log(teacheriscalled, coursename, "coursename","teacheriscalled", " in ClassesTeacher")
-      }, [teacheriscalled, coursename]);
-
-
-    useEffect(() => {
         if (sessionending > 1 && starttime > 1 || typeof sessionending === "undefined") {
             if (sessionending > starttime) {
                 setClassisstillgoingon(true)
@@ -434,12 +404,11 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
     useEffect(() => {
         updatedatabase();
-        console.log("HHHHHHHHHHHH", coursename, "Coursename", sessionending, currentsessionid, classisstillgoingon, classiscurrent, Shownewsessionbegan, "HHHHHHHHHHHH");
     }, [section, classtrue, classisstillgoingon]);
 
 
     const updatedatabase = () => {
-        console.log(idselected, coursename, "Coursename", "This is the IDDD")
+      
         if (idselected) {
             updateDoc(doc(firebase, "users", id), {
                 currentclass: idselected,
@@ -448,12 +417,10 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 console.log(error); alert(error);
             })
         }
-        console.log(idselected, coursename, "coursename","IDSELECTEDPPPPPPPPP")
+    
     }
 
     const getidofsession = async () => {
-
-        console.log(usersesssionid, "and HERE IS WHAT IT IS PASSIng");
 
         const docRef2 = doc(firebase, "classesbeingtaught", idselected);
 
@@ -486,7 +453,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
     const deletecourse = async () => {
         const userDoc = doc(firebase, "classesbeingtaught",
             idselected)
-        console.log("HEEEEEEEEYYYYY,", idselected, "HEEEEEEEEEEEEy");
 
         await deleteDoc(userDoc)
 
@@ -509,7 +475,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 snapshot.forEach(docs => {
                     deleteDoc(doc(firebase, "classsessions", docs.data().id))
                 })
-                console.log("Deleted Sessions of class?")
             })
     }
     const deleteitspasses = async () => {
@@ -522,7 +487,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 snapshot.forEach(docs => {
                     deleteDoc(doc(firebase, "passes", docs.data().id))
                 })
-                console.log("Deleted Sessions of class?")
             })
     }
 
@@ -536,7 +500,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 snapshot.forEach(docs => {
                     deleteDoc(doc(firebase, "consequencephoneuse", docs.data().id))
                 })
-                console.log("Deleted Sessions of class?")
             })
     }
 
@@ -563,7 +526,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 snapshot.forEach(docs => {
                     deleteDoc(doc(firebase, "classesbeingtaught", docs.data().id))
                 })
-                console.log("Did anything change?")
             })
             .then(function () {
                 setUserdata([{ classname: "You haven't Registered" }])
@@ -582,7 +544,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 snapshot.forEach(docs => {
                     deleteDoc(doc(firebase, "classsessions", docs.data().id))
                 })
-                console.log("Did anything change?")
             })
 
     }
@@ -597,7 +558,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 snapshot.forEach(docs => {
                     deleteDoc(doc(firebase, "passes", docs.data().id))
                 })
-                console.log("Did anything change?")
             })
 
     }
@@ -612,7 +572,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                 snapshot.forEach(docs => {
                     deleteDoc(doc(firebase, "consequencephoneus", docs.data().id))
                 })
-                console.log("Did anything change?")
             })
 
     }
@@ -659,7 +618,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
     const beginthisclassendotherone = () => {
 
-        console.log("445 sessionending was this the last to be run");
         const rightnow = Date.now();
 
         updateDoc(doc(firebase, "classsessions", idofcurrentclass), {
@@ -677,7 +635,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
         setShowspinner(true);
 
-        console.log("REsetting changemade has happende")
         const array = [];
         const array2 = [];
 
@@ -706,8 +663,7 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                         }).catch((error) => {
                             console.log(error); alert(error);
                         })
-                        console.log("HERE IS THT LEST OF THE IDS.")
-
+    
                     }
                 }
             })
@@ -718,13 +674,7 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
     async function createanewsession() {
 
-        console.log("Anew seesssion is starting")
-
         setShownewsessionbegan(true);
-
-        // Tabulatesumsofpeopleinpenalty();
-
-        console.log("Check1")
 
         const usersRef = firebase;
         const r = new Date();
@@ -736,8 +686,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
         const typicaldate = day + ", " + newmonth + "/" + date + "/" + year;
 
         if (idselected) {
-
-            console.log("Check2")
 
             const docRef = await addDoc(collection(firebase, "classsessions"), {
 
@@ -762,11 +710,8 @@ console.log("is qrcodes run before this?", id,"it knows the id");
 
                 setCurrentending(starttime + lengthofclassesforacomputer)
 
-                console.log(Newconsequenceid2, "Check3")
-
-
                 const user = userRec.id;
-                console.log(user, "user was this the last to be run");
+
                 await updateDoc(doc(firebase, "classsessions", user), {
                     id: user
                 }).catch((error) => {
@@ -787,7 +732,6 @@ console.log("is qrcodes run before this?", id,"it knows the id");
                     console.log(error); alert(error);
                 });
 
-                console.log("Check4")
                 setUsersessionid(user);
 
 

@@ -104,7 +104,6 @@ export default function SignUp({ route, navigation }) {
     async function getlocationsqrcodes() {
         console.log(id, "see if this shows uppppp in Classesstudent");
 
-
         const array = []
         const array2 = [];
         if (id != "") {
@@ -133,7 +132,6 @@ export default function SignUp({ route, navigation }) {
 
                 .then(async (snapshot1) => {
                     snapshot1.forEach(doc => {
-                        console.log(doc.data(), "Look at what caem up")
                         array.push(doc.data())
                     })
 
@@ -144,14 +142,6 @@ export default function SignUp({ route, navigation }) {
             setShowspinner(false);
         }
     };
-
-
-    useEffect(() => {
-        if (typeof getadjustmentss != 'undefined') {
-            console.log(getadjustmentss, "getadjustmentss")
-        }
-    }, [getadjustmentss]);
-
 
     useEffect(() => {
 
@@ -224,26 +214,11 @@ export default function SignUp({ route, navigation }) {
 
 
     useEffect(() => {
-        console.log(getadjustmentss, "getadjustmentss")
         if (isNaN(getadjustmentss) == false) {
             updatedatabase();
             setAdjustmentandoverunder(getadjustmentss);
         }
     }, [getadjustmentss]);
-
-
-
-    // const resetaftercalculations = () => {
-    //     const percents = {id: classid, percentage: percent, overunder: total2, adjustments: getadjustmentss}
-
-    //   if (id && classid) {
-    //         updateDoc(doc(firebase, "users", id), {
-    //             [idselected]: percents,
-    //         }).catch((error) => {
-    //             console.log(error); alert(error);
-    //         })
-    //       }
-    //   }
 
     const getadjustment = () => {
 
@@ -262,21 +237,16 @@ export default function SignUp({ route, navigation }) {
                     const getpenaltystatus = object.temporary;
                     setOverunderstatus(getlevel);
                     setGetadjustments(whatever);
-                    setNowinpenalty(getpenaltystatus)
-                    console.log(whatever, "hHERE is a NEW NUMBErrrr")
+                    setNowinpenalty(getpenaltystatus);
                 })
         }
     }
     useEffect(() => {
-        console.log("THiis getadjustments was done")
         getadjustment();
     }, [idselected]);
 
     const updatedatabase = () => {
-        console.log((total3 / 60000), "penaltyminutes", total2, "overunder THIS IW WHERE THE PROBLEM BEGINS")
-
-        // const percents = { id: idselected, penaltyminutes: (total3 / 60000), overunder: total2, adjustments: getadjustmentss, level: overunderstatus }
-
+      
         if (idselected && currentlocation) {
 
             updateDoc(doc(firebase, "users", id), {
@@ -297,7 +267,6 @@ export default function SignUp({ route, navigation }) {
                 console.log(error); alert(error);
             })
         }
-        console.log(userdata.length, coursesadded)
     }
 
     async function refresh() {

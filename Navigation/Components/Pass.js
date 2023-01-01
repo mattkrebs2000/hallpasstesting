@@ -16,8 +16,6 @@ export default function App3({ route, navigation }) {
 
   const { teacherid, coursename, classid, teacher, Selectedclassdestination, youcangetpass, section, currentlocation, school, state, town, locationdestination, firstname, lastname, userinformation, ledby, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, currentsessionid, bathroompassinuse, totalinlineforbathroom, id, passid, teacheridforreturn, leftclass, expectedreturn, maxstudentsonphonepass, newlocation, timeallowed, adjustmentandoverunder, total2, getcurrentdifference, realtimeleave, rightnow, currentdate, endofclasssession } = route.params;
 
-  console.log(id, "id", passid, "getexistingpassid", school, "school", state, "state", town, "town", firstname, "firstname", lastname, "lastname", classid, "passclassid", currentsessionid, "passclasssessionid", currentlocation, "passlocation", coursename, "passcoursename", locationdestination, "passdestination", bathroomtime, "timeallowed", teacheridforreturn, "passteacheridreturn", teacherid, "teacheridfrompass", timeallowed, "timeallowed", expectedreturn, "expectedreturnfrompass", rightnow, "passrightnow", currentdate, "passcurrentdate", realtimeleave, "passrealtimeleave", "HEEEEYEEYEE THIS IS ALL THAT IT GETS")
-
   const [currentdifference, setCurrentdifference] = useState(0);
 
   const [day, setDay] = useState("");
@@ -37,11 +35,6 @@ export default function App3({ route, navigation }) {
     setRightnow2(ac);
 
   }, []);
-
-  useEffect(() => {
-    console.log(expectedreturn, "expectedreturn, Expectedreturn")
-
-  }, [expectedreturn]);
 
   useEffect(() => {
 
@@ -70,7 +63,6 @@ export default function App3({ route, navigation }) {
 
 
   useEffect(() => {
-    console.log("How often is this run")
     setLeavetimeGlobal(rightnow2);
     setLeftclass2(leftclass);
 

@@ -66,8 +66,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
       const value9 = await AsyncStorage.getItem('role')
       const value10 = await AsyncStorage.getItem('adminclass')
 
-      console.log(email, value2, value9, value5, value6, value7, value8, value9, "This is the stored value", value10, adminclass, "adminclass");
-
       setAdminclass(value10);
 
     } catch (e) {
@@ -78,14 +76,6 @@ const TeacherMainMenu = ({ route, navigation }) => {
   useEffect(() => {
     getData()
   }, [id]);
-
-  useEffect(() => {
-    console.log(adminclass, "this is the adminclass1")
-  }, [adminclass]);
-
-  useEffect(() => {
-    console.log(adminclass, "this is the adminclass2")
-  }, []);
 
 
   useEffect(() => {

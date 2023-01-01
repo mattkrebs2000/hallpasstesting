@@ -40,7 +40,7 @@ export default function SignUp({ route, navigation }) {
     const { idofcurrentclass, currentsessionid, endlastclass, userinformation, role, bathroompasslimit, ifnegativeplusminus, nonbathroompasslimit, drinkpasslimit, exclusivephonepassmaxstudents, exclusivephonepasstimelmit, lengthofclass, classiscurrent, nameofcurrentclass, starttimeofcurrentclass, classid, coursename, section, teacherid,
         email, starttime, lengthofclassesforacomputer, inpenalty, stoptimepenalty, starttimepenalty, totaltimepenalty, alreadyused, teacher, Selectedclassdestination, youcangetpass, currentlocation, locationdestination, firstname, lastname, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, bathroompassinuse, totalinlineforbathroom, lengthofclasses, endlastclasssubstitute, sessionended, thelastid, phonepassduration, overunder, bathroompassduration, drinkpassduration, otherpassduration, maxstudentsphonepass, donewithworkphonepass, consequenceid, id, teacheriscalled, school, state, town, sessionending,maxstudentsbathroom, linkedclass
     } = route.params;
-    console.log(drinkofwater, drinkpassduration,drinkpasslocal," Drink of Water ,Register Classes ");
+    console.log(" Drink of Water ,Register Classes ");
 
     const [location, setLocation] = useState("");
     const [classname, setClassname] = useState("");
@@ -64,10 +64,6 @@ export default function SignUp({ route, navigation }) {
     const [maxstudentsonphonepasslocal, setMaxstudentonphonepasslocal] = useState();
     const [donewithworkphonepasslocal, setDonewithworkphonepasslocal] = useState();
 
-
-    useEffect(() => {
-     console.log(drinkpasslocal, "drinpasslocal is here")
-}, [drinkpasslocal]);
 
     useEffect(() => {
         getpresets();
@@ -168,12 +164,6 @@ export default function SignUp({ route, navigation }) {
     }, [idsofpasses]);
 
 
-    const signoutfunction = () => {
-        auth.signOut();
-        console.log("Someone has just been logged out")
-    }
-
-
     const ifitshtere = () => {
         if (sessionending < Date.now()) {
             updateDoc(doc(firebase, "classsessions", currentsessionid), {
@@ -244,7 +234,6 @@ export default function SignUp({ route, navigation }) {
             linkto: "Not Linked"
 
         }).then(async (userRec) => {
-            console.log("IS THere ANything Here", userRec.id, "IS THERE ANYTHING HERE?")
             const user = userRec.id;
             await updateDoc(doc(firebase, "classesbeingtaught", user), {
                 id: user,
