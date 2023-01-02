@@ -36,7 +36,7 @@ export default function SignUp({ route, navigation }) {
     const [available, setAvailable] = useState(true);
     const [bathroomoccupied, setBathroomoccupied] = useState(false);
     const [destination, setDestination] = useState("");
- 
+
     const [phonetimestart, setPhonetimestart] = useState(0);
     const [currenttime, setCurrenttime] = useState(0);
     const [tallyphonetimeingoodstanding, setTallyphonetimeingoodstanding] = useState(0);
@@ -247,7 +247,7 @@ export default function SignUp({ route, navigation }) {
             ),
         });
 
-}, []);
+    }, []);
 
     useEffect(() => {
         if (typeof newconsequence != "undefined") {
@@ -326,14 +326,18 @@ export default function SignUp({ route, navigation }) {
                     let idd = classid;
                     let object = docSnap.data();
 
-                    const whatever = object[idd].adjustments;
-                    const penaltyminutes = object[idd].penaltyminutes;
-                    const ovunder = object[idd].overunder;
-                    const level = object[idd].level;
-                    setAdjustments(whatever);
-                    setPenaltyminutes(penaltyminutes);
-                    setOverunderlocal(ovunder);
-                    setAbc(level);
+
+                    if (typeof object[idd] != "undefined") {
+
+                        const whatever = object[idd].adjustments;
+                        const penaltyminutes = object[idd].penaltyminutes;
+                        const ovunder = object[idd].overunder;
+                        const level = object[idd].level;
+                        setAdjustments(whatever);
+                        setPenaltyminutes(penaltyminutes);
+                        setOverunderlocal(ovunder);
+                        setAbc(level);
+                    }
 
                 })
         }
@@ -563,7 +567,7 @@ export default function SignUp({ route, navigation }) {
             await updateDoc(doc(firebase, "users", idselected), {
                 latetoclass: true,
                 lastmistake: "Late To Class",
-                lastmistaketime:Date.now()
+                lastmistaketime: Date.now()
             }).catch((error) => {
                 console.log(error); alert(error);
             });
@@ -742,7 +746,7 @@ export default function SignUp({ route, navigation }) {
 
 
     async function showexpectations() {
-console.log("expectations was run!");
+        console.log("expectations was run!");
         if (teacherid) {
             const q = query(collection(firebase, "Expectations"), where("teacherid", "==", id));
 
@@ -832,7 +836,7 @@ console.log("expectations was run!");
                             temporary: "true",
                             changemade: true,
                             lastmistake: localcode,
-                            lastmistaketime:Date.now()
+                            lastmistaketime: Date.now()
                         }).catch((error) => {
                             console.log(error); alert(error);
                         })
@@ -895,7 +899,7 @@ console.log("expectations was run!");
                             temporary: "true",
                             changemade: true,
                             lastmistake: "Not Specified",
-                            lastmistaketime:Date.now()
+                            lastmistaketime: Date.now()
                         }).catch((error) => {
                             console.log(error); alert(error);
                         })
@@ -1009,12 +1013,12 @@ console.log("expectations was run!");
                 <Students userdata={userdata} id={id} selected={selected} setSelected={setSelected}
                     selected2={selected2} setSelected2={setSelected2}
 
-                    idselected={idselected} setIdselected={setIdselected} changehasbeenmade={changehasbeenmade} temporary={temporary} indefinitepenalty={indefinitepenalty} classid={classid} overunderlocal={overunderlocal} currentlevel={currentlevel} abc={abc} updatecompleted={updatecompleted} totalpenaltyinutes={totalpenaltyinutes} localpercent={localpercent}totalclasstime={totalclasstime} over={over} consequences={consequences} empty={empty} idselected2={idselected2} setIdselected2={setIdselected2} />
+                    idselected={idselected} setIdselected={setIdselected} changehasbeenmade={changehasbeenmade} temporary={temporary} indefinitepenalty={indefinitepenalty} classid={classid} overunderlocal={overunderlocal} currentlevel={currentlevel} abc={abc} updatecompleted={updatecompleted} totalpenaltyinutes={totalpenaltyinutes} localpercent={localpercent} totalclasstime={totalclasstime} over={over} consequences={consequences} empty={empty} idselected2={idselected2} setIdselected2={setIdselected2} />
             </View>
 
             {idselected && empty != false ? <ScrollView style={styles.container3}>
-            
-            <View><ActivityIndicator
+
+                <View><ActivityIndicator
                     size="large"
                     color="#FFF"
                     animating={showspinner}
@@ -1034,7 +1038,7 @@ console.log("expectations was run!");
                     <Text>{'\n'}</Text>
 
                     <Pressable style={styles.section5}>
-                        {(changehasbeenmade === false) && ((temporary === "null")) ? <Text style ={styles.paragraph3} onPress={() => setIndefinitepenalty("false")}>Toggle Status{'\n'}"In Good Standing"/"In Penalty"{'\n'}{'\n'}</Text> : null}
+                        {(changehasbeenmade === false) && ((temporary === "null")) ? <Text style={styles.paragraph3} onPress={() => setIndefinitepenalty("false")}>Toggle Status{'\n'}"In Good Standing"/"In Penalty"{'\n'}{'\n'}</Text> : null}
 
                         {(changehasbeenmade === true && temporary === "true") ? <Text style={styles.paragraph3} onPress={() => takeoffpenalty1()}>This Toggle Status{'\n'}"In Good Standing"/"In Penalty"{'\n'}{'\n'}</Text> : null}
                     </Pressable>
@@ -1085,7 +1089,7 @@ console.log("expectations was run!");
             {idselected2 && empty === false ? <View style={styles.container33}><Pressable style={styles.section55}><Text style={styles.paragraph35} onPress={() => indefinitechange()}>Classify it as this.</Text></Pressable></View> : empty === false ? <View style={styles.container33}><Pressable style={styles.section55}><Text style={styles.paragraph35} onPress={() => indefinitechange()}>Don't Categorize Consequence</Text></Pressable></View> : null}
 
 
-     
+
         </SafeAreaView>
     );
 }

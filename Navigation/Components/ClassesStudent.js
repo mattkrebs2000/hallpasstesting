@@ -232,21 +232,24 @@ export default function SignUp({ route, navigation }) {
                     let idd = idselected;
                     let object = docSnap.data();
 
-                    const whatever = (Math.round((object[idd].overunder) * 10)) / 10;
-                    const getlevel = object[idd].level;
-                    const getpenaltystatus = object.temporary;
-                    setOverunderstatus(getlevel);
-                    setGetadjustments(whatever);
-                    setNowinpenalty(getpenaltystatus);
+                    if (typeof object[idd] != "undefined") {
+                        const whatever = (Math.round((object[idd].overunder) * 10)) / 10;
+                        const getlevel = object[idd].level;
+                        const getpenaltystatus = object.temporary;
+                        setOverunderstatus(getlevel);
+                        setGetadjustments(whatever);
+                        setNowinpenalty(getpenaltystatus);
+                    }
                 })
         }
     }
+
     useEffect(() => {
         getadjustment();
     }, [idselected]);
 
     const updatedatabase = () => {
-      
+
         if (idselected && currentlocation) {
 
             updateDoc(doc(firebase, "users", id), {

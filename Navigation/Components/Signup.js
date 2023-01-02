@@ -556,6 +556,9 @@ export default function SignUp({ route, navigation }) {
           let idd = classid2;
           let object = docSnap.data();
 
+
+          if (typeof object[idd] != "undefined") {
+
           const whatever = object[idd].adjustments;
           // const percent = object[idd].percentage;
           const penaltyminutes = object[idd].penaltyminutes;
@@ -565,6 +568,7 @@ export default function SignUp({ route, navigation }) {
           setPenaltyminutes(penaltyminutes);
           setOverunderlocal2(ovunder);
           setAbc2(level);
+          }
         })
     }
 

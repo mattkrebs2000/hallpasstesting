@@ -26,7 +26,7 @@ export default function App3({ route, navigation }) {
   const [rightnow2, setRightnow2] = useState();
   const [sound, setSound] = React.useState();
 
-
+console.log(locationdestination, "locationdestination", newlocation, "newlocation")
 
   useEffect(() => {
     playSound();
@@ -167,20 +167,14 @@ export default function App3({ route, navigation }) {
       <View style={styles.sectionB}>
         <ScrollView>
 
-          {locationdestination != newlocation ? <Pressable
+         <Pressable
             onPress={() => navigation.navigate('Scanner', {
               teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, teacherid: teacherid, coursename: coursename, Selectedclassdestination: Selectedclassdestination, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime,
               currentsessionid: currentsessionid, id: id, passid: passid, day: day, teacheridforreturn: teacheridforreturn, leftclass2: leftclass2, bathroompassinuse: bathroompassinuse, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, expectedreturn2: expectedreturn, endofclasssession: endofclasssession, day:day, timeallowed:timeallowed, 
             })}
           >
             <Text style={locationdestination.includes("urse") ? styles.paragraph2 : styles.paragraph}>Return this Pass!</Text>
-          </Pressable> : <Pressable onPress={() => navigation.navigate('Mainmenustudent', {
-            teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, teacherid: teacherid, coursename: coursename, Selectedclassdestination: Selectedclassdestination, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime,
-            currentsessionid: currentsessionid, id: id, passid: passid, day: day, teacheridforreturn: teacheridforreturn, leftclass2: leftclass2, bathroompassinuse: bathroompassinuse, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference,
-          })}
-          >
-            <Text style={styles.paragraph}>Return Pass</Text>
-          </Pressable>}
+          </Pressable> 
 
 
 

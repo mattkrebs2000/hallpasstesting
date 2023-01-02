@@ -72,25 +72,11 @@ const Destination = ({ route, navigation }) => {
   if (classid) {
 
     const unsub = onSnapshot(doc(firebase, "classesbeingtaught", classid), (doc) => {
-
       setBathroomepassinuselocal(doc.data().inusebathroompass);
       setTotalinlineforbathroomlocal(doc.data().totalinlineforbathroom);
-
     }
     )
   }
-
-  useEffect(() =>
-    onSnapshot(doc(firebase, "users", id), (doc) => {
-
-      if (doc.data().exclusivephonepassused === currentsessionid) {
-        setDisable(true);
-      } else {
-        setDisable(false);
-      }
-    }
-    ), []);
-
 
   //when it mounts
 
@@ -98,8 +84,6 @@ const Destination = ({ route, navigation }) => {
 
     setBathroomepassinuselocal(bathroompassinuse);
     setTotalinlineforbathroomlocal(totalinlineforbathroom);
-    setExclusivephonepassinuselocal(exclusivephonepassinuse);
-    setTotalinlineforexclusivephonelocal(totalinlineforexclusivephone);
 
     navigation.setOptions({
       headerLeft: () => (
@@ -110,13 +94,9 @@ const Destination = ({ route, navigation }) => {
       ),
     });
 
-    if (teacherid.length > 0 || typeof teacherid != "undefined") {
-      getTeachers()
-    }
-
     if (typeof newlocation != "undefined") {
       setNewlocation2(newlocation);
-    } 
+    }
 
     const currenttime = Date.now();
 
@@ -126,27 +106,7 @@ const Destination = ({ route, navigation }) => {
       setClassisover(true);
     }
 
-    if ((endofclasssession - (lengthofclasssession / 2)) > currenttime) {
-      setDisabledonewithworkphonepass(true);
-    } else {
-      setDisabledonewithworkphonepass(false);
-    }
-
   }, []);
-
-  useEffect(() => {
-
-    console.log("3")
-
-    const currenttime = Date.now();
-
-    if ((endofclasssession - (lengthofclasssession / 2)) > currenttime) {
-      setDisabledonewithworkphonepass(true);
-    } else {
-      setDisabledonewithworkphonepass(false);
-    }
-
-  }, [update, newlocation]);
 
   useEffect(() => {
 
@@ -192,37 +152,46 @@ const Destination = ({ route, navigation }) => {
   }, [locationdestination, Teacheriddestination]);
 
   useEffect(() => {
-    if (completed === true || typeof newlocation != "undefined") {
+    console.log(data, "HERE IS RH EEE DATTA")
+    if (typeof newlocation != "undefined") {
 
       if (newlocation) {
         if (ledby === "Admin") {
           getAvailableLocations2withadmin();
         } else {
-          if (exclusivetime > 0 && donewithworkpass == true) {
-            getAvailableLocations2grouptime0();
-          } else {
-            getAvailableLocations2grouptime0dww();
-          }
-
-        }
-      }
-      else {
-        if (ledby === "Admin") {
-          getAvailableLocationswithadmin();
-        } else {
-          if (exclusivetime > 0 && donewithworkpass == true) {
-            getAvailableLocationsingrouptime0();
-          } else if (exclusivetime > 0 && donewithworkpass == false) {
-            getAvailableLocationsingrouptime0dww();
-          } else if (exclusivetime == 0 && donewithworkpass == false) {
-            getAvailableLocationsboth0dww();
-          } else {
-            getAvailableLocationsboth0();
-          }
+          getAvailableLocations2grouptime0dww();
         }
       }
     }
-  }, [completed, newlocation]);
+    else {
+      if (ledby === "Admin") {
+        getAvailableLocationswithadmin();
+      } else {
+        getAvailableLocationsboth0();
+      }
+    }
+  }, [newlocation]);
+
+  useEffect(() => {
+    console.log(data, "HERE IS RH EEE DATTA")
+    if (typeof newlocation != "undefined") {
+
+      if (newlocation) {
+        if (ledby === "Admin") {
+          getAvailableLocations2withadmin();
+        } else {
+          getAvailableLocations2grouptime0dww();
+        }
+      }
+    }
+    else {
+      if (ledby === "Admin") {
+        getAvailableLocationswithadmin();
+      } else {
+        getAvailableLocationsboth0();
+      }
+    }
+  }, []);
 
   useEffect(() => {
 
@@ -312,39 +281,39 @@ const Destination = ({ route, navigation }) => {
         .then((docSnap) => {
 
           if (docSnap.exists()) {
-          let object = docSnap.data();
+            let object = docSnap.data();
 
-          const classid = object.classid;
-          const sessionid = object.classsessionid;
-          const location = object.comingfrom;
-          const coursename = object.coursename;
-          const destination = object.destination;
-          const teacherid = object.teacherid;
-          const idreturnteacher = object.
-            returnteacherid;
-          const timallowed = object.timeallowedonpass;
-          const limitreached = object.whenlimitwillbereached;
-          const rightnow = object.passdetailrightnow;
-          const currentdate = object.passdetailcurrentdate;
-          const realtimeleave = object.passdetailrealtimeleave;
-          const classending = object.endofclasssession;
+            const classid = object.classid;
+            const sessionid = object.classsessionid;
+            const location = object.comingfrom;
+            const coursename = object.coursename;
+            const destination = object.destination;
+            const teacherid = object.teacherid;
+            const idreturnteacher = object.
+              returnteacherid;
+            const timallowed = object.timeallowedonpass;
+            const limitreached = object.whenlimitwillbereached;
+            const rightnow = object.passdetailrightnow;
+            const currentdate = object.passdetailcurrentdate;
+            const realtimeleave = object.passdetailrealtimeleave;
+            const classending = object.endofclasssession;
 
-          setPassclassid(classid);
+            setPassclassid(classid);
 
-          setPassrightnow(rightnow);
-          setPasscurrentdate(currentdate);
-          setPassrealtimeleave(realtimeleave);
+            setPassrightnow(rightnow);
+            setPasscurrentdate(currentdate);
+            setPassrealtimeleave(realtimeleave);
 
-          setTeacheridfrompass(teacherid);
-          setPassteacheridreturn(idreturnteacher);
-          setExpectedreturnfrompass(limitreached);
-          setTimeallowed(timallowed);
-          setPasslocaation(location);
+            setTeacheridfrompass(teacherid);
+            setPassteacheridreturn(idreturnteacher);
+            setExpectedreturnfrompass(limitreached);
+            setTimeallowed(timallowed);
+            setPasslocaation(location);
 
-          setPassclasssessionid(sessionid);
-          setPasscoursename(coursename);
-          setClasssessionending(classending);
-          setPassdestinaation(destination);
+            setPassclasssessionid(sessionid);
+            setPasscoursename(coursename);
+            setClasssessionending(classending);
+            setPassdestinaation(destination);
           }
         })
     }
@@ -383,66 +352,12 @@ const Destination = ({ route, navigation }) => {
     } else {
       setUpdate(true)
     }
-    getTeachers()
   }
-
-
-  const getTeachers = () => {
-
-    const f = query(collection(firebase, "users"), where("school", "==", school), where("state", "==", state), where("town", "==", town), where("role", "!=", "Student"));
-    const docDATAA = getDocs(f)
-
-      .then(function (snapshot) {
-
-        const array = [];
-        snapshot.forEach(doc => {
-          if ((doc.data().id) != teacherid) {
-            array.push(doc.data().currentclass)
-          }
-        })
-        setData(array);
-        setCompleted(true);
-      })
-
-  };
-
-
-  const getAvailableLocationsingrouptime0 = () => {
-
-    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
-    const docDATAA = getDocs(g)
-      .then(function (snapshot) {
-
-        const arrayy = [{ location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
-
-        snapshot.forEach(doc => {
-            arrayy.push(doc.data())
-        })
-        setSeconddata(arrayy); setShowspinner(false);
-      })
-  }
-
-  const getAvailableLocationsingrouptime0dww = () => {
-
-    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
-    const docDATAA = getDocs(g)
-      .then(function (snapshot) {
-
-        const arrayy = [{ location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
-
-        snapshot.forEach(doc => {
-            arrayy.push(doc.data())
-        })
-        setSeconddata(arrayy); setShowspinner(false);
-      })
-
-  }
-
   const getAvailableLocationsboth0 = () => {
 
-    console.log("12")
+    console.log("12", data, "here is the data")
 
-    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
+    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true),where("school", "==", school), where("state", "==", state), where("town", "==", town));
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
 
@@ -450,44 +365,33 @@ const Destination = ({ route, navigation }) => {
         const arrayy = [{ location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
 
         snapshot.forEach(doc => {
+          if (classid != doc.data().id) {
+
+          console.log(doc.data(), "dataa", data, "1here is the availalbe locations");
+       
             arrayy.push(doc.data())
+          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
-
-  }
-
-  const getAvailableLocationsboth0dww = () => {
-
-    console.log("13")
-
-    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
-    const docDATAA = getDocs(g)
-      .then(function (snapshot) {
-
-        const arrayy = [{ location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },];
-
-        snapshot.forEach(doc => {
-            arrayy.push(doc.data())
-        })
-        setSeconddata(arrayy); setShowspinner(false);
-      })
-
   }
 
   const getAvailableLocationswithadmin = () => {
 
     const arrayy = coursesstudentisin;
 
-    console.log( "14")
+    console.log("14" , data, "here is the data")
 
-    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
+    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true),where("school", "==", school), where("state", "==", state), where("town", "==", town));
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
 
         snapshot.forEach(doc => {
-          if (classid != doc.data().id)
+          if (classid != doc.data().id) {
+          console.log(doc.data(), "2here is the availalbe locations");
+
             arrayy.push(doc.data())
+          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -496,65 +400,48 @@ const Destination = ({ route, navigation }) => {
 
   const getAvailableLocations2withadmin = () => {
 
-    console.log("15")
+    console.log("15", data, "here is the data")
 
     let arrayy = [];
 
-    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
+    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true),where("school", "==", school), where("state", "==", state), where("town", "==", town));
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
 
-        const arrayy = [{ location: newlocation, id: newlocation },]
+        const arrayy = [{ location: newlocation, id: newlocation + "1" },]
 
         snapshot.forEach(doc => {
+          if (classid != doc.data().id) {
+          console.log(doc.data(), "3here is the availalbe locations");
+       
             arrayy.push(doc.data())
+          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
 
-  }
-
-  const getAvailableLocations2grouptime0 = () => {
-
-    console.log("16")
-
-    let arrayy = [];
-
-    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
-    const docDATAA = getDocs(g)
-      .then(function (snapshot) {
-
-        //   const arrayy = [{ location: newlocation, id: newlocation },]
-
-        const arrayy = [{ location: newlocation, id: newlocation }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },]
-
-
-
-        snapshot.forEach(doc => {
-            arrayy.push(doc.data())
-        })
-        setSeconddata(arrayy); setShowspinner(false);
-      })
   }
 
   const getAvailableLocations2grouptime0dww = () => {
 
-    console.log("17")
+    console.log("17", data, "here is the data")
 
     let arrayy = [];
 
-    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true));
+    const g = query(collection(firebase, "classesbeingtaught"), where("acceptingincomingstudents", "==", true),where("school", "==", school), where("state", "==", state), where("town", "==", town));
     const docDATAA = getDocs(g)
       .then(function (snapshot) {
 
-        //   const arrayy = [{ location: newlocation, id: newlocation },]
+        //   const arrayy = [{ location: newlocation, id: newlocation + "1" },]
 
-        const arrayy = [{ location: newlocation, id: newlocation }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },]
-
-
+        const arrayy = [{ location: newlocation, id: newlocation + "1" }, { location: "Bathroom", id: "Bathroom" }, { location: "Get Drink of Water", id: "Get Drink of Water" },]
 
         snapshot.forEach(doc => {
-            arrayy.push(doc.data())
+          if (classid != doc.data().id) {
+          console.log(doc.data(), "4here is the availalbe locations");
+     
+          arrayy.push(doc.data())
+          }
         })
         setSeconddata(arrayy); setShowspinner(false);
       })
@@ -623,7 +510,7 @@ const Destination = ({ route, navigation }) => {
       });
 
       setPassid(userRec.id);
-    
+
     })
       .catch((error) => {
         console.log(error); alert(error);
@@ -690,7 +577,7 @@ const Destination = ({ route, navigation }) => {
       });
 
       setPassid(userRec.id);
-   
+
     })
       .catch((error) => {
         console.log(error); alert(error);
@@ -742,7 +629,7 @@ const Destination = ({ route, navigation }) => {
       coursename: coursename,
       comingfrom: currentlocation,
       teacherid: teacherid,
-      classesinvolved: [classid,Idselecteddestination ],
+      classesinvolved: [classid, Idselecteddestination],
       studentid: id,
       school: school,
       teacheriscalled: teacher,
@@ -786,9 +673,73 @@ const Destination = ({ route, navigation }) => {
   }
 
 
+  async function otherpassinfosent2() {
+
+
+    setShowspinner(true);
+    const r = new Date();
+
+    console.log("22")
+
+    const docRef = await addDoc(collection(firebase, "passes"), {
+
+      returnteacherid: "none",
+      timepassinitiated: Date.now(),
+      timeallowedonpass: nonbathroomtime,
+      firstname: firstname,
+      lastname: lastname,
+      classid: classid,
+      coursename: coursename,
+      comingfrom: currentlocation,
+      teacherid: teacherid,
+      classesinvolved: [classid, Idselecteddestination],
+      studentid: id,
+      school: school,
+      teacheriscalled: teacher,
+      destination: locationdestination,
+      timeleftclass: 0,
+      leftclass: 0,
+      returned: 0,
+      timereturned: 0,
+      whenlimitwillbereached: 0,
+      // returnedbeforetimelimit: "null",
+      differenceoverorunderinminutes: 0,
+
+    }).then(async (userRec) => {
+      let user = userRec.id;
+      await updateDoc(doc(firebase, "passes", user), {
+        id: user
+      }).catch((error) => {
+        console.log(error); alert(error);
+      });
+
+
+      await updateDoc(doc(firebase, "users", id), {
+        status: "Newlocation Pass Info",
+        passid: userRec.id
+      }).catch((error) => {
+        console.log(error); alert(error);
+      });
+
+      await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+        addingnumber: Date.now()
+      }).catch((error) => {
+        console.log(error); alert(error);
+      });
+
+      setPassid(userRec.id);
+    })
+      .catch((error) => {
+        console.log(error); alert(error);
+      });
+
+  }
+
+
+
   async function custompassinfosent() {
 
-      navigation.navigate("Passisready", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, })
+    navigation.navigate("Passisready", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, adjustmentandoverunder: adjustmentandoverunder, total2: total2, getcurrentdifference: getcurrentdifference, })
   }
 
   return (
@@ -798,7 +749,7 @@ const Destination = ({ route, navigation }) => {
         <TouchableOpacity><Text style={styles.error} onPress={() => refresh()}>Select Desired Destination</Text></TouchableOpacity></View>
       <Text>{'\n'}</Text>
       <View style={styles.container2}>
-        {seconddata.length > 0 ? <Destinations ledby = {ledby} newlocation={newlocation} seconddata={seconddata} id={id} setSelectedclassdestination={setSelectedclassdestination} selectedclass={Selectedclassdestination} setCoursenamedestination={setCoursenamedestination} Idselecteddestination={Idselecteddestination} currentlocation={currentlocation} Teacherdestination={Teacherdestination} disable={disable} disabledonewithworkphonepass={disabledonewithworkphonepass} classisover={classisover} /> : <Text style={styles.text}>   </Text>}
+        {seconddata.length > 0 ? <Destinations ledby={ledby} newlocation={newlocation} seconddata={seconddata} id={id} setSelectedclassdestination={setSelectedclassdestination} selectedclass={Selectedclassdestination} setCoursenamedestination={setCoursenamedestination} Idselecteddestination={Idselecteddestination} currentlocation={currentlocation} Teacherdestination={Teacherdestination} disable={disable} disabledonewithworkphonepass={disabledonewithworkphonepass} classisover={classisover} /> : <Text style={styles.text}>   </Text>}
       </View>
       <View style={styles.section3}>
 
@@ -816,15 +767,13 @@ const Destination = ({ route, navigation }) => {
             bottom: 0,
           }} /></View>
 
-        {passid == "" && Selectedclassdestination && locationdestination === "Done with work Phone Pass" ? (<Text style={styles.paragraph2} onPress={() => custompassinfosent()} >Make A Pass </Text>) :
-
-            passid == "" && Selectedclassdestination && locationdestination === "Bathroom" && (bathroomepassinuselocal > 0 || totalinlineforbathroomlocal > 0) ? (<Text style={styles.paragraph2} onPress={() => bathroompassinfosent()} >Get In Line </Text>) :
-              passid == "" && Selectedclassdestination && locationdestination === "Bathroom" ? (<Text style={styles.paragraph2} onPress={() => bathroompassinfosent()} >Make A Pass </Text>) :
-                passid == "" && Selectedclassdestination && locationdestination === "Get Drink of Water" ? (<Text style={styles.paragraph2} onPress={() => drinkpassinfosent2()} >Make A Pass </Text>) : passid == "" && Selectedclassdestination && locationdestination === newlocation ? (<Text style={styles.paragraph2} onPress={() => custompassinfosent()} >Make A Pass </Text>) : passid == "" && Selectedclassdestination === "" ? (<Text style={styles.paragraph2} onPress={() => navigation.navigate("Customlocation", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, lengthofclasssession: lengthofclasssession })}> A Different Destination</Text>) : passid == "" ? (<Text style={styles.paragraph2} onPress={() => otherpassinfosent()} >Make A Pass </Text>) : (<Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenustudent", {
-                  userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
-                  maxstudentsonphonepass: maxstudentsonphonepass,
-                  bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom
-                })} >You Have an Active Pass</Text>)}
+        {passid == "" && Selectedclassdestination && locationdestination === "Bathroom" && (bathroomepassinuselocal > 0 || totalinlineforbathroomlocal > 0) ? (<Text style={styles.paragraph2} onPress={() => bathroompassinfosent()} >Get In Line </Text>) :
+          passid == "" && Selectedclassdestination && locationdestination === "Bathroom" ? (<Text style={styles.paragraph2} onPress={() => bathroompassinfosent()} >Make A Pass </Text>) :
+            passid == "" && Selectedclassdestination && locationdestination === "Get Drink of Water" ? (<Text style={styles.paragraph2} onPress={() => drinkpassinfosent2()} >Make A Pass </Text>) : passid == "" && Selectedclassdestination && locationdestination === newlocation ? (<Text style={styles.paragraph2} onPress={() => otherpassinfosent2()} >Make A Pass </Text>) : passid == "" && Selectedclassdestination === "" ? (<Text style={styles.paragraph2} onPress={() => navigation.navigate("Customlocation", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, lengthofclasssession: lengthofclasssession })}> A Different Destination</Text>) : passid == "" ? (<Text style={styles.paragraph2} onPress={() => otherpassinfosent()} >Make A Pass </Text>) : (<Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenustudent", {
+              userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
+              maxstudentsonphonepass: maxstudentsonphonepass,
+              bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom
+            })} >You Have an Active Pass</Text>)}
 
         <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
         <Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenustudent", {
@@ -914,6 +863,6 @@ const styles = StyleSheet.create({
   },
 
 });
-export default Destination; 
+export default Destination;
 
 

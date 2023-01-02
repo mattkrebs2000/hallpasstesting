@@ -67,6 +67,14 @@ const [lastmissteptime, setLastmissteptime] = useState();
   const [sound, setSound] = React.useState();
 
 
+console.log(getexistingpassid,"getexistingpassid", getstatus, "getstatus", "main menu student"); 
+
+
+
+useEffect(() => {
+  console.log(getexistingpassid,"getexistingpassid", getstatus, "getstatus", "main menu student"); 
+}, []);
+
 
   useEffect(() => {
     if (typeof day != "undefined") {
@@ -461,7 +469,11 @@ const [lastmissteptime, setLastmissteptime] = useState();
   }
 
   const sendtoplace = () => {
-    if (getstatus === "On Pass") {
+    if (getstatus === "On Newlocation Pass") {
+      navigation.navigate("Pass", { id: id, passid: getexistingpassid, school: school, state: state, town: town, firstname: firstname, lastname: lastname, classid: passclassid, currentsessionid: passclasssessionid, currentlocation: passlocation, coursename: passcoursename, locationdestination: passdestination, bathroomtime: timeallowed, teacheridforreturn: passteacheridreturn, teacherid: teacheridfrompass, timeallowed: timeallowed, expectedreturn: expectedreturnfrompass, rightnow: passrightnow, currentdate: passcurrentdate, realtimeleave: passrealtimeleave, newlocation:passdestination });
+
+    }
+   else if (getstatus === "On Pass") {
       navigation.navigate("Pass", { id: id, passid: getexistingpassid, school: school, state: state, town: town, firstname: firstname, lastname: lastname, classid: passclassid, currentsessionid: passclasssessionid, currentlocation: passlocation, coursename: passcoursename, locationdestination: passdestination, bathroomtime: timeallowed, teacheridforreturn: passteacheridreturn, teacherid: teacheridfrompass, timeallowed: timeallowed, expectedreturn: expectedreturnfrompass, rightnow: passrightnow, currentdate: passcurrentdate, realtimeleave: passrealtimeleave });
 
     }
@@ -483,11 +495,11 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
   useEffect(() => {
 
-    console.log("10");
+    console.log("10", passclassid, passclasssessionid, passlocation, passcoursename, passdestination, timeallowed);
 
     const timenow = Date.now();
 
-    if (passclassid && passclasssessionid && passlocation && passcoursename && passdestination && timeallowed && (classsessionending > timenow)) {
+    if (passclassid && passlocation && passcoursename && passdestination && timeallowed) {
       sendtoplace();
     }
   }, [passdestination]);
@@ -498,6 +510,13 @@ const [lastmissteptime, setLastmissteptime] = useState();
     console.log("11");
     getpassdetails();
   }, [getexistingpassid]);
+
+  useEffect(() => {
+if (typeof getexistingpassid != "undefined" && getexistingpassid != "") 
+    console.log("11");
+    getpassdetails();
+  }, []);
+
 
   useEffect(() => {
 

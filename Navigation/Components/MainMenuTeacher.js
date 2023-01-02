@@ -409,7 +409,7 @@ const TeacherMainMenu = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log(email2, "THIS IS THE EMAIL");
-    if (typeof email2 != "undefined" && email2 != "Mkrebs@rpsk12.org" && email2 != "Mjones@rpsk12.org" && email2 != "Nurse@rpsk12.org" && email2 != "mkrebs@rpsk12.org" && typeof email != "undefined" && email != "Mkrebs@rpsk12.org" && email != "Mjones@rpsk12.org" && email != "Nurse@rpsk12.org" && email != "mkrebs@rpsk12.org" ) {
+    if (typeof email2 != "undefined" && email2 != "Mkrebs@rpsk12.org" && email2 != "Mrjones@rpsk12.org" && email2 != "Nurse@rpsk12.org" && email2 != "mkrebs@rpsk12.org" && typeof email != "undefined" && email != "Mkrebs@rpsk12.org" && email != "Mrjones@rpsk12.org" && email != "Nurse@rpsk12.org" && email != "mkrebs@rpsk12.org" ) {
       navigation.navigate("SignIn");
       alert("This App is in Development. Direct inquiries to mattkrebsemail@gmail.com.")
     } else {

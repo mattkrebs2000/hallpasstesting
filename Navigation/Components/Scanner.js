@@ -60,10 +60,35 @@ const Scanner = ({ route, navigation }) => {
       getadjustment();
       checkDatabaseData2();
       setExpectedreturn(expectedreturn2);
+
+      // if (locationdestination == newlocation) {
+      //   setGiveshortcut(true);
+      // }
     }
   }, [day, expectedreturn2]);
 
+
+//IF THERE IS NO SCANNER AND IT WAS A "NEW LOCATION" . . . They can close this pass out whenever they want
+
   useEffect(() => {
+    if ((typeof day != "undefined") && (locationdestination == newlocation)) {
+
+      updateDoc(doc(firebase, "classesbeingtaught", classid), {
+        addingnumber: Date.now(),
+        removescanneraddbutton: true
+      }).catch((error) => {
+        console.log(error); alert(error);
+      })  
+      .then(() => {
+      setGiveshortcut(true);
+    })
+    }
+  }, [day]);
+
+
+
+  useEffect(() => {
+
     console.log("14Did it get this far? ");
     setText("Not yet scanned");
     setScanned(false);
@@ -101,8 +126,6 @@ const Scanner = ({ route, navigation }) => {
             setOverunderr(0);
             setLevell("Consequences For Lateness");
           }
-
-
         })
     }
   };
@@ -142,13 +165,8 @@ const Scanner = ({ route, navigation }) => {
       }).catch((error) => {
         console.log(error); alert(error);
       })
-
-
     }
   }, [currenttime]);
-
-
-
 
   useEffect(() => {
 
@@ -158,13 +176,12 @@ const Scanner = ({ route, navigation }) => {
       } else {
         setText('Not yet scanned')
         setScanned(false);
-        alert("You have scanned the wrong @RCode2");
       }
 
     } else {
 
       if (leavetimeGlobal) {
-      
+
         const formatAMPM = () => {
           let hours = leavetimeGlobal.getHours();
           let minutes = leavetimeGlobal.getMinutes();
@@ -204,7 +221,7 @@ const Scanner = ({ route, navigation }) => {
 
 
   useEffect(() => {
-   
+
     if (locationdestination == "Bathroom") {
       setAllottedtime(bathroomtime);
     } else if (locationdestination == "Get Drink of Water") {
@@ -229,17 +246,7 @@ const Scanner = ({ route, navigation }) => {
 
   useEffect(() => {
     if (typeof classid != "undefined") {
-
       checkDatabaseData();
-
-      if (newlocation === locationdestination) {
-        updateDoc(doc(firebase, "classesbeingtaught", classid), {
-          removescanneraddbutton: true,
-        }).catch((error) => {
-          console.log(error); alert(error);
-        })
-
-      }
     }
   }, []);
 
@@ -276,6 +283,10 @@ const Scanner = ({ route, navigation }) => {
       setTakenameoffwaitlist(docSnap.data().totalinlineforbathroom);
       setGiveshortcut(docSnap.data().removescanneraddbutton);
 
+      // if (locationdestination != newlocation && (typeof day != "undefined")) {
+      //   setGiveshortcut(docSnap.data().removescanneraddbutton);
+      // }
+
 
     } else {
       // doc.data() will be undefined in this case
@@ -289,7 +300,7 @@ const Scanner = ({ route, navigation }) => {
   //shortcut() to be used in development
 
   const developmentshortcut = () => {
-  
+
     var r = new Date();
     var s = Date.now();
 
@@ -315,7 +326,6 @@ const Scanner = ({ route, navigation }) => {
       : undefined;
   }, [sound]);
 
-
   async function playSound() {
     const { sound } = await Audio.Sound.createAsync(
       require('../../assets/Confirm.mp3')
@@ -332,7 +342,43 @@ const Scanner = ({ route, navigation }) => {
 
     const expected = (rightnow + (allottedtime * 60000))
 
+
     if (classid && passid &&
+      (locationdestination == newlocation)) {
+
+      await updateDoc(doc(firebase, "passes", passid), {
+        leftclass: rightnow,
+        timeleftclass: leavetimeGlobal.toLocaleTimeString([], { hour12: true }),
+        whenlimitwillbereached: expected,
+        placeinline: null,
+        passdetailrightnow: rightnow, passdetailcurrentdate: currentdate, passdetailrealtimeleave: realtimeleave
+      }).catch((error) => {
+        console.log(error); alert(error);
+      });
+
+      await updateDoc(doc(firebase, "classesbeingtaught", classid), {
+        addingnumber: Date.now(),
+        removescanneraddbutton: false
+      }).catch((error) => {
+        console.log(error); alert(error);
+      });
+
+      await updateDoc(doc(firebase, "users", id), {
+        status: "On Newlocation Pass",
+      }).catch((error) => {
+        console.log(error); alert(error);
+      })
+
+        .then(async () => {
+
+          setExpectedreturn(expected);
+          setHasPermission(null);
+          setText("Not yet scanned");
+          setScanned(false);
+          setCompleted(true);
+        })
+    }
+    else if (classid && passid &&
       locationdestination == "Bathroom") {
 
       await updateDoc(doc(firebase, "passes", passid), {
@@ -752,7 +798,7 @@ const Scanner = ({ route, navigation }) => {
     if (typeof day === "undefined") {
       if (text == teacherid && scanned) {
         console.log("Play SOund Happened");
-          finalizehallpass();
+        finalizehallpass();
       }
       if (teacherid != text && scanned) {
 
