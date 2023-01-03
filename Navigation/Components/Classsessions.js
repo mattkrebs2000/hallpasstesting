@@ -166,10 +166,10 @@ export default function SignUp({ route, navigation }) {
         }
     });
 
+
     useEffect(() => {
         console.log("THIS IS THE IDddddddddddddd");
         getlocationsqrcodes();
-
     }, []);
 
 
@@ -295,8 +295,10 @@ export default function SignUp({ route, navigation }) {
 
 
     useEffect(() => {
-        if (userdata === []) {
+        console.log(userdata.length, "Hello AGAIN")
+        if (userdata.length === 0) {
             getlocationsqrcodes()
+            console.log(userdata, "HELLO AGAIN")
         }
     }, [userdata]);
 
@@ -309,7 +311,7 @@ export default function SignUp({ route, navigation }) {
         await deleteDoc(userDoc)
 
             .then(function () {
-                setUserdata([]);
+               setUserdata([]);
 
             })
     };

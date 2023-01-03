@@ -82,6 +82,7 @@ export default function SignUp({ route, navigation }) {
 
     const [smsAvailable, setSmsAvailable] = React.useState(false);
     const [phone, setPhone] = useState();
+    const [isfirstname, setIsfirstname] = useState(1)
 
 
     console.log(lengthofclasses, "studentsenrolled");
@@ -126,7 +127,18 @@ export default function SignUp({ route, navigation }) {
     }, []);
 
 
+const rotatingvalues = () => {
+if (isfirstname < 3) {
+    setIsfirstname(isfirstname + 1) 
+} else {
+    setIsfirstname(1)  
+}
+}
+
+
     function compare_lname(a, b) {
+        console.log(isfirstname, "HERE IS THE NMBER VALUE")
+        if (isfirstname === 1) {
 
         if (typeof a.locallastname != "undefined" && typeof b.locallastname != "undefined") {
             if (a.locallastname.toLowerCase() < b.locallastname.toLowerCase()) {
@@ -139,13 +151,40 @@ export default function SignUp({ route, navigation }) {
         } else {
             null
         }
+    } else {
+        if (typeof a.localfirstname != "undefined" && typeof b.localfirstname != "undefined") {
+            if (a.localfirstname.toLowerCase() < b.localfirstname.toLowerCase()) {
+                return -1;
+            }
+            if (a.localfirstname.toLowerCase() > b.localfirstname.toLowerCase()) {
+                return 1;
+            }
+            return 0;
+      
     }
+    }
+}
 
     useEffect(() => {
         if (userdata2) {
+            if (isfirstname < 3)
             setUserdata(userdata2.sort(compare_lname))
+
+            else {
+                const filteredData = userdata2.filter((person) => {
+                    return person.temporary != "null";
+                })
+                setUserdata(filteredData)
+                setIdselected("")
+            }
         }
     }, [userdata2]);
+
+    useEffect(() => {
+        if (isfirstname > 0) {
+           getlocationsqrcodes();
+        }
+    }, [isfirstname]);
 
 
     const endpasses = () => {
@@ -1003,17 +1042,23 @@ export default function SignUp({ route, navigation }) {
                 </Pressable>
 
 
-                <TouchableOpacity><Text style={styles.error}>{coursename} ({userdata.length}){'\n'}
+                {isfirstname === 1 ? <TouchableOpacity onPress={() => rotatingvalues()} ><Text style={styles.error}>{coursename} ({userdata.length}) -Last Name{'\n'}
                     Total Class Time: {Math.round(totalclasstime)} Min.</Text>
                     {(sessionending > Date.now()) && classiscurrent == true && empty === false ? <Text style={styles.error1}>Classify This Rule Violation</Text> : (sessionending > Date.now()) && classiscurrent == true ? <Text style={styles.error1}>Stats Include This Session</Text> : <Text style={styles.error1}>Class Is Not In Session</Text>}
-                </TouchableOpacity>
+                </TouchableOpacity> : isfirstname === 2 ? <TouchableOpacity onPress={() => rotatingvalues()} ><Text style={styles.error}>{coursename} ({userdata.length}) -First Name{'\n'}
+                    Total Class Time: {Math.round(totalclasstime)} Min.</Text>
+                    {(sessionending > Date.now()) && classiscurrent == true && empty === false ? <Text style={styles.error1}>Classify This Rule Violation</Text> : (sessionending > Date.now()) && classiscurrent == true ? <Text style={styles.error1}>Stats Include This Session</Text> : <Text style={styles.error1}>Class Is Not In Session</Text>}
+                </TouchableOpacity> :<TouchableOpacity onPress={() => rotatingvalues()} ><Text style={styles.error}>{coursename} ({userdata.length}) - In Penalty{'\n'}
+                    Total Class Time: {Math.round(totalclasstime)} Min.</Text>
+                    {(sessionending > Date.now()) && classiscurrent == true && empty === false ? <Text style={styles.error1}>Classify This Rule Violation</Text> : (sessionending > Date.now()) && classiscurrent == true ? <Text style={styles.error1}>Stats Include This Session</Text> : <Text style={styles.error1}>Class Is Not In Session</Text>}
+                </TouchableOpacity>}
             </View>
 
             <View style={!idselected ? styles.container23 : empty === false ? styles.container233 : styles.container2}>
                 <Students userdata={userdata} id={id} selected={selected} setSelected={setSelected}
                     selected2={selected2} setSelected2={setSelected2}
 
-                    idselected={idselected} setIdselected={setIdselected} changehasbeenmade={changehasbeenmade} temporary={temporary} indefinitepenalty={indefinitepenalty} classid={classid} overunderlocal={overunderlocal} currentlevel={currentlevel} abc={abc} updatecompleted={updatecompleted} totalpenaltyinutes={totalpenaltyinutes} localpercent={localpercent} totalclasstime={totalclasstime} over={over} consequences={consequences} empty={empty} idselected2={idselected2} setIdselected2={setIdselected2} />
+                    idselected={idselected} setIdselected={setIdselected} changehasbeenmade={changehasbeenmade} temporary={temporary} indefinitepenalty={indefinitepenalty} classid={classid} overunderlocal={overunderlocal} currentlevel={currentlevel} abc={abc} updatecompleted={updatecompleted} totalpenaltyinutes={totalpenaltyinutes} localpercent={localpercent} totalclasstime={totalclasstime} over={over} consequences={consequences} empty={empty} idselected2={idselected2} setIdselected2={setIdselected2} isfirstname={isfirstname}/>
             </View>
 
             {idselected && empty != false ? <ScrollView style={styles.container3}>
@@ -1310,7 +1355,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#000",
         color: "#fff",
         alignContent: "center",
-        justifyContent: "center",
+        marginTop: 20,
         height: "30%",
 
 
@@ -1324,7 +1369,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#000",
         color: "#fff",
         alignContent: "center",
-        marginTop: 20,
+
         marginBottom: 20,
         justifyContent: "center",
     },

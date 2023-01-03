@@ -1,7 +1,7 @@
 import React, { useEffect, useState, } from 'react';
 import { Alert, nativeEvent, Animated, ScrollView, View, Text, Pressable, StyleSheet, TouchableOpacity } from 'react-native'
 
-export default function Phonelessstudents({ setIdselected, idselected, userdata, deleteToDo, id, setSelected, selected, changehasbeenmade, temporary, indefinitepenalty, classid, overunderlocal, currentlevel, abc, updatecompleted, totalminustesincompliance, localpercent, totalclasstime, totalpenaltyinutes, over, consequences, empty, setSelected2, idselected2, selected2, }) {
+export default function Phonelessstudents({ setIdselected, idselected, userdata, deleteToDo, id, setSelected, selected, changehasbeenmade, temporary, indefinitepenalty, classid, overunderlocal, currentlevel, abc, updatecompleted, totalminustesincompliance, localpercent, totalclasstime, totalpenaltyinutes, over, consequences, empty, setSelected2, idselected2, selected2,isfirstname }) {
 
 
   const [scroll, setScroll] = useState(0);
@@ -27,7 +27,7 @@ if (height > height2) {
 
 
   const selectHandler = (item, i) => {
-    if (item.id != idselected) {
+    if (item.id != idselected && isfirstname != 3) {
       setSelected(item);
    
      setPickindex(i);
