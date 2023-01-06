@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState, } from 'react';
 import { Alert, nativeEvent, Animated, ScrollView, View, Text, Pressable, StyleSheet, TouchableOpacity } from 'react-native'
 
@@ -168,6 +170,4 @@ const styles = StyleSheet.create({
   },
 
 });
-
-
 

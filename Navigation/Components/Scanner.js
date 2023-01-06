@@ -56,6 +56,9 @@ const Scanner = ({ route, navigation }) => {
   useEffect(() => {
 
     if (id && classid && typeof day != "undefined") {
+
+
+
       setCurrenttiime(Date.now())
       getadjustment();
       checkDatabaseData2();
@@ -286,8 +289,6 @@ const Scanner = ({ route, navigation }) => {
       // if (locationdestination != newlocation && (typeof day != "undefined")) {
       //   setGiveshortcut(docSnap.data().removescanneraddbutton);
       // }
-
-
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");

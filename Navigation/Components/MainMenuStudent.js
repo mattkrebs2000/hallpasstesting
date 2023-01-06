@@ -14,7 +14,7 @@ import { _DEFAULT_PROGRESS_UPDATE_INTERVAL_MILLIS } from "expo-av/build/AV";
 
 export default function Destination({ route, navigation }) {
 
-  const { teacherid, classid, coursename, section, location, teacher, youcangetpass, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, getadjustmentss, adjust, nowinpenalty, passid, overunderstatus, currentsessionid, endofclasssession, donewithworkplease, day, } = route.params;
+  const { teacherid, classid, coursename, section, location, teacher, youcangetpass, ledby, grouptime, drinkofwater, exclusivetime, donewithworkpass, getadjustmentss, adjust, nowinpenalty, passid, overunderstatus, currentsessionid, endofclasssession, donewithworkplease, day, lengthofclasssession} = route.params;
 
 
 
@@ -68,6 +68,7 @@ const [lastmissteptime, setLastmissteptime] = useState();
 
 
 console.log(getexistingpassid,"getexistingpassid", getstatus, "getstatus", "main menu student"); 
+
 
 
 
@@ -548,16 +549,16 @@ if (typeof getexistingpassid != "undefined" && getexistingpassid != "")
   }, [coursename,lastmistep]);
 
   useEffect(() => {
-    console.log("16");
-    if (isNaN(100 - (Math.floor((total3 / total5) * 100)))) {
+    console.log("16", total3, total5, "these are the totals");
+    if (isNaN(100 - ((((total3/60000) / total5) * 100)))) {
       setPercent(100);
     } else {
-      setPercent(100 - (Math.floor((total3 / total5) * 100)));
+      setPercent(100 - (((total3 / total5) * 100)));
     }
   }, [total5]);
 
   useEffect(() => {
-    console.log("17");
+    console.log("17", total3, total5, "these are the totals");
     gettotaltimeoneclass();
   }, [total3]);
 
@@ -639,6 +640,7 @@ if (typeof getexistingpassid != "undefined" && getexistingpassid != "")
           })
 
         }).then(async () => {
+          
           setTotal(array.reduce((a, b) => a + b, 0));
         })
 
@@ -695,11 +697,21 @@ if (typeof getexistingpassid != "undefined" && getexistingpassid != "")
 
         .then(async (snapshot) => {
           snapshot.forEach(doc => {
-            let number = doc.data().passesnolongeravailable - doc.data().classbeginnumber;
-            array.push(number);
-          })
-        }).then(async () => {
+            let number = doc.data().lengthofclass;
+            let classsession = lengthofclasssession/60000;
+            if (number > classsession) {
+                console.log("mistake made");
+                array.push(classsession);
+            } else {
+                array.push(number);
+            }
+        })
+    }).then(async () => {
 
+          console.log(array, "this is the array in total classtime")
+          array.forEach(obj => {
+            console.log(lengthofclasssession,obj, "Main Menu")
+        });
           setTotal5(array.reduce((a, b) => a + b, 0));
         })
     }
@@ -726,7 +738,7 @@ if (typeof getexistingpassid != "undefined" && getexistingpassid != "")
 
           {typeof coursename === "undefined" ? null : <Text>{'\n'}</Text>}
 
-          {typeof coursename === "undefined" ? null : <View style={styles.button2}><View style={styles.btext2}><Text style={styles.btext}>{coursename}{'\n'}{'\n'}In Compliance{'\n'}With Class Rules</Text><Text style={styles.btext3}>{percent}%</Text></View><View style={styles.btext2}><Text style={styles.btext5}>{coursename}{'\n'}{'\n'}Respect For Self{'\n'}& Others Rating</Text><Text style={positivenegative === "negative" ? styles.btext4 : styles.btext44}>{positivenegative}</Text><Text style={styles.btext4}> {positivenegative === "negative" ? getadjustmentsandplustotal2 : ""}</Text></View></View>}
+          {typeof coursename === "undefined" ? null : <View style={styles.button2}><View style={styles.btext2}><Text style={styles.btext}>{coursename}{'\n'}{'\n'}In Compliance{'\n'}With Class Rules</Text><Text style={styles.btext3}>{Math.floor(100 - ((total3/60000)/(total5) * 100))}%</Text></View><View style={styles.btext2}><Text style={styles.btext5}>{coursename}{'\n'}{'\n'}Respect For Self{'\n'}& Others Rating</Text><Text style={positivenegative === "negative" ? styles.btext4 : styles.btext44}>{positivenegative}</Text><Text style={styles.btext4}> {positivenegative === "negative" ? getadjustmentsandplustotal2 : ""}</Text></View></View>}
           {typeof coursename === "undefined" ? null : <Text>{'\n'}</Text>}
 
           {coursename && lastmistep === "Late On A Pass" && lastmissteptime > (Date.now() - 432000000) ? <View style={styles.button}>

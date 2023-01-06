@@ -119,6 +119,11 @@ export default function SignUp({ route, navigation }) {
     }, []);
 
 
+    useEffect(() => {
+      userdata.forEach(obj => console.log(obj.id, "this is the id"))
+    }, [idselected2]);
+
+
     async function refresh3() {
 
         if (typeof currentsessionid != "undefined") {
