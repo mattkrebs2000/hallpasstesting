@@ -62,6 +62,7 @@ const [lastmissteptime, setLastmissteptime] = useState();
   const [role, setRole] = useState();
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
+  const [pnumber, setPnumber] = useState()
   const [email, setEmail] = useState();
   const [teacheriscalled, setTeacheriscalled] = useState();
   const [sound, setSound] = React.useState();
@@ -270,6 +271,23 @@ useEffect(() => {
   }, [id]);
 
   async function getstorage8() {
+
+    const idValue = await AsyncStorage.getItem('phonenumber')
+
+      .then(async (userRec8) => {
+        setPnumber(userRec8);
+      })
+  }
+  useEffect(() => {
+    if (typeof pnumber != "undefined") {
+      getstorage9();
+    } else {
+      console.log("id tripped it up");
+      getstorage9();
+    }
+  }, [pnumber]);
+
+  async function getstorage9() {
 
     const roleValue = await AsyncStorage.getItem('role')
 
@@ -759,34 +777,34 @@ if (typeof getexistingpassid != "undefined" && getexistingpassid != "")
           {coursename ? <View style={styles.button}>
 
             <Text style={styles.btext} onPress={() => navigation.navigate("ClassesStudent", {
-              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber
             }
             )}>Begin Making A Pass</Text>
           </View> : typeof id != "undefined" ? <View style={styles.button}>
 
             <Text style={styles.btext} onPress={() => navigation.navigate("ClassesStudent", {
-              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustments: getadjustmentss, getadjustmentsandplustotal2: getadjustmentsandplustotal2, total3: total3, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustments: getadjustmentss, getadjustmentsandplustotal2: getadjustmentsandplustotal2, total3: total3, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber
             })}>Select Your Location</Text>
           </View> : null}
 
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
           {coursename ? <View style={styles.button}>
             <Text style={styles.btext} onPress={() => navigation.navigate("Relatedrules", {
-              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber
             })}>Rules Set By This Teacher</Text>
           </View> : null}
 
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
           {coursename ? <View style={styles.button}>
             <Text style={styles.btext} onPress={() => navigation.navigate("StudentConsequences", {
-              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber
             })}>Consequences Given</Text>
           </View> : null}
 
           {coursename ? <Text>{'\n'}{'\n'}</Text> : null}
           {coursename ? <View style={styles.button}>
             <Text style={styles.btext} onPress={() => navigation.navigate("Passesstudents", {
-              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber
             })}>My Passes/Tardies</Text>
           </View> : null}
 
@@ -799,7 +817,7 @@ if (typeof getexistingpassid != "undefined" && getexistingpassid != "")
           <View style={styles.button}>
 
             {typeof id != "undefined" ? <Text style={styles.btext} onPress={() => navigation.navigate("Availableclasses", {
-              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, email: email, getadjustmentsandplustotal2: getadjustmentsandplustotal2
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, email: email, getadjustmentsandplustotal2: getadjustmentsandplustotal2, pnumber:pnumber
             })}>Join A Class</Text> : <Text style={styles.btext} onPress={() => getstorage0()}>Reset Needed</Text>}
           </View>
           <Text>{'\n'}</Text>

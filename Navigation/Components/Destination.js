@@ -15,7 +15,7 @@ const height = Dimensions.get("window").height;
 
 const Destination = ({ route, navigation }) => {
 
-  const { userinformation, teacherid, classid, coursename, section, location, school, teacher, youcangetpass, currentlocation, state, town, newlocation, firstname, lastname, ledby, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, currentsessionid, bathroompassinuse, totalinlineforbathroom, id, exclusivephonepassinuse, totalinlineforexclusivephone, maxstudentsonphonepass, endofclasssession, overunderstatus, lengthofclasssession, adjustmentandoverunder, total2, getcurrentdifference, maxstudentsbathroom, linkedclass, coursesstudentisin } = route.params;
+  const { userinformation, teacherid, classid, coursename, section, location, school, teacher, youcangetpass, currentlocation, state, town, newlocation, firstname, lastname, ledby, drinkofwater, exclusivetime, donewithworkpass, bathroomtime, nonbathroomtime, currentsessionid, bathroompassinuse, totalinlineforbathroom, id, exclusivephonepassinuse, totalinlineforexclusivephone, maxstudentsonphonepass, endofclasssession, overunderstatus, lengthofclasssession, adjustmentandoverunder, total2, getcurrentdifference, maxstudentsbathroom, linkedclass, coursesstudentisin, pnumber } = route.params;
 
   console.log(passid, "this is the passid", endofclasssession, "endofclasssession", " in Destination.js");
 
@@ -486,6 +486,7 @@ const Destination = ({ route, navigation }) => {
       // returnedbeforetimelimit: "null",
       differenceoverorunderinminutes: 0,
       endofclasssession: endofclasssession,
+      phonenumber:pnumber,
 
     }).then(async (userRec) => {
       let user = userRec.id;
@@ -554,6 +555,7 @@ const Destination = ({ route, navigation }) => {
       // returnedbeforetimelimit: "null",
       differenceoverorunderinminutes: 0,
       endofclasssession: endofclasssession,
+      phonenumber:pnumber,
 
     }).then(async (userRec) => {
       let user = userRec.id;
@@ -641,6 +643,7 @@ const Destination = ({ route, navigation }) => {
       whenlimitwillbereached: 0,
       // returnedbeforetimelimit: "null",
       differenceoverorunderinminutes: 0,
+      phonenumber:pnumber,
 
     }).then(async (userRec) => {
       let user = userRec.id;
@@ -704,6 +707,7 @@ const Destination = ({ route, navigation }) => {
       whenlimitwillbereached: 0,
       // returnedbeforetimelimit: "null",
       differenceoverorunderinminutes: 0,
+      phonenumber:pnumber,
 
     }).then(async (userRec) => {
       let user = userRec.id;
@@ -769,7 +773,7 @@ const Destination = ({ route, navigation }) => {
 
         {passid == "" && Selectedclassdestination && locationdestination === "Bathroom" && (bathroomepassinuselocal > 0 || totalinlineforbathroomlocal > 0) ? (<Text style={styles.paragraph2} onPress={() => bathroompassinfosent()} >Get In Line </Text>) :
           passid == "" && Selectedclassdestination && locationdestination === "Bathroom" ? (<Text style={styles.paragraph2} onPress={() => bathroompassinfosent()} >Make A Pass </Text>) :
-            passid == "" && Selectedclassdestination && locationdestination === "Get Drink of Water" ? (<Text style={styles.paragraph2} onPress={() => drinkpassinfosent2()} >Make A Pass </Text>) : passid == "" && Selectedclassdestination && locationdestination === newlocation ? (<Text style={styles.paragraph2} onPress={() => otherpassinfosent2()} >Make A Pass </Text>) : passid == "" && Selectedclassdestination === "" ? (<Text style={styles.paragraph2} onPress={() => navigation.navigate("Customlocation", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, lengthofclasssession: lengthofclasssession })}> A Different Destination</Text>) : passid == "" ? (<Text style={styles.paragraph2} onPress={() => otherpassinfosent()} >Make A Pass </Text>) : (<Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenustudent", {
+            passid == "" && Selectedclassdestination && locationdestination === "Get Drink of Water" ? (<Text style={styles.paragraph2} onPress={() => drinkpassinfosent2()}>Make A Pass </Text>) : passid == "" && Selectedclassdestination && locationdestination === newlocation ? (<Text style={styles.paragraph2} onPress={() => otherpassinfosent2()} >Make A Pass </Text>) : passid == "" && Selectedclassdestination === "" ? (<Text style={styles.paragraph2} onPress={() => navigation.navigate("Customlocation", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession, lengthofclasssession: lengthofclasssession, pnumber:pnumber })}> A Different Destination</Text>) : passid == "" ? (<Text style={styles.paragraph2} onPress={() => otherpassinfosent()} >Make A Pass </Text>) : (<Text style={styles.paragraph2} onPress={() => navigation.navigate("Mainmenustudent", {
               userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
               maxstudentsonphonepass: maxstudentsonphonepass,
               bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom

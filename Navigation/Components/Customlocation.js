@@ -12,7 +12,7 @@ import { Alert } from 'react-native-web';
 
 const App = ({ route, navigation }) => {
 
-  const { userinformation, teacherid, coursename, classid, teacher,  Selectedclassdestination,  youcangetpass, section, currentlocation, school, state, town,locationdestination, firstname,  lastname, ledby, exclusivetime, drinkofwater,  donewithworkpass, bathroomtime,  nonbathroomtime,  currentsessionid, bathroompassinuse, totalinlineforbathroomlocal, passid, id, teacheridforreturn, maxstudentsonphonepass, endofclasssession, lengthofclasssession, } = route.params;
+  const { userinformation, teacherid, coursename, classid, teacher,  Selectedclassdestination,  youcangetpass, section, currentlocation, school, state, town,locationdestination, firstname,  lastname, ledby, exclusivetime, drinkofwater,  donewithworkpass, bathroomtime,  nonbathroomtime,  currentsessionid, bathroompassinuse, totalinlineforbathroomlocal, passid, id, teacheridforreturn, maxstudentsonphonepass, endofclasssession, lengthofclasssession, pnumber } = route.params;
   
   const [newlocation, setNewlocation] = useState();
   const { control, handleSubmit } = useForm();
@@ -24,7 +24,7 @@ const runthis = () => {
 
 console.log("WHEN DIT THIS RUN? ", newlocation, "newlocation")
 
-      navigation.navigate("Destination", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby,  drinkofwater:drinkofwater, drinkofwater:drinkofwater,exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession,lengthofclasssession:lengthofclasssession })
+      navigation.navigate("Destination", { userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: classid, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby,  drinkofwater:drinkofwater, drinkofwater:drinkofwater,exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroomlocal, passid: passid, id: id, teacheridforreturn: teacheridforreturn, maxstudentsonphonepass: maxstudentsonphonepass, newlocation: newlocation, endofclasssession: endofclasssession,lengthofclasssession:lengthofclasssession, pnumber:pnumber})
 
     }
 

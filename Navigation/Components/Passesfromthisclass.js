@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Passes from './Mapofclasspasses/Mapofclasspasses';
+import * as SMS from 'expo-sms';
 
 import { Alert, SafeAreaView, Text, View, TextInput, KeyboardAvoidingView, Platform, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator, Pressable } from 'react-native';
 
@@ -45,6 +46,28 @@ export default function SignUp({ route, navigation }) {
     const [studentfirstname, setStudentfirstname] = useState();
 
     const [currentmax2, setCurrentmax2] = useState();
+    const [phone, setPhone] = useState();
+    const [smsAvailable, setSmsAvailable] = React.useState(false);
+
+
+    React.useEffect(() => {
+        SMS.isAvailableAsync().then(setSmsAvailable);
+    }, []);
+
+    async function sendgetbacktoclasstext() {
+
+            const message = "Hi " + studentfirstname + ". You now have exceeded the time-limit of this pass. If you are done with the purpose of your pass return to class.";
+            if (smsAvailable) {
+                alert("this is being run")
+                await SMS.sendSMSAsync(
+                    [phone],
+                    message
+                );
+            } else {
+                alert("its not available");
+            }
+    }
+
 
     useEffect(() => {
         setCurrentmax2(maxstudentsbathroom);
@@ -93,7 +116,9 @@ export default function SignUp({ route, navigation }) {
         let left = selectedclass.leftclass;
 
         let first = selectedclass.firstname;
+        let phone = selectedclass.phonenumber;
 
+        setPhone(phone);
         setStudentfirstname(first);
         setStudentid(student);
         setDest(destination);
@@ -117,6 +142,7 @@ export default function SignUp({ route, navigation }) {
 
     useEffect(() => {
         setHelpgiven(false);
+        console.log(idselected2, studentid, "this should be pass id and id");
     }, [idselected2]);
 
 
@@ -513,7 +539,7 @@ export default function SignUp({ route, navigation }) {
 
                     {idselected2 && leftclassonpass === 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={(e) => Sendonpass()} >Give Shortcut: Send On Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === false ? <Text style={styles.paragraph2} onPress={() => Sendonpass()}>Give Shortcut: Return Pass</Text> : idselected2 && returnedzero == 0 && helpgiven === true ? <Text style={styles.paragraph2}>{studentfirstname} has Shortcut option</Text> : <Text style={styles.paragraph2}>    </Text>}
 
-                    {idselected2 ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : <Text style={styles.paragraph2}>    </Text>}
+                    {idselected2 && (Date.now() > limitreached) && returnedzero === 0 ? <Text style={styles.paragraph2} onPress={(e) => sendgetbacktoclasstext()} >Send 'Get Back To Class' Text </Text> :<Text style={styles.paragraph222} >Send 'Get Back To Class' Text </Text>}
 
                     {idselected2 && returnedzero === 0 && leftclassonpass != 0 ? <Text style={styles.paragraph2} onPress={(e) => ReturnStudentFromPass()}>Return Pass</Text> : <Text style={styles.paragraph2} onPress={(e) => ReturnStudnet2()}>Reset Bathroom Availability</Text>}
 
@@ -523,8 +549,10 @@ export default function SignUp({ route, navigation }) {
                     {currentmax2 > 1 ? <Pressable onPress={() => reducemaxbathroom()}>
                         <Text style={styles.paragraph2}>Decrease Total Number of{'\n'}Students Allowed in Bathroom</Text>
                     </Pressable> : <Pressable>
-                        <Text style={styles.paragraph2}>               {'\n'}           </Text>
+                    <Text style={styles.paragraph222}>Decrease Total Number of{'\n'}Students Allowed in Bathroom</Text>
                     </Pressable>}
+
+                    {idselected2 ? <Text style={styles.paragraph2} onPress={(e) => createTwoButtonAlert()} >Delete Pass/Tardy </Text> : <Text style={styles.paragraph222} >Delete Pass/Tardy </Text> }
 
                     <Text style={styles.paragraph2}>___________________ {'\n'}</Text>
 
@@ -634,7 +662,17 @@ const styles = StyleSheet.create({
         textAlign: "center",
         backgroundColor: '#000000',
         color: "#fff",
+        justifyContent: "center",
+        marginTop: 30,
+    },
 
+    paragraph222: {
+
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: "center",
+        backgroundColor: '#000000',
+        color: "#777",
         justifyContent: "center",
         marginTop: 30,
     },

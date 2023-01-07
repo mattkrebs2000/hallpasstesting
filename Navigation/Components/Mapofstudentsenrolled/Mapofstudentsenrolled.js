@@ -95,14 +95,14 @@ startAnimation();
                   }
                   onPress={() => selectHandler(item, i)}>
                   <Text style={styles.unselected
-                  }>{item.localfirstname} {item.locallastname}-{item.temporary === "null" ? "All Good" : "In Penalty"}{'\n'}{item.email} - {item.passwordactual}{'\n'}In Compliance: {Math.round((totalclasstime) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime) - (item[classid].penaltyminutes)) / (totalclasstime)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder + item[classid].adjustments)}{'\n'}{item[classid].level}</Text>
+                  }>{item.localfirstname} {item.locallastname}-{item.temporary === "null" ? "All Good" : "In Penalty"}{'\n'}{item.email} - {item.passwordactual}{'\n'}In Compliance: {Math.round((totalclasstime) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime) - (item[classid].penaltyminutes)) / (totalclasstime)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder)}{'\n'}{item[classid].level}</Text>
                 </Pressable> : <Pressable
                   style={
                     item.temporary === "null"  ? styles.unselected : styles.unselected2
                   }
                   onPress={() => selectHandler(item, i)}>
                   <Text style={styles.unselected
-                  }>{item.localfirstname} {item.locallastname}-{item.temporary === "null" ? "All Good" : "In Penalty"}{'\n'}{item.email} - {item.passwordactual}{'\n'}In Compliance: {Math.round((totalclasstime) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime) - (item[classid].penaltyminutes)) / (totalclasstime)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder + item[classid].adjustments)}{'\n'}{item[classid].level}</Text>
+                  }>{item.localfirstname} {item.locallastname}-{item.temporary === "null" ? "All Good" : "In Penalty"}{'\n'}{item.email} - {item.passwordactual}{'\n'}In Compliance: {Math.round((totalclasstime) - (item[classid].penaltyminutes))} Min. = {Math.round((((totalclasstime) - (item[classid].penaltyminutes)) / (totalclasstime)) * 100)}%{'\n'}Pass Min. Over/Under: {Math.floor(item[classid].overunder)}{'\n'}{item[classid].level}</Text>
                 </Pressable>}
               </View>
             </View>

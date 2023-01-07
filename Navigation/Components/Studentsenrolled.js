@@ -86,6 +86,21 @@ export default function SignUp({ route, navigation }) {
 
 
 
+    async function issuewarning() {
+
+        if (typeof localcode != "undefinded") {
+            const message = "Hi " + firstname + "! This text is being sent to let you know that you are about to start losing points as a result of your behavior.";
+            if (smsAvailable) {
+                alert("this is being run")
+                await SMS.sendSMSAsync(
+                    [phone],
+                    message
+                );
+            } else {
+                alert("its not available");
+            }
+        }
+    }
 
     async function onComposeSms() {
 
@@ -223,6 +238,14 @@ if (isfirstname < 3) {
     useEffect(() => {
         refresh3();
     }, []);
+
+
+    useEffect(() => {
+        if (typeof idselected != "undefined") {
+            console.log(idselected, "HELLLOOOO")
+        }
+    }, [idselected]);
+
 
 
     async function refresh3() {
@@ -1109,6 +1132,11 @@ if (isfirstname < 3) {
                     <Pressable style={styles.section5}>
                         {idselected && (studentjustarrivedlate === false || typeof studentjustarrivedlate === "undefined") ? <Text style={(starttimeofcurrentclass + 300000) < Date.now() ? styles.paragraph3 : styles.paragraph33} onPress={(starttimeofcurrentclass + 300000) < Date.now() ? () => logunauthorizedpass() : () => console.log("late")}>This Student Just Arrived{'\n'}Late To Class{'\n'}-Press to Record Time-</Text> : (studentjustarrivedlate === true) && idselected ? <Text style={styles.paragraph3}>This student was{'\n'}marked tardy for this session.</Text> : null}
                     </Pressable>
+
+
+                    {idselected && (temporary === "null") ? <Pressable style={styles.section5}>
+                      <Text style={styles.paragraph3} onPress={() => issuewarning()}>{'\n'}{'\n'}Send Text Warning</Text> 
+                    </Pressable>: null}
 
                 </View> : null}
 

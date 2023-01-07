@@ -21,7 +21,7 @@ export default function App25r({ route, navigation }) {
     const [updatenumber, setUpdatenumber] = useState();
 
 
-    const { userinformation, firstname, lastname, teacherid, classid, id, coursename, section, location, school, teacher, town, state, percent, total2, getadjustments, getcurrentdifference, email } = route.params;
+    const { userinformation, firstname, lastname, teacherid, classid, id, coursename, section, location, school, teacher, town, state, percent, total2, getadjustments, getcurrentdifference, email, pnumber } = route.params;
 
     console.log(id, "id", school, "school", state, "state", town, "town", firstname, "firstname", lastname, "lastname", email, "email")
 

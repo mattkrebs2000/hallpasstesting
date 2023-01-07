@@ -22,6 +22,7 @@ export default function Login({ route, navigation }) {
   const [role2, setRole] = useState();
   const [firstname2, setFirstname] = useState();
   const [lastname2, setLastname] = useState();
+  const [phonen2, setPhonen2] = useState();
   const [teacheriscalled2, setTeacheriscalled] = useState();
   const [email2, setEmail] = useState();
 
@@ -183,9 +184,21 @@ export default function Login({ route, navigation }) {
             console.log("there was not a email called")
           }
 
+          if (docSnap.data().phonenumber) {
+            AsyncStorage.setItem('phonenumber', docSnap.data().phonenumber);
+            setPhonen2(docSnap.data().phonenumber)
+            console.log("there was a phone number")
+           
+          } else {
+            console.log("there was not a phone number called")
+            AsyncStorage.setItem('phonenumber', 'None Listed');
+            setPhonen2('None Listed')
+          }
 
 
 
+
+    
           setEmail(docSnap.data().email)
           setSchool(docSnap.data().school);
           setTown(docSnap.data().town);
@@ -196,6 +209,7 @@ export default function Login({ route, navigation }) {
           setEmaillocal("");
           setPasswordlocal("");
           setRole(docSnap.data().role);
+    
 
         } else {
 
@@ -211,7 +225,7 @@ export default function Login({ route, navigation }) {
 
     if (role2 === "Student") {
 
-      navigation.navigate("Mainmenustudent", { school2: school2, state2: state2, town2: town2, role2: role2, firstname2: firstname2, lastname2: lastname2, id2: id2, email2: email2 });
+      navigation.navigate("Mainmenustudent", { school2: school2, state2: state2, town2: town2, role2: role2, firstname2: firstname2, lastname2: lastname2, id2: id2, email2: email2, phonen2:phonen2 });
 
     } if (role2 === "Teacher") {
 
