@@ -298,6 +298,9 @@ export default function Login({ route, navigation }) {
         <TouchableOpacity style={styles.touchable}>
           <Text style={styles.paragraph22} onPress={() => navigation.navigate("Signup")} >SignUp</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.touchable}>
+          <Text style={styles.paragraph22} onPress={() => navigation.navigate("Signup")} >Create a Quick Pass</Text>
+        </TouchableOpacity>
 
         <Text style={styles.paragraph2}>___________________ </Text>
 
@@ -306,6 +309,7 @@ export default function Login({ route, navigation }) {
             Sign Out
           </Text>
         </TouchableOpacity>
+    
       </View>
     </SafeAreaView>
   );
@@ -332,7 +336,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container2: {
-    height: "35%",
+    height: "25%",
     backgroundColor: "#000",
     width: "100%",
 
