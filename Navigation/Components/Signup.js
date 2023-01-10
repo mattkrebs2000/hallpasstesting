@@ -658,6 +658,7 @@ export default function SignUp({ route, navigation }) {
           timeteacheradded: 0,
           lastmistake:"",
           lastmistaketime:0,
+          passesallowedinweekifonpenalty:2,
         };
 
         const usersRef = firebase;
@@ -757,6 +758,7 @@ export default function SignUp({ route, navigation }) {
             status: "",
             lastmistake:"",
             lastmistaketime:0,
+            passesallowedinweekifonpenalty:2,
             // phonepassavailable:"",
             // imageuri:"",
             // imageisapproved: false,

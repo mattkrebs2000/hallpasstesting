@@ -66,6 +66,7 @@ const [lastmissteptime, setLastmissteptime] = useState();
   const [email, setEmail] = useState();
   const [teacheriscalled, setTeacheriscalled] = useState();
   const [sound, setSound] = React.useState();
+  const [passesallowedinweekifonpenalty, setPassesallowedinweekifonpenalty] = useState();
 
 
 console.log(getexistingpassid,"getexistingpassid", getstatus, "getstatus", "main menu student"); 
@@ -413,10 +414,7 @@ useEffect(() => {
   }
 
   useEffect(() => {
-
     console.log("5");
-
-
     updatedatabase();
   }, [percent]);
 
@@ -474,11 +472,14 @@ useEffect(() => {
             const statusupdate = object.status;
             const idofpass = object.passid;
 
+            const ifonpenaltynumberofpasses = object.passesallowedinweekifonpenalty;
+
             const lastmistep = object.lastmistake;
             const lasttime = object.lastmistaketime;
             setLastmisstep(lastmistep)
             setLastmissteptime(lasttime)
 
+            setPassesallowedinweekifonpenalty(ifonpenaltynumberofpasses)
 
             setGetstatus(statusupdate);
             setGetexistingpassid(idofpass);
@@ -777,13 +778,13 @@ if (typeof getexistingpassid != "undefined" && getexistingpassid != "")
           {coursename ? <View style={styles.button}>
 
             <Text style={styles.btext} onPress={() => navigation.navigate("ClassesStudent", {
-              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustmentsandplustotal2: getadjustmentsandplustotal2, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber, passesallowedinweekifonpenalty:passesallowedinweekifonpenalty
             }
             )}>Begin Making A Pass</Text>
           </View> : typeof id != "undefined" ? <View style={styles.button}>
 
             <Text style={styles.btext} onPress={() => navigation.navigate("ClassesStudent", {
-              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustments: getadjustmentss, getadjustmentsandplustotal2: getadjustmentsandplustotal2, total3: total3, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber
+              teacherid: teacherid, classid: classid, coursename: coursename, section: section, location: location, school: school, teacher: teacher, town: town, state: state, school: school, firstname: firstname, lastname: lastname, id: id, percent: percent, total2: total2, getadjustments: getadjustmentss, getadjustmentsandplustotal2: getadjustmentsandplustotal2, total3: total3, getstatus: getstatus, passid: getexistingpassid, pnumber:pnumber, passesallowedinweekifonpenalty:passesallowedinweekifonpenalty
             })}>Select Your Location</Text>
           </View> : null}
 
