@@ -659,6 +659,7 @@ export default function SignUp({ route, navigation }) {
           lastmistake:"",
           lastmistaketime:0,
           passesallowedinweekifonpenalty:2,
+          totalpassesinlastsevendays:0
         };
 
         const usersRef = firebase;
@@ -759,6 +760,7 @@ export default function SignUp({ route, navigation }) {
             lastmistake:"",
             lastmistaketime:0,
             passesallowedinweekifonpenalty:2,
+            totalpassesinlastsevendays:0
             // phonepassavailable:"",
             // imageuri:"",
             // imageisapproved: false,

@@ -82,8 +82,40 @@ export default function SignUp({ route, navigation }) {
 
     const [smsAvailable, setSmsAvailable] = React.useState(false);
     const [phone, setPhone] = useState();
-    const [isfirstname, setIsfirstname] = useState(1)
+    const [isfirstname, setIsfirstname] = useState(1);
 
+    const [passesperweek, setPassesperweek] = useState();
+    const [totalnow, setTotalnow] = useState();
+
+
+
+    const increasepassesallowedinpenalty= () => {
+        setPassesperweek(passesperweek + 1);
+    }
+
+    const decreasepassesallowedinpenalty = () => {
+            setPassesperweek(passesperweek - 1);
+    }
+
+    useEffect(() => {
+
+        console.log("passes per week was run")
+        if (passesperweek > -1) {
+            updateDoc(doc(firebase, "users", idselected), {
+                passesallowedinweekifonpenalty: passesperweek
+            }).catch((error) => {
+                console.log(error); alert(error);
+            }).then(() => {
+                if (passesperweek > -1)  {
+                getlocationsqrcodes();
+                }
+            })
+        } else {
+            null
+        }
+    }, [passesperweek]);
+
+  
 
 
     async function issuewarning() {
@@ -453,7 +485,11 @@ if (isfirstname < 3) {
         let consequence = selected.consequenceid;
         let idselect = selected.id;
         let fon = selected.phonenumber;
+        let accruedpasses = selected.totalpassesinlastsevendays;
+        let limiitonweeklypasses = selected.passesallowedinweekifonpenalty;
 
+        setTotalnow(accruedpasses)
+        setPassesperweek(limiitonweeklypasses)
         setPhone(fon)
         setFirstname(selected.localfirstname)
         setLastname(selected.locallastname)
@@ -1163,6 +1199,15 @@ if (isfirstname < 3) {
                             idofcurrentclass: idofcurrentclass, currentsessionid: currentsessionid, sessionending: sessionending, endlastclass: endlastclass, userinformation: userinformation, school: school, state: state, town: town, role: role, id: id, bathroompasslimit: bathroompasslimit, ifnegativeplusminus: ifnegativeplusminus, nonbathroompasslimit: nonbathroompasslimit, drinkpasslimit: drinkpasslimit, exclusivephonepassmaxstudents: exclusivephonepassmaxstudents, exclusivephonepasstimelmit: exclusivephonepasstimelmit, lengthofclass: lengthofclass, classiscurrent: classiscurrent, nameofcurrentclass: nameofcurrentclass, starttimeofcurrentclass: starttimeofcurrentclass, classid: classid, coursename: coursename, section: section, location: location, teacherid: teacherid, teacheriscalled: teacheriscalled,
                             email: email, starttime: starttime, lengthofclassesforacomputer: lengthofclassesforacomputer, inpenalty: inpenalty, stoptimepenalty: stoptimepenalty, starttimepenalty: starttimepenalty, totaltimepenalty: totaltimepenalty, alreadyused: alreadyused, teacher: teacher, Selectedclassdestination: Selectedclassdestination, youcangetpass: youcangetpass, currentlocation: currentlocation, locationdestination: locationdestination, firstname: firstname, lastname: lastname, ledby: ledby, grouptime: grouptime, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, lengthofclasses: lengthofclasses, endlastclasssubstitute: endlastclasssubstitute, sessionended: sessionended, thelastid: thelastid, phonepassduration: phonepassduration, overunder: overunder, bathroompassduration: bathroompassduration, drinkpassduration: drinkpassduration, otherpassduration: otherpassduration, maxstudentsphonepass: maxstudentsphonepass, donewithworkphonepass: donewithworkphonepass, consequenceid: consequenceid, totalclasstime: totalclasstime, idselected: idselected, penaltyminutes: penaltyminutes, adjustments: adjustments, abc: abc, linkedclass: linkedclass, maxstudentsbathroom: maxstudentsbathroom,
                         })} >View "Penalty" History{'\n'}Of This Student</Text> : <Text style={styles.paragraph3}></Text>}
+                        <Text>{'\n'}</Text>
+                    </Pressable>
+
+                    <Pressable  style={styles.section5}>
+                        <Text style={styles.paragraph3} onPress={() => increasepassesallowedinpenalty()}>Increase Number of{'\n'}Passes/Week In Penalty</Text>
+                        <Text>{'\n'}</Text>
+                    </Pressable>
+                    <Pressable onPress={() => decreasepassesallowedinpenalty()} style={styles.section5}>
+                        <Text style={styles.paragraph3}>Decrease Number of{'\n'}Passes/Week In Penalty</Text>
                         <Text>{'\n'}</Text>
                     </Pressable>
 

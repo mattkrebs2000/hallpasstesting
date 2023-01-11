@@ -8,9 +8,6 @@ import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailV
 import { onSnapshot, getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc, FieldValue, arrayUnion } from "@firebase/firestore";
 
 
-
-
-
 const height = Dimensions.get("window").height;
 
 export default function SignUp({ route, navigation }) {
@@ -365,7 +362,7 @@ export default function SignUp({ route, navigation }) {
                         userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
                         maxstudentsonphonepass: maxstudentsonphonepass,
                         bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass, pnumber: pnumber
-                    })} ><Text style={styles.paragraph2}>This Class IS NOT in session.{'\n'} See LIMITED pass options. </Text></TouchableOpacity>) : getadjustmentss < 0 && overunderstatus == "Consequences For Lateness" && selectedclass && youcangetpass && endofclasssession > Date.now() && ledby == "Teacher" && (numberofrecentpasses < passesallowedinweekifonpenalty) ? (<TouchableOpacity onPress={() => navigation.navigate("Getapprovalfromteacher", {
+                    })} ><Text style={styles.paragraph2}>This Class IS NOT in session.{'\n'} See LIMITED pass options. </Text></TouchableOpacity>) : getadjustmentss < 0 && overunderstatus == "Consequences For Lateness" && selectedclass && youcangetpass && endofclasssession > Date.now() && ledby == "Teacher" && (numberofrecentpasses< passesallowedinweekifonpenalty) ? (<TouchableOpacity onPress={() => navigation.navigate("Getapprovalfromteacher", {
                         userinformation: userinformation, teacherid: teacherid, coursename: coursename, classid: idselected, teacher: teacher, youcangetpass: youcangetpass, section: section, currentlocation: currentlocation, school: school, state: state, town: town, firstname: firstname, lastname: lastname, ledby: ledby, drinkofwater: drinkofwater, exclusivetime: exclusivetime, donewithworkpass: donewithworkpass, bathroomtime: bathroomtime, nonbathroomtime: nonbathroomtime, currentsessionid: currentsessionid,
                         maxstudentsonphonepass: maxstudentsonphonepass,
                         bathroompassinuse: bathroompassinuse, totalinlineforbathroom: totalinlineforbathroom, id: id, bathroomtime: bathroomtime, endofclasssession: endofclasssession, overunderstatus: overunderstatus, lengthofclasssession: lengthofclasssession, getadjustmentss: getadjustmentss, adjustmentandoverunder: adjustmentandoverunder, maxstudentsbathroom: maxstudentsbathroom, linkedclass: linkedclass, pnumber: pnumber, numberofrecentpasses:numberofrecentpasses,
